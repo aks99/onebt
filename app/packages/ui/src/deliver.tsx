@@ -27,23 +27,23 @@ export function formatSeconds(s: number) {
 }
 export function BeatRow(p: BeatRowProps) {
   return (
-    <div className="grid grid-cols-[2rem_1fr_auto] items-center gap-3 border-b border-[var(--border-subtle)] py-2">
+    <div className="grid grid-cols-[2rem_1fr] items-center gap-x-3 gap-y-1 border-b border-[var(--border-subtle)] py-2 sm:grid-cols-[2rem_1fr_auto]">
       <span className="t-metadata tabular text-[var(--text-muted)]">{p.order}</span>
       <div className="min-w-0">
         <div className="flex flex-wrap items-baseline gap-2">
-          <span className="t-lede truncate">"{p.firstWords} ..."</span>
+          <span className="t-lede break-words">"{p.firstWords} ..."</span>
           {p.purpose && <span className="t-metadata text-[var(--text-muted)]">{p.purpose}</span>}
           <span className="t-metadata tabular text-[var(--text-muted)]">{formatSeconds(p.targetSeconds)}</span>
         </div>
         {p.stageNote && <p className="t-compact text-[var(--text-secondary)]">Stage: {p.stageNote}</p>}
       </div>
-      <div className="flex items-center gap-3">
+      <div className="col-start-2 flex items-center gap-3 sm:col-start-auto">
         <span className="flex gap-1" role="img" aria-label={`mastery: ${p.state}`}>
           {[1, 2, 3, 4].map((i) => (
             <span key={i} aria-hidden="true" className={cx("block h-2.5 w-2.5 rounded-full", i <= stateStep[p.state] ? "bg-[var(--accent-solid)]" : "border border-[var(--border)]")} />
           ))}
         </span>
-        <span className="t-metadata text-[var(--text-secondary)] w-20 text-right">
+        <span className="t-metadata text-[var(--text-secondary)] sm:w-20 sm:text-right">
           {p.dueToday ? "due today" : p.nextReviewOn ? `due ${new Date(p.nextReviewOn + "T00:00:00Z").toLocaleDateString("en-GB", { day: "numeric", month: "short", timeZone: "UTC" })}` : p.state}
         </span>
         {p.onEditNote && <Button size="sm" variant="ghost" onClick={p.onEditNote} aria-label={`Edit stage note for beat ${p.order}`}>Note</Button>}
@@ -65,6 +65,9 @@ export interface DrillCardProps {
   total: number;
   blankRatio?: 0.1 | 0.3 | 0.6;
   seed?: number;
+  maskedText?: string;             // caller-supplied masked text (keeps the blanks and the typed answers in step)
+  extra?: React.ReactNode;         // a typed field or a hint under the text
+  resultLabel?: string;            // e.g. "4 of 5 words" for typed blank-fill
   onResult: (result: "hit" | "miss") => void;
   onSkip?: () => void;
   onEnd?: () => void;
@@ -97,7 +100,7 @@ export function DrillCard(p: DrillCardProps) {
   const shown = (() => {
     if (p.kind === "read_cover_recite") return covered ? "" : p.beatText;
     if (p.kind === "cue_cards") return revealed ? p.beatText : `${p.firstWords} ...`;
-    if (p.kind === "blank_fill") return revealed ? p.beatText : maskWords(p.beatText, p.blankRatio ?? 0.3, p.seed ?? p.index + 1);
+    if (p.kind === "blank_fill") return revealed ? p.beatText : (p.maskedText ?? maskWords(p.beatText, p.blankRatio ?? 0.3, p.seed ?? p.index + 1));
     return revealed ? p.beatText : `${p.firstWords} ...`;   // chaining shows the cue, the member recites the rest
   })();
 
@@ -109,15 +112,17 @@ export function DrillCard(p: DrillCardProps) {
         <span>{title} <span className="tabular">beat {p.index + 1} of {p.total}</span></span>
         {p.onEnd && <Button size="sm" variant="ghost" onClick={p.onEnd}>End</Button>}
       </header>
-      <div className="flex flex-1 items-center justify-center px-4 py-8 text-center">
+      <div className="flex flex-1 flex-col items-center justify-center gap-4 px-2 py-6 text-center sm:px-4 sm:py-8">
         <p className="t-editor-body whitespace-pre-wrap" aria-live="polite">{shown || <span className="text-[var(--text-muted)]">Covered. Say it, then mark yourself.</span>}</p>
+        {p.extra}
+        {p.resultLabel && <p className="t-compact text-[var(--text-secondary)]" role="status">{p.resultLabel}</p>}
       </div>
       <div className="flex flex-wrap items-center justify-center gap-3">
         {p.kind === "read_cover_recite" && !covered && <Button variant="secondary" onClick={() => setCovered(true)}>Cover it</Button>}
         {p.kind !== "read_cover_recite" && !revealed && <Button variant="secondary" onClick={() => setRevealed(true)}>Reveal <kbd className="t-metadata">R</kbd></Button>}
         {p.onSkip && <Button variant="ghost" onClick={p.onSkip}>Skip</Button>}
       </div>
-      <div className="mt-6 grid grid-cols-2 gap-4">
+      <div className="mt-6 grid grid-cols-2 gap-3 sm:gap-4">
         <Button size="lg" variant="milestone" className="min-h-[56px]" onClick={() => p.onResult("hit")}>Got it <kbd className="t-metadata opacity-80">G</kbd></Button>
         <Button size="lg" variant="secondary" className="min-h-[56px]" onClick={() => p.onResult("miss")}>Missed <kbd className="t-metadata opacity-80">M</kbd></Button>
       </div>
@@ -135,7 +140,8 @@ export interface PracticeTimerProps {
   slotSeconds: number;
   mode: "count_up" | "count_down";
   beats?: TimerBeat[];
-  endingPoints?: [number, number];   // seconds from start; the first is the safe ending
+  endingPoints?: number[];           // seconds from start; the first is the safe ending
+  checkpointLabels?: { at: number; label: string }[];   // the beat under each 6-minute tick (11.7)
   onFinish: (result: { durationSeconds: number; beatReached: number | null }) => void;
   onExit?: () => void;
   reducedMotion?: boolean;
@@ -173,7 +179,7 @@ export function PracticeTimer(p: PracticeTimerProps) {
   const reset = () => { setRunning(false); accRef.current = 0; startRef.current = null; setElapsed(0); };
 
   return (
-    <section className="flex min-h-[70vh] flex-col items-center justify-center gap-6 p-6" aria-label="Practice timer">
+    <section className="flex min-h-[70vh] flex-col items-center justify-center gap-6 p-4 sm:p-6" aria-label="Practice timer">
       <p className="t-compact text-[var(--text-secondary)]">{p.mode === "count_up" ? "Count-up: learn the real length" : `Count-down to ${formatSeconds(p.slotSeconds)}`}</p>
       <div className={cx("t-timer tabular", atCheckpoint && !p.reducedMotion && "animate-pulse")} role="timer" aria-live="off">{formatSeconds(Math.floor(shown))}</div>
       <div className="relative h-3 w-full max-w-3xl rounded-full bg-[var(--surface-2)]" aria-hidden="true">
@@ -181,6 +187,11 @@ export function PracticeTimer(p: PracticeTimerProps) {
         {checkpoints.map((c) => <span key={c} className="absolute top-[-4px] h-5 w-0.5 bg-[var(--border-strong)]" style={{ left: `${(c / p.slotSeconds) * 100}%` }} title={`${c / 60} min`} />)}
         {p.endingPoints?.map((e, i) => <span key={e} className="absolute top-[-6px] h-6 w-1 bg-[var(--text)]" style={{ left: `${(e / p.slotSeconds) * 100}%` }} title={`ending point ${i + 1}`} />)}
       </div>
+      {p.checkpointLabels && p.checkpointLabels.length > 0 && (
+        <ul className="flex w-full max-w-3xl flex-wrap justify-between gap-x-4 gap-y-1 t-metadata text-[var(--text-muted)]" aria-label="Checkpoints">
+          {p.checkpointLabels.map((c) => <li key={c.at} className="tabular">{formatSeconds(c.at)} <span className="text-[var(--text-secondary)]">{c.label}</span></li>)}
+        </ul>
+      )}
       <p className="t-body text-[var(--text-secondary)]" aria-live="polite">
         {currentBeat ? <>You should be on: <strong>{currentBeat.order} "{currentBeat.firstWords} ..."</strong></> : "Start when ready."}
       </p>

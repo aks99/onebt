@@ -21,6 +21,7 @@ export interface JourneyInput {
   fitToTime: boolean | null;         // last timed run under the slot; null when no run yet
   beatsMastered: number;
   beatsTotal: number;
+  beatsDue?: number;                 // beats whose review is today or overdue (F3.6)
   eventDate?: string | null;         // once accepted or invited
   published: boolean;
   launchSteps: number;               // launch plan steps marked done
@@ -104,6 +105,9 @@ export function nextBestAction(s: JourneyInput): NextAction {
 
   // Stage 5: Rehearse.
   const eventDays = s.eventDate ? daysBetween(now, s.eventDate) : null;
+  if (s.beatsTotal > 0 && (s.beatsDue ?? 0) > 0) {
+    return { title: `Drill ${plural(s.beatsDue ?? 0, "beat")} due today`, minutes: Math.min(15, 3 + (s.beatsDue ?? 0)), reason: `because spaced review keeps beats cold: ${s.beatsMastered} of ${s.beatsTotal} mastered`, href: "/deliver/drill/read_cover_recite?due=1", alt: { title: "Do a timed run", minutes: Math.max(5, Math.round(s.beatsTotal / 2)), href: "/deliver/timer" } };
+  }
   if (s.beatsTotal > 0 && s.beatsMastered < s.beatsTotal) {
     return { title: "Drill your next beats", minutes: 12, reason: `because ${s.beatsMastered} of ${s.beatsTotal} beats are mastered${eventDays !== null ? ` and the event is in ${plural(eventDays, "day")}` : ""}`, href: "/deliver/memorize", alt: { title: "Do a timed run", minutes: Math.max(5, Math.round(s.beatsTotal / 2)), href: "/deliver/timer" } };
   }

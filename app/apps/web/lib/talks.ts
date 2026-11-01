@@ -6,7 +6,7 @@ import { dossierChars } from "@/lib/find/interview";
 
 export interface Talk {
   id: string; user_id: string; title: string | null; path: TalkPath; stage: Stage; idea_id: string | null;
-  slot_minutes: number; event_id: string | null; event_date: string | null; publication: string; published_url: string | null;
+  slot_minutes: number; target_wpm: number; measured_wpm: number | null; event_id: string | null; event_date: string | null; publication: string; published_url: string | null;
   archived_at: string | null; created_at: string;
 }
 
@@ -49,7 +49,7 @@ export async function loadJourneyInput(userId: string, talk: Talk): Promise<Jour
     eventName: (a.events?.name as string | undefined) ?? (a.event_name_manual as string) ?? "an event", deadline: (a.events?.application_deadline as string | null) ?? null,
   }));
   const trackedIds = new Set<string>([...((targets.data ?? []) as any[]).map((t) => t.event_id), ...((apps.data ?? []) as any[]).map((a) => a.event_id).filter(Boolean)]);
-  const beatSum = (beats.data as { mastered: number; total: number } | null) ?? { mastered: 0, total: 0 };
+  const beatSum = (beats.data as { mastered: number; total: number; due: number } | null) ?? { mastered: 0, total: 0, due: 0 };
   const run = runs.data as { duration_s: number } | null;
   const slotSeconds = talk.slot_minutes * 60;
   const planSteps = ((launch.data?.plan as { done?: boolean }[] | undefined) ?? []).filter((x) => x.done).length;
@@ -67,6 +67,7 @@ export async function loadJourneyInput(userId: string, talk: Talk): Promise<Jour
     fitToTime: run ? run.duration_s <= slotSeconds : null,
     beatsMastered: beatSum.mastered,
     beatsTotal: beatSum.total,
+    beatsDue: beatSum.due,
     eventDate: talk.event_date,
     published: talk.publication === "published" || !!talk.published_url,
     launchSteps: planSteps,

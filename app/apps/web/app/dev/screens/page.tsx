@@ -14,6 +14,10 @@ import { ApplicationDetail } from "@/components/pipeline/ApplicationDetail";
 import { DEFAULT_FORM_FIELDS } from "@/lib/pipeline/formMapper";
 import { OutlineEditor } from "@/components/write/OutlineEditor";
 import { ScriptStudio } from "@/components/write/ScriptStudio";
+import { Memorize } from "@/components/deliver/Memorize";
+import { TimerScreen } from "@/components/deliver/TimerScreen";
+import { SAMPLE_BEATS } from "@/components/deliver/sample-progress";
+import { SAMPLE_SCRIPT } from "@/lib/deliver/sample";
 
 // Dev preview of the step-5 screens with fixture data, for the phone and desktop screenshots in the
 // acceptance report. No database, no AI calls. Not linked from the product.
@@ -68,6 +72,10 @@ export default function DevScreens() {
             doc={{ sections: [{ id: "s1", kind: "hook", title: "Opening", text: "It is 3 am in an operating theatre in Pune. A nurse sees the count is wrong and says nothing. In 3 of 10 surgeries the checklist is skipped, not because people are careless but because the most junior person in the room has no way to stop it.", target_seconds: 70, ending_point: false, covered_point_ids: ["p1"], uncovered: [] }] }}
             versions={[{ id: "v2", version: 2, source: "llm", pass_key: "kill_the_jargon", word_count: 1480, est_seconds: 592, post_lock: false, created_at: "2026-11-01T12:00:00Z", rubric: null }, { id: "v1", version: 1, source: "llm", pass_key: null, word_count: 1610, est_seconds: 644, post_lock: false, created_at: "2026-11-01T11:00:00Z", rubric: null }]}
             rubric={{ scores: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((n) => ({ criterion: n, level: (n === 9 ? 2 : 3) as 2 | 3, reason: "Quoted words earned this level." })), lock_gate_passed: false, quirks: [], strongest_line: "A nurse sees the count is wrong and says nothing.", weakest_line: "The close summarizes.", next_step: "Rewrite the last 150 words as the picture of the world with the idea adopted." }} />
+        </section>
+        <section id="deliver" className="flex flex-col gap-6">
+          <Memorize talkId="t" sample={false} scriptLocked lockedVersion={7} slotMinutes={5} title="The ninety-second repair" rows={SAMPLE_BEATS.map((b, i) => ({ ...b, state: (["cold", "known", "learning", "new"] as const)[i % 4], next_review_at: i % 4 === 3 || i % 4 === 2 ? "2026-11-01" : "2026-11-05", interval_days: [14, 7, 3, 1][i % 4], hits: 3 - (i % 4), misses: i % 3, due: i % 4 >= 2 }))} />
+          <TimerScreen talkId="t" sample={false} beats={SAMPLE_BEATS} doc={SAMPLE_SCRIPT} slotMinutes={5} targetWpm={150} measuredWpm={147} wordCount={700} runs={[{ id: "r1", started_at: "2026-11-01T09:00:00Z", duration_s: 292, beat_reached: 13, word_count: 700, wpm: 144, under_slot: true }, { id: "r2", started_at: "2026-10-31T09:00:00Z", duration_s: 318, beat_reached: 13, word_count: 700, wpm: 132, under_slot: false }]} />
         </section>
         <section id="onboarding-path"><PathAndQuestions /></section>
         <section id="onboarding-pick"><PickAndMatch talkId="t" path="apply" showDeadlines={false} ideas={ideas.map((i) => ({ id: i.id, title_working: i.title_working, throughline: i.throughline, score: i.score }))} matches={[{ id: "e1", name: "TEDxWilson Park", city: "Edinburgh", country_code: "GB", theme: "Thresholds", application_deadline: "2026-12-09", event_date: "2027-03-14", tracked: false, reasons: ["theme \"Thresholds\"", "accepts applications from your region", "event Mar 2027"] }, { id: "e2", name: "TEDxPune", city: "Pune", country_code: "IN", theme: null, application_deadline: "2027-01-15", event_date: "2027-05-02", tracked: true, reasons: ["open call", "in your country", "event May 2027"] }]} /></section>

@@ -557,8 +557,52 @@ reset role;
 
 select name, case when passed then 'PASS' else 'FAIL' end as result, coalesce(left(detail, 90), '') as detail from tests.results where name like 'step8:%' order by passed, name;
 
+-- ---------------------------------------------------------------
+-- Step 9: DELIVER core (migration 0013): beat map verified word for word, drills, timer saves, measured pace
+-- ---------------------------------------------------------------
+select tests.login('aaaaaaaa-0000-0000-0000-000000000001');
+update public.script_versions set doc = '{"sections":[{"id":"s1","kind":"hook","title":"Opening","text":"It is 3 am in an operating theatre in Pune. A nurse sees the count is wrong and says nothing.","target_seconds":40,"ending_point":false},{"id":"s2","kind":"idea","title":"The idea","text":"Checklists fail when the most junior person cannot stop the room. Give them a stop rule.","target_seconds":40,"ending_point":true}]}' where id = '2a000000-0000-0000-0000-000000000002';
+select tests.expect_error('step9: beats that change a word are refused', $q$select public.build_beat_map('2a000000-0000-0000-0000-000000000002', '[{"order":1,"section_id":"s1","text":"It is 3 am in an operating theatre in Pune.","first_words":"It is 3","purpose":"care","target_seconds":20},{"order":2,"section_id":"s1","text":"A nurse sees the count is wrong and says something.","first_words":"A nurse sees","purpose":"care","target_seconds":20}]')$q$, 'BEATS_MISMATCH');
+select tests.expect_error('step9: an unlocked version cannot have a beat map', $q$select public.build_beat_map('2a000000-0000-0000-0000-000000000001', '[{"order":1,"section_id":"s1","text":"x","first_words":"x","purpose":"care","target_seconds":1}]')$q$, 'SCRIPT_NOT_LOCKED');
+select tests.check('step9: a verified beat map is saved with every beat new and due today',
+  public.build_beat_map('2a000000-0000-0000-0000-000000000002', '[{"order":1,"section_id":"s1","text":"It is 3 am in an operating theatre in Pune.","first_words":"","purpose":"care","target_seconds":20},{"order":2,"section_id":"s1","text":"A nurse sees the count is wrong and says nothing.","first_words":"A nurse sees","purpose":"care","target_seconds":20},{"order":3,"section_id":"s2","text":"Checklists fail when the most junior person cannot stop the room. Give them a stop rule.","first_words":"Checklists fail when","purpose":"idea","target_seconds":40}]') = 3);
+select tests.check('step9: empty first words fall back to the first three words of the beat', (select first_words from public.beats where script_version_id = '2a000000-0000-0000-0000-000000000002' and "order" = 1) = 'It is 3');
+select tests.check('step9: beat_summary counts 3 total, 0 mastered, 3 due', (select mastered = 0 and total = 3 and due = 3 from public.beat_summary('7a000000-0000-0000-0000-000000000001')));
+select tests.check('step9: beat_map returns the rows in order with state new', (select count(*) = 3 and bool_and(state = 'new') and bool_and(due) from public.beat_map('7a000000-0000-0000-0000-000000000001')));
+-- drills: a miss moves the review to tomorrow; a hit expands the interval
+select public.record_drill_result((select id from public.beats where script_version_id = '2a000000-0000-0000-0000-000000000002' and "order" = 1), 'miss');
+select tests.check('step9: a missed beat is due tomorrow and learning', (select next_review_at = (now() at time zone 'utc')::date + 1 and state = 'learning' and misses = 1 from public.beat_progress bp join public.beats b on b.id = bp.beat_id where b.script_version_id = '2a000000-0000-0000-0000-000000000002' and b."order" = 1));
+select public.record_drill_result((select id from public.beats where script_version_id = '2a000000-0000-0000-0000-000000000002' and "order" = 2), 'hit');
+select tests.check('step9: a hit beat moves to a 3-day interval', (select next_review_at = (now() at time zone 'utc')::date + 3 and interval_days = 3 and state = 'learning' from public.beat_progress bp join public.beats b on b.id = bp.beat_id where b.script_version_id = '2a000000-0000-0000-0000-000000000002' and b."order" = 2));
+select tests.check('step9: due count drops to 1 after the two drills', (select due = 1 from public.beat_summary('7a000000-0000-0000-0000-000000000001')));
+select tests.expect_error('step9: a cue cannot be blank', $q$select public.update_beat((select id from public.beats where script_version_id = '2a000000-0000-0000-0000-000000000002' and "order" = 1), '  ')$q$, 'CUE_REQUIRED');
+select public.update_beat((select id from public.beats where script_version_id = '2a000000-0000-0000-0000-000000000002' and "order" = 1), 'Three am', 'Stage left, hands still');
+select tests.check('step9: cue and stage note saved', (select first_words = 'Three am' and stage_note = 'Stage left, hands still' from public.beats where script_version_id = '2a000000-0000-0000-0000-000000000002' and "order" = 1));
+-- timer: no duration, no save; prompter stays dark; three runs set the measured pace; under-slot milestone once
+select tests.expect_error('step9: a run without a duration is refused', $q$select public.save_timed_run('7a000000-0000-0000-0000-000000000001', 0, 2)$q$, 'RUN_NEEDS_DURATION');
+select tests.expect_error('step9: the prompter mode is behind its flag', $q$select public.save_timed_run('7a000000-0000-0000-0000-000000000001', 500, 2, 'prompter')$q$, 'FEATURE_OFF');
+-- step 3 seeded three runs (640, 620, 600 s at 1,500 words): measured pace 145. Each saved run recomputes it.
+select tests.check('step9: measured pace before the new runs is 145', (select measured_wpm = 145 from public.talks where id = '7a000000-0000-0000-0000-000000000001'));
+select public.save_timed_run('7a000000-0000-0000-0000-000000000001', 560, 3);
+select tests.check('step9: one more run moves the measured pace to 146', (select measured_wpm = 146 from public.talks where id = '7a000000-0000-0000-0000-000000000001'));
+select public.save_timed_run('7a000000-0000-0000-0000-000000000001', 560, 3);
+select public.save_timed_run('7a000000-0000-0000-0000-000000000001', 560, 3);
+select tests.check('step9: six runs give a measured pace of 147', (select measured_wpm = 147 from public.talks where id = '7a000000-0000-0000-0000-000000000001'));
+select tests.check('step9: the under-time milestone is awarded once', (select count(*) from public.milestones where user_id = 'aaaaaaaa-0000-0000-0000-000000000001' and key = 'first_run_under_time') = 1);
+select tests.check('step9: recent_runs lists six runs, four at 150 wpm under the slot, two over', (select count(*) = 6 and count(*) filter (where wpm = 150 and under_slot) = 4 and count(*) filter (where not under_slot) = 2 from public.recent_runs('7a000000-0000-0000-0000-000000000001')));
+select tests.check('step9: timed runs logged as activity', (select count(*) from public.activity_log where user_id = 'aaaaaaaa-0000-0000-0000-000000000001' and kind = 'timed_run') = 3);
+-- the other member sees nothing of A's beats
+select tests.login('bbbbbbbb-0000-0000-0000-000000000002');
+select tests.expect_error('step9: B cannot build a beat map on A version', $q$select public.build_beat_map('2a000000-0000-0000-0000-000000000002', '[{"order":1,"section_id":"s1","text":"x","first_words":"x","purpose":"care","target_seconds":1}]')$q$, 'NOT_FOUND');
+select tests.check('step9: B sees no beats of A talk', (select count(*) = 0 from public.beat_map('7a000000-0000-0000-0000-000000000001')));
+select tests.expect_error('step9: B cannot save a run on A talk', $q$select public.save_timed_run('7a000000-0000-0000-0000-000000000001', 500, 1)$q$, 'NOT_FOUND');
+select tests.logout();
+reset role;
+
+select name, case when passed then 'PASS' else 'FAIL' end as result, coalesce(left(detail, 90), '') as detail from tests.results where name like 'step9:%' order by passed, name;
+
 
 
 select name, case when passed then 'PASS' else 'FAIL' end as result, coalesce(left(detail, 90), '') as detail from tests.results where name like 'step3:%' order by passed, name;
 select count(*) filter (where passed) as passed, count(*) filter (where not passed) as failed from tests.results;
-select 1 / (case when (select count(*) from tests.results where not passed) = 0 then 1 else 0 end) as all_green_after_step8;
+select 1 / (case when (select count(*) from tests.results where not passed) = 0 then 1 else 0 end) as all_green_after_step9;
