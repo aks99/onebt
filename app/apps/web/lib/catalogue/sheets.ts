@@ -7,13 +7,15 @@ import { createSign } from "node:crypto";
 export interface ServiceAccount { client_email: string; private_key: string; token_uri?: string }
 
 export function loadServiceAccount(): ServiceAccount | null {
-  const raw = process.env.GOOGLE_SERVICE_ACCOUNT_JSON;
+  let raw = process.env.GOOGLE_SERVICE_ACCOUNT_JSON;
+  if (!raw && process.env.GOOGLE_SERVICE_ACCOUNT_JSON_BASE64) raw = Buffer.from(process.env.GOOGLE_SERVICE_ACCOUNT_JSON_BASE64, "base64").toString("utf8");
   if (!raw) return null;
   try { const j = JSON.parse(raw); return j.client_email && j.private_key ? j : null; } catch { return null; }
 }
 
 function b64url(input: Buffer | string) {
-  return Buffer.from(input).toString("base64").replace(/=/g, "").replace(/\+/g, "-").replace(/\//g, "_");
+  const buf = typeof input === "string" ? Buffer.from(input, "utf8") : input;
+  return buf.toString("base64").replace(/=/g, "").replace(/\+/g, "-").replace(/\//g, "_");
 }
 
 export function buildJwt(sa: ServiceAccount, now = Math.floor(Date.now() / 1000)) {

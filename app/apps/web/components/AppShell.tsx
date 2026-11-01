@@ -19,7 +19,7 @@ const ITEMS: Item[] = [
 ];
 const SUB: Record<string, { href: string; label: string }[]> = {
   "/find": [
-    { href: "/find/idea-lab", label: "Idea Lab" }, { href: "/find/events", label: "Event Finder" },
+    { href: "/find/idea-lab", label: "Idea Lab" }, { href: "/find/events", label: "Event Finder" }, { href: "/find/targets", label: "Targets" },
     { href: "/find/applications", label: "Applications" }, { href: "/find/prior-stages", label: "Prior Stages" },
   ],
   "/write": [{ href: "/write/brief", label: "Idea Brief" }, { href: "/write/outline", label: "Outline" }, { href: "/write/script", label: "Script Studio" }, { href: "/write/factcheck", label: "Fact-check" }],
@@ -32,7 +32,7 @@ function activeFor(path: string, item: Item) {
   return path === item.href || path.startsWith(root + "/") || path === root;
 }
 
-export function AppShell({ children, talkTitle, rings }: { children: React.ReactNode; talkTitle?: string | null; rings?: Partial<Record<"find" | "write" | "deliver" | "amplify", number>> }) {
+export function AppShell({ children, talkTitle, rings, staff }: { children: React.ReactNode; talkTitle?: string | null; rings?: Partial<Record<"find" | "write" | "deliver" | "amplify", number>>; staff?: boolean }) {
   const path = usePathname() ?? "";
   const section = "/" + path.split("/")[1];
   const sub = SUB[section];
@@ -62,7 +62,10 @@ export function AppShell({ children, talkTitle, rings }: { children: React.React
             </Link>
           );
         })}
-        <div className="mt-auto"><Link href="/me/plan" className="flex h-11 items-center rounded-[var(--radius)] px-3 t-body hover:bg-[var(--surface-2)]">Me</Link></div>
+        <div className="mt-auto flex flex-col gap-1">
+          {(staff || path.startsWith("/curate") || path.startsWith("/admin")) && <Link href="/curate" aria-current={path.startsWith("/curate") ? "page" : undefined} className={cx("flex h-11 items-center rounded-[var(--radius)] px-3 t-body", path.startsWith("/curate") ? "bg-[var(--surface-2)] font-medium" : "hover:bg-[var(--surface-2)]")}>Curator Console</Link>}
+          <Link href="/me/plan" className="flex h-11 items-center rounded-[var(--radius)] px-3 t-body hover:bg-[var(--surface-2)]">Me</Link>
+        </div>
       </nav>
 
       {/* Section sub-navigation (scrolls sideways on phones, never the page) */}

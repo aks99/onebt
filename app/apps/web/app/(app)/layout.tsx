@@ -2,15 +2,17 @@ import { redirect } from "next/navigation";
 import { AppShell } from "@/components/AppShell";
 import { currentUser } from "@/lib/supabase/server";
 import { currentTalk } from "@/lib/talks";
+import { currentRole } from "@/lib/roles";
 
 export const dynamic = "force-dynamic";
 
 // Every member screen sits inside the shell (rail on desktop, tabs on phones). A member with no Talk Record
-// yet is sent to onboarding, which creates one.
+// yet is sent to onboarding, which creates one. Curators and admins may have no talk; they still get the shell.
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
   const user = await currentUser();
   if (!user) redirect("/login");
   const talk = await currentTalk(user.id);
-  if (!talk) redirect("/onboarding");
-  return <AppShell talkTitle={talk.title}>{children}</AppShell>;
+  let staff = false;
+  if (!talk) { const r = await currentRole(); staff = !!r && (r.role === "curator" || r.role === "admin"); if (!staff) redirect("/onboarding"); }
+  return <AppShell talkTitle={talk?.title ?? null} staff={staff || undefined}>{children}</AppShell>;
 }

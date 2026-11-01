@@ -51,6 +51,8 @@ create table public.reminder_log (
 );
 
 alter table public.profiles add column if not exists deadline_reminders boolean not null default true;
+-- One contact record per organizer so a sync can upsert it.
+create unique index if not exists organizer_contacts_one_per_org on public.organizer_contacts(organizer_id);
 
 -- ---------------------------------------------------------------
 -- Expire catalogue rows missing from the sheet. Never deletes; tracked applications keep their notes
