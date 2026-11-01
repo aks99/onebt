@@ -560,6 +560,8 @@ select name, case when passed then 'PASS' else 'FAIL' end as result, coalesce(le
 -- ---------------------------------------------------------------
 -- Step 9: DELIVER core (migration 0013): beat map verified word for word, drills, timer saves, measured pace
 -- ---------------------------------------------------------------
+reset role;
+set role authenticated;
 select tests.login('aaaaaaaa-0000-0000-0000-000000000001');
 update public.script_versions set doc = '{"sections":[{"id":"s1","kind":"hook","title":"Opening","text":"It is 3 am in an operating theatre in Pune. A nurse sees the count is wrong and says nothing.","target_seconds":40,"ending_point":false},{"id":"s2","kind":"idea","title":"The idea","text":"Checklists fail when the most junior person cannot stop the room. Give them a stop rule.","target_seconds":40,"ending_point":true}]}' where id = '2a000000-0000-0000-0000-000000000002';
 select tests.expect_error('step9: beats that change a word are refused', $q$select public.build_beat_map('2a000000-0000-0000-0000-000000000002', '[{"order":1,"section_id":"s1","text":"It is 3 am in an operating theatre in Pune.","first_words":"It is 3","purpose":"care","target_seconds":20},{"order":2,"section_id":"s1","text":"A nurse sees the count is wrong and says something.","first_words":"A nurse sees","purpose":"care","target_seconds":20}]')$q$, 'BEATS_MISMATCH');
@@ -601,8 +603,46 @@ reset role;
 
 select name, case when passed then 'PASS' else 'FAIL' end as result, coalesce(left(detail, 90), '') as detail from tests.results where name like 'step9:%' order by passed, name;
 
+-- ---------------------------------------------------------------
+-- Step 10: AMPLIFY basics (migration 0014): publication states, the official link, the launch plan, copy kit, guard
+-- ---------------------------------------------------------------
+reset role;
+set role authenticated;
+select tests.login('aaaaaaaa-0000-0000-0000-000000000001');
+select tests.expect_error('step10: published needs the official link', $q$select public.set_publication('7a000000-0000-0000-0000-000000000001', 'published')$q$, 'OFFICIAL_LINK_REQUIRED');
+select tests.expect_error('step10: a non-official link is refused', $q$select public.set_publication('7a000000-0000-0000-0000-000000000001', 'published', 'https://example.com/my-talk.mp4')$q$, 'OFFICIAL_LINK_REQUIRED');
+select tests.expect_error('step10: a window that ends before it starts is refused', $q$select public.set_publication('7a000000-0000-0000-0000-000000000001', 'awaiting_upload', null, null, '2026-12-10', '2026-12-01')$q$, 'BAD_WINDOW');
+select public.set_publication('7a000000-0000-0000-0000-000000000001', 'awaiting_upload', null, 'Organizer said four to six weeks after the event', '2026-12-01', '2026-12-20', 'TEDxWilson Park');
+select tests.check('step10: awaiting upload stores the window, the organizer timeline and the event name', (select publication = 'awaiting_upload' and published_url is null and event_name_manual = 'TEDxWilson Park' from public.talks where id = '7a000000-0000-0000-0000-000000000001')
+  and (select lower(expected_upload_window) = '2026-12-01' and organizer_timeline like 'Organizer said%' from public.launch_plans where talk_id = '7a000000-0000-0000-0000-000000000001'));
+select tests.check('step10: is_official_talk_url accepts YouTube and TED links only', public.is_official_talk_url('https://www.youtube.com/watch?v=abcDEF123') and public.is_official_talk_url('https://youtu.be/abcDEF123') and public.is_official_talk_url('https://www.ted.com/talks/some_speaker_some_talk') and not public.is_official_talk_url('https://vimeo.com/123') and not public.is_official_talk_url(null));
+select public.set_publication('7a000000-0000-0000-0000-000000000001', 'published', 'https://www.youtube.com/watch?v=abcDEF123');
+select tests.check('step10: published sets the link, the time, the Amplify stage and the milestone', (select publication = 'published' and published_url = 'https://www.youtube.com/watch?v=abcDEF123' and published_at is not null and stage = 'amplify' from public.talks where id = '7a000000-0000-0000-0000-000000000001')
+  and (select count(*) from public.milestones where user_id = 'aaaaaaaa-0000-0000-0000-000000000001' and key = 'talk_published') = 1);
+select public.set_publication('7a000000-0000-0000-0000-000000000001', 'published', 'https://www.youtube.com/watch?v=abcDEF123');
+select tests.check('step10: publishing twice awards the milestone once', (select count(*) from public.milestones where user_id = 'aaaaaaaa-0000-0000-0000-000000000001' and key = 'talk_published') = 1);
+select tests.check('step10: published_talk_count is 1 for A', public.published_talk_count() = 1);
+select public.save_launch_plan('7a000000-0000-0000-0000-000000000001', '[{"when":"2026-12-07","text":"Launch team list of 20 people","phase":"pre","done":false},{"when":"2026-12-08","text":"Post on LinkedIn at 09:00","phase":"launch","done":false},{"when":"launch day + 2","text":"Reply to every comment","phase":"first_48h","done":false}]');
+select tests.expect_error('step10: a plan must be an array', $q$select public.save_launch_plan('7a000000-0000-0000-0000-000000000001', '{"a":1}')$q$, 'BAD_PLAN');
+select tests.check('step10: marking a launch item done returns the count', public.set_launch_item_done('7a000000-0000-0000-0000-000000000001', 0, true) = 1);
+select tests.check('step10: a done item logs a launch step', (select count(*) from public.activity_log where user_id = 'aaaaaaaa-0000-0000-0000-000000000001' and kind = 'launch_step') >= 1);
+select tests.check('step10: unmarking an item lowers the count', public.set_launch_item_done('7a000000-0000-0000-0000-000000000001', 0, false) = 0);
+select tests.expect_error('step10: an item index outside the plan is refused', $q$select public.set_launch_item_done('7a000000-0000-0000-0000-000000000001', 9, true)$q$, 'BAD_INDEX');
+select public.save_launch_text('7a000000-0000-0000-0000-000000000001', 'copy_kit', '{"email_signature_line":"Spoke at TEDxWilson Park 2026, an independently organized TEDx event"}');
+select tests.check('step10: the copy kit is saved', (select copy_kit->>'email_signature_line' like 'Spoke at%' from public.launch_plans where talk_id = '7a000000-0000-0000-0000-000000000001'));
+select tests.expect_error('step10: an unknown text kind is refused', $q$select public.save_launch_text('7a000000-0000-0000-0000-000000000001', 'press_kit', '{}')$q$, 'BAD_KIND');
+select tests.login('bbbbbbbb-0000-0000-0000-000000000002');
+select tests.expect_error('step10: B cannot set the publication of A talk', $q$select public.set_publication('7a000000-0000-0000-0000-000000000001', 'delivered')$q$, 'NOT_FOUND');
+select tests.expect_error('step10: B cannot mark A launch items', $q$select public.set_launch_item_done('7a000000-0000-0000-0000-000000000001', 0, true)$q$, 'NOT_FOUND');
+select tests.check('step10: published_talk_count is 0 for B', public.published_talk_count() = 0);
+select tests.check('step10: B cannot read A launch plan', (select count(*) from public.launch_plans where talk_id = '7a000000-0000-0000-0000-000000000001') = 0);
+select tests.logout();
+reset role;
+
+select name, case when passed then 'PASS' else 'FAIL' end as result, coalesce(left(detail, 90), '') as detail from tests.results where name like 'step10:%' order by passed, name;
+
 
 
 select name, case when passed then 'PASS' else 'FAIL' end as result, coalesce(left(detail, 90), '') as detail from tests.results where name like 'step3:%' order by passed, name;
 select count(*) filter (where passed) as passed, count(*) filter (where not passed) as failed from tests.results;
-select 1 / (case when (select count(*) from tests.results where not passed) = 0 then 1 else 0 end) as all_green_after_step9;
+select 1 / (case when (select count(*) from tests.results where not passed) = 0 then 1 else 0 end) as all_green_after_step10;

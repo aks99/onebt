@@ -4,7 +4,7 @@ How to use this file: paste **Prompt 1** into apper.io as the first message. app
 
 Repository: https://github.com/aks99/onebt
 Raw files (readable by any tool):
-- Blueprint: https://raw.githubusercontent.com/aks99/onebt/main/TEDx-OS-Master-Blueprint-v1.14.md
+- Blueprint: https://raw.githubusercontent.com/aks99/onebt/main/TEDx-OS-Master-Blueprint-v1.15.md
 - First-release feature list: https://raw.githubusercontent.com/aks99/onebt/main/MVP-First-Release.md
 - Screens and wireframes: https://raw.githubusercontent.com/aks99/onebt/main/TEDx-OS-Screen-Inventory-and-Wireframes.md
 - Crawler and Google Sheet import: https://raw.githubusercontent.com/aks99/onebt/main/TEDx-Event-Database-Crawler-Prompt.md
@@ -20,7 +20,7 @@ WHAT IT IS
 One Big Talk guides experts, coaches, consultants and authors through preparing a talk for an independently organized TEDx event, in four pillars and seven stages: FIND (Position the idea, Discover events, Apply), WRITE (Idea Brief, Outline, Script), DELIVER (Memorize and time the talk, text only), AMPLIFY (launch the published talk). Everything hangs off one "Talk Record" per talk: a database record the member types into. Nothing is ever recorded in audio or video.
 
 The complete specification is in this public repository; read these before building and refer back to them for every detail:
-- Blueprint (source of truth): https://raw.githubusercontent.com/aks99/onebt/main/TEDx-OS-Master-Blueprint-v1.14.md
+- Blueprint (source of truth): https://raw.githubusercontent.com/aks99/onebt/main/TEDx-OS-Master-Blueprint-v1.15.md
 - Exact first-release feature list: https://raw.githubusercontent.com/aks99/onebt/main/MVP-First-Release.md
 - Every screen with its states and wireframe: https://raw.githubusercontent.com/aks99/onebt/main/TEDx-OS-Screen-Inventory-and-Wireframes.md
 
