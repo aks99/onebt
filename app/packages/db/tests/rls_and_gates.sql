@@ -257,3 +257,55 @@ select tests.check('no media columns anywhere',
 select name, case when passed then 'PASS' else 'FAIL' end as result, coalesce(left(detail, 90), '') as detail from tests.results order by passed, name;
 select count(*) filter (where passed) as passed, count(*) filter (where not passed) as failed from tests.results;
 select 1 / (case when (select count(*) from tests.results where not passed) = 0 then 1 else 0 end) as all_green;
+
+-- ---------------------------------------------------------------
+-- Step 3 additions: trial checks, allowances, credit reservation, seat release
+-- ---------------------------------------------------------------
+reset role;
+delete from tests.results where name like 'step3:%';
+select tests.check('step3: new member is on an active trial', public.is_trial_active('aaaaaaaa-0000-0000-0000-000000000001'));
+select tests.check('step3: trial member has member access', public.has_member_access('aaaaaaaa-0000-0000-0000-000000000001'));
+select tests.check('step3: trial allows no second locked idea', public.trial_limit_check('aaaaaaaa-0000-0000-0000-000000000001', 'lock_idea') = false);
+select tests.check('step3: trial allows tracking up to three events', public.trial_limit_check('aaaaaaaa-0000-0000-0000-000000000001', 'track_event') = true);
+-- allowances: 3 script drafts during the trial, the fourth refused with the reset date
+select public.consume_allowance('bbbbbbbb-0000-0000-0000-000000000002', 'script_draft');
+select public.consume_allowance('bbbbbbbb-0000-0000-0000-000000000002', 'script_draft');
+select public.consume_allowance('bbbbbbbb-0000-0000-0000-000000000002', 'script_draft');
+select tests.check('step3: three script drafts consumed', (select script_drafts_used from public.allowances where user_id = 'bbbbbbbb-0000-0000-0000-000000000002') = 3);
+select tests.expect_error('step3: fourth script draft refused with reset date',
+  $q$select public.consume_allowance('bbbbbbbb-0000-0000-0000-000000000002', 'script_draft')$q$, 'ALLOWANCE_EXHAUSTED');
+select tests.expect_error('step3: fair use cap enforced',
+  $q$select public.consume_fair_use('bbbbbbbb-0000-0000-0000-000000000002', 'factcheck', 0)$q$, 'FAIR_USE_REACHED');
+-- credits: reserve twice with the same key returns one row; settle; release is a no-op after settle
+select tests.check('step3: reserve is idempotent',
+  (select (public.reserve_credits('bbbbbbbb-0000-0000-0000-000000000002', 'script_draft', 60, 'key-1')).id)
+  = (select (public.reserve_credits('bbbbbbbb-0000-0000-0000-000000000002', 'script_draft', 60, 'key-1')).id));
+select tests.check('step3: exactly one ledger row for the key', (select count(*) from public.credits_ledger where idempotency_key = 'key-1') = 1);
+select tests.check('step3: settle marks settled',
+  (select (public.settle_credits((select id from public.credits_ledger where idempotency_key = 'key-1'))).status) = 'settled');
+select tests.check('step3: release after settle changes nothing',
+  (select (public.release_credits((select id from public.credits_ledger where idempotency_key = 'key-1'))).status) = 'settled');
+select tests.check('step3: settled credits this month = 60', public.credits_settled_this_month('bbbbbbbb-0000-0000-0000-000000000002') = 60);
+select tests.check('step3: release a reservation',
+  (select (public.release_credits((select (public.reserve_credits('bbbbbbbb-0000-0000-0000-000000000002', 'outline', 20, 'key-2')).id))).status) = 'released');
+-- seats: release puts one back; never below zero
+select public.release_founding_seat();
+select tests.check('step3: released seat available again', public.founding_seats_remaining() = 1);
+select tests.check('step3: next claim is founding again', public.claim_founding_seat('bbbbbbbb-0000-0000-0000-000000000002') = 'founding');
+-- plans
+select public.apply_paid_plan('bbbbbbbb-0000-0000-0000-000000000002', 'founding', 'six_month', true, now() + interval '6 months');
+select tests.check('step3: paid plan applied', (select plan = 'founding' and billing_period = 'six_month' and founding_price from public.memberships where user_id = 'bbbbbbbb-0000-0000-0000-000000000002'));
+select tests.check('step3: paid member allowances are full', (select tailored_applications_allowed from public.allowances where user_id = 'bbbbbbbb-0000-0000-0000-000000000002') = 15);
+select public.lapse_plan('bbbbbbbb-0000-0000-0000-000000000002', false);
+select tests.check('step3: lapse returns to spark and drops founding price', (select plan = 'spark' and not founding_price from public.memberships where user_id = 'bbbbbbbb-0000-0000-0000-000000000002'));
+-- members cannot call the money-moving functions
+set role authenticated;
+select tests.login('aaaaaaaa-0000-0000-0000-000000000001');
+select tests.expect_error('step3: member cannot reserve credits directly', $q$select public.reserve_credits('aaaaaaaa-0000-0000-0000-000000000001', 'x', 1, 'k')$q$, 'permission denied');
+select tests.expect_error('step3: member cannot claim a seat directly', $q$select public.claim_founding_seat('aaaaaaaa-0000-0000-0000-000000000001')$q$, 'permission denied');
+select tests.logout();
+reset role;
+
+select name, case when passed then 'PASS' else 'FAIL' end as result, coalesce(left(detail, 90), '') as detail from tests.results where name like 'step3:%' order by passed, name;
+select count(*) filter (where passed) as passed, count(*) filter (where not passed) as failed from tests.results;
+select 1 / (case when (select count(*) from tests.results where not passed) = 0 then 1 else 0 end) as all_green_after_step3;

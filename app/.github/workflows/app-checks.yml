@@ -1,0 +1,21 @@
+name: App checks (typecheck, unit tests, copy lint, tokens, contrast, no-capture)
+on:
+  push:
+    paths: ["app/apps/**", "app/packages/ui/**", "app/tools/**", ".github/workflows/app-checks.yml"]
+  pull_request:
+    paths: ["app/apps/**", "app/packages/ui/**", "app/tools/**"]
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: app } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with: { version: 10 }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: pnpm, cache-dependency-path: app/pnpm-lock.yaml }
+      - run: pnpm install --frozen-lockfile
+      - run: node tools/copy-lint/check.mjs
+      - run: node packages/ui/scripts/build-tokens.mjs && node packages/ui/scripts/check-contrast.mjs && node packages/ui/scripts/check-no-capture.mjs
+      - run: pnpm --filter @onebigtalk/ui typecheck
+      - run: pnpm --filter @onebigtalk/web typecheck && pnpm --filter @onebigtalk/web test

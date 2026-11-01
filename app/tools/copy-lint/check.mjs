@@ -14,7 +14,9 @@ function walk(dir) {
     const text = readFileSync(p, "utf8");
     text.split("\n").forEach((line, i) => {
       if (line.includes("—")) { console.log(`${p}:${i + 1}: em dash`); problems++; }
-      if (/!(?=["'\s)]|$)/.test(line) && !/!==|!=|!\[/.test(line)) { console.log(`${p}:${i + 1}: exclamation mark`); problems++; }
+      // An exclamation mark in prose: after a letter and before a quote, a space or the line end.
+      // TypeScript's non-null "!" before ")" "," ";" "." is not prose and is not flagged.
+      if (/[A-Za-z0-9]!(?=["'\s]|$)/.test(line) && !/!==|!=|!\[/.test(line)) { console.log(`${p}:${i + 1}: exclamation mark`); problems++; }
       for (const b of banned) if (line.toLowerCase().includes(b.toLowerCase())) { console.log(`${p}:${i + 1}: banned phrase "${b}"`); problems++; }
     });
   }
