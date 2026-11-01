@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { DISCLAIMER, PRODUCT_NAME } from "@/lib/product";
+import "./styles/globals.css";
 
 export const metadata: Metadata = {
   title: PRODUCT_NAME,
@@ -8,10 +9,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className="light">
       <body>
         {children}
-        <footer style={{ fontSize: 12, lineHeight: "16px", padding: "24px 16px", color: "#5F6B7E", background: "#FBF8F3" }}>
+        <footer className="t-metadata" style={{ padding: "24px 16px", color: "var(--text-muted)", background: "var(--bg)" }}>
           <p>{DISCLAIMER}</p>
         </footer>
       </body>

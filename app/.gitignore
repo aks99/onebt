@@ -1,9 +1,9 @@
-node_modules
-.next
+!.env.example
+*.log
 .env
 .env.*
-!.env.example
-dist
+.next
 coverage
+dist
+node_modules
 pgdata
-*.log
