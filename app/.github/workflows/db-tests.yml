@@ -1,0 +1,27 @@
+name: Database migrations and RLS tests
+on:
+  push:
+    paths: ["app/packages/db/**", ".github/workflows/db-tests.yml"]
+  pull_request:
+    paths: ["app/packages/db/**"]
+jobs:
+  rls:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_PASSWORD: postgres
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U postgres" --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      PGHOST: localhost
+      PGPORT: "5432"
+      PGUSER: postgres
+      PGPASSWORD: postgres
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update -q && sudo apt-get install -y -q postgresql-client
+      - name: Apply migrations and run the RLS and gate tests (two members, one curator, one admin, anon)
+        run: bash app/packages/db/scripts/local-test.sh obt_ci

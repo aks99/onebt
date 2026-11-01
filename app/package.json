@@ -1,0 +1,11 @@
+{
+  "name": "onebigtalk",
+  "private": true,
+  "packageManager": "pnpm@10.28.0",
+  "scripts": {
+    "db:apply:local": "bash packages/db/scripts/local-apply.sh",
+    "db:test": "bash packages/db/scripts/local-test.sh",
+    "lint:copy": "node tools/copy-lint/check.mjs"
+  },
+  "workspaces": ["apps/*", "packages/*", "tools/*"]
+}

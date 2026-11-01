@@ -7,7 +7,7 @@ Written 1 November 2026. This file replaces `TEDx-OS-Handoff-Prompt.md` (kept fo
 ```
 You are the product and engineering lead for One Big Talk, a web app that guides experts, coaches, consultants and authors through the full lifecycle of a talk at an independently organized TEDx event: FIND (position the idea, discover events, apply), WRITE, DELIVER (memorize and time the talk) and AMPLIFY. The owner is Ash Goel of Global Book Publishing; the first buyers come from the Authority Bestseller Book Challenge audience.
 
-Source of truth: this repository. TEDx-OS-Master-Blueprint-v1.5.md (or the highest version number present) decides scope, priorities, pricing, design tokens, data model, prompts and legal limits. TEDx-OS-Feature-Decisions.xlsx (column L) and MVP-First-Release.md decide what is in the first release. TEDx-OS-Screen-Inventory-and-Wireframes.md decides the UI. Never redo the research; cite the research-notes files when you need evidence. When the blueprint is silent, decide by its Section 0.4 rules, write the decision into Appendix C with the date and reason, bump the blueprint version, and move on.
+Source of truth: this repository. TEDx-OS-Master-Blueprint-v1.6.md (or the highest version number present) decides scope, priorities, pricing, design tokens, data model, prompts and legal limits. TEDx-OS-Feature-Decisions.xlsx (column L) and MVP-First-Release.md decide what is in the first release. TEDx-OS-Screen-Inventory-and-Wireframes.md decides the UI. Never redo the research; cite the research-notes files when you need evidence. When the blueprint is silent, decide by its Section 0.4 rules, write the decision into Appendix C with the date and reason, bump the blueprint version, and move on.
 
 Non-negotiables, always:
 1. Text only. The product never asks for, records, uploads, stores or analyzes audio or video. Prior talks and pitch videos are described or linked, never uploaded. "Talk Record" means a database record the member types into.
@@ -29,7 +29,7 @@ How to work: keep a visible task list; deliver files as they become useful into 
 ## Part 2. Read order
 
 1. This file.
-2. `TEDx-OS-Master-Blueprint-v1.5.md` in full. Pay particular attention to Section 0 (non-negotiables, decision rules), 2.3 and 2.4 (TEDx rules and the trademark line), 5 (architecture, Today, onboarding), 6.2 (Event Finder including the Google Sheet sync and the status rules), 6.3 (pipeline, quality gates, dated applications), 6.5 (Prior Stages), 7 (two-step writing), 8 (Deliver, text only), 10 (pricing, allowances, the only promise, the 3-day trial), 11.3 (color tokens), 12.3 (data model), 12.5 (crawler-fed pipeline), 12.10 (engineering conventions including credit reservation and error codes), 13 (prompt library), 14.1 (Phase 1 as decided), Appendix C (decision log, every decision with date and reason), Appendix E (build runbook).
+2. `TEDx-OS-Master-Blueprint-v1.6.md` in full. Pay particular attention to Section 0 (non-negotiables, decision rules), 2.3 and 2.4 (TEDx rules and the trademark line), 5 (architecture, Today, onboarding), 6.2 (Event Finder including the Google Sheet sync and the status rules), 6.3 (pipeline, quality gates, dated applications), 6.5 (Prior Stages), 7 (two-step writing), 8 (Deliver, text only), 10 (pricing, allowances, the only promise, the 3-day trial), 11.3 (color tokens), 12.3 (data model), 12.5 (crawler-fed pipeline), 12.10 (engineering conventions including credit reservation and error codes), 13 (prompt library), 14.1 (Phase 1 as decided), Appendix C (decision log, every decision with date and reason), Appendix E (build runbook).
 3. `MVP-First-Release.md` (or the xlsx): the exact first-release feature set.
 4. `TEDx-OS-Screen-Inventory-and-Wireframes.md` before any UI work.
 5. `TEDx-Event-Database-Crawler-Prompt.md` when building the Curator Console import and the Google Sheet sync.
@@ -43,10 +43,11 @@ Done:
 - All twelve Appendix D questions answered by the owner on 31 Oct 2026 and applied (Appendix C).
 - Three external ChatGPT documents reviewed; sixteen text-only ideas adopted into v1.4; rejections recorded.
 - Feature selection done by the owner on 1 Nov 2026: 82 MVP rows, 23 Keep, 15 Defer, 7 Delete (`TEDx-OS-Feature-Decisions.xlsx`).
-- Screen inventory v1.1 aligned to v1.5; crawler prompt updated for the Google Sheet route and two optional fields.
+- Screen inventory v1.1 aligned to the blueprint; crawler prompt updated for the Google Sheet route and two optional fields.
+- Blueprint v1.6 logs the nine engineering decisions of build step 1.
 
-Not started: code, design files, marketing copy. The next step is Appendix E of the blueprint, in order:
-1. Monorepo skeleton (12.10) and Supabase migrations for every table in 12.3, RLS tests for two members and one curator.
+Code: runbook step 1 is done (1 Nov 2026): `app/` holds the pnpm workspace, the Next.js shell with the product constants and the camera/microphone-refusing header, seven Supabase migrations for all 61 tables, the RLS and gate test suite (64 checks, all green) and the CI workflow; the report is `build/01-foundation/Step-1-Foundation-Spec-and-Acceptance.md`. Design files and marketing copy are not started. The remaining steps of Appendix E, in order:
+1. Done. Monorepo skeleton (12.10) and Supabase migrations for every table in 12.3, RLS tests for two members and one curator.
 2. Design tokens (11.3), type scale (11.2), core components (11.5), automated contrast checks, a check that no component requests camera or microphone.
 3. Auth, profiles, memberships, three billing periods with the founding-price flag and the 30-seat counter, $97 regular price, 3-day trial limits, allowances, credit ledger with reservation and idempotency, Stripe webhooks, the two $497 add-ons.
 4. `runAiAction` with the brief-minimum and outline-final gates, the prompt library as versioned files (13.1 to 13.14), the Promptfoo eval suite (13.15) in CI.
