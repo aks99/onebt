@@ -2,12 +2,12 @@
 
 How to use this file: paste **Prompt 1** into apper.io as the first message. apper.io works as an ongoing chat, so after it builds the first version, paste **Prompts 2 to 9** one at a time, in order, checking each result against the acceptance list before moving on. The full specification lives in the public repository; every prompt points to the exact file. The repository is the source of truth; if apper.io's output and the repository disagree, the repository wins.
 
-Repository: https://github.com/YOUR-GITHUB-USERNAME/onebigtalk
+Repository: https://github.com/aks99/onebt
 Raw files (readable by any tool):
-- Blueprint: https://raw.githubusercontent.com/YOUR-GITHUB-USERNAME/onebigtalk/main/TEDx-OS-Master-Blueprint-v1.10.md
-- First-release feature list: https://raw.githubusercontent.com/YOUR-GITHUB-USERNAME/onebigtalk/main/MVP-First-Release.md
-- Screens and wireframes: https://raw.githubusercontent.com/YOUR-GITHUB-USERNAME/onebigtalk/main/TEDx-OS-Screen-Inventory-and-Wireframes.md
-- Crawler and Google Sheet import: https://raw.githubusercontent.com/YOUR-GITHUB-USERNAME/onebigtalk/main/TEDx-Event-Database-Crawler-Prompt.md
+- Blueprint: https://raw.githubusercontent.com/aks99/onebt/main/TEDx-OS-Master-Blueprint-v1.10.md
+- First-release feature list: https://raw.githubusercontent.com/aks99/onebt/main/MVP-First-Release.md
+- Screens and wireframes: https://raw.githubusercontent.com/aks99/onebt/main/TEDx-OS-Screen-Inventory-and-Wireframes.md
+- Crawler and Google Sheet import: https://raw.githubusercontent.com/aks99/onebt/main/TEDx-Event-Database-Crawler-Prompt.md
 
 ---
 
@@ -20,9 +20,9 @@ WHAT IT IS
 One Big Talk guides experts, coaches, consultants and authors through preparing a talk for an independently organized TEDx event, in four pillars and seven stages: FIND (Position the idea, Discover events, Apply), WRITE (Idea Brief, Outline, Script), DELIVER (Memorize and time the talk, text only), AMPLIFY (launch the published talk). Everything hangs off one "Talk Record" per talk: a database record the member types into. Nothing is ever recorded in audio or video.
 
 The complete specification is in this public repository; read these before building and refer back to them for every detail:
-- Blueprint (source of truth): https://raw.githubusercontent.com/YOUR-GITHUB-USERNAME/onebigtalk/main/TEDx-OS-Master-Blueprint-v1.10.md
-- Exact first-release feature list: https://raw.githubusercontent.com/YOUR-GITHUB-USERNAME/onebigtalk/main/MVP-First-Release.md
-- Every screen with its states and wireframe: https://raw.githubusercontent.com/YOUR-GITHUB-USERNAME/onebigtalk/main/TEDx-OS-Screen-Inventory-and-Wireframes.md
+- Blueprint (source of truth): https://raw.githubusercontent.com/aks99/onebt/main/TEDx-OS-Master-Blueprint-v1.10.md
+- Exact first-release feature list: https://raw.githubusercontent.com/aks99/onebt/main/MVP-First-Release.md
+- Every screen with its states and wireframe: https://raw.githubusercontent.com/aks99/onebt/main/TEDx-OS-Screen-Inventory-and-Wireframes.md
 
 TEN RULES THAT NEVER CHANGE
 1. Text only. No screen asks for camera or microphone. No upload control accepts audio or video. No recording, transcription or analysis of recordings anywhere.
@@ -79,7 +79,7 @@ Acceptance before you stop: a motivational platitude ("be your authentic self") 
 ## Prompt 3: Event Finder and the Curator Console (FIND, Stage 2)
 
 ```
-Build the Event Finder (blueprint 6.2, screens S3.4, S3.5) and the admin Curator Console (blueprint 9.5 A4 and 12.5, screen S8.3), including the weekly Google Sheet sync. The app never crawls. Read https://raw.githubusercontent.com/YOUR-GITHUB-USERNAME/onebigtalk/main/TEDx-Event-Database-Crawler-Prompt.md for the exact column names of the sheet.
+Build the Event Finder (blueprint 6.2, screens S3.4, S3.5) and the admin Curator Console (blueprint 9.5 A4 and 12.5, screen S8.3), including the weekly Google Sheet sync. The app never crawls. Read https://raw.githubusercontent.com/aks99/onebt/main/TEDx-Event-Database-Crawler-Prompt.md for the exact column names of the sheet.
 
 Curator Console (curator and admin roles only), tabs:
 - Sources: connect one Google Sheet by id with tabs "events", "organizers" and optionally "application_calls"; the app reads it through the Google Sheets API with a service account (show the service-account email to share the sheet with); schedule weekly plus a "Sync now" button; show last synced time and a column-map check (missing or unknown headers listed).

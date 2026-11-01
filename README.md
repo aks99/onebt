@@ -2,7 +2,9 @@
 
 A web app that guides experts, coaches, consultants and authors through the full lifecycle of a talk at an independently organized TEDx event: find one idea worth spreading, discover and apply to the right events, write the talk in two steps from the speaker's own brief, memorize it and finish under time, then launch the published talk. Text only. Never promises selection. Never sells a slot.
 
-Owner: Ash Goel, Global Book Publishing. Working repository for the product definition and build. Everything a person or an AI needs to continue the work is here.
+Owner: Ash Goel, Global Book Publishing. Working repository for the product definition and build. Everything a person or an AI needs to continue the work is here: https://github.com/aks99/onebt
+
+Binary files (the decisions workbook `.xlsx`, screenshots `.png`, the external review PDF) are in the repository as well as in the owner's folder `G:\TEDx OS`, which mirrors this repository.
 
 One Big Talk is an independent product and is not affiliated with, endorsed by, or sponsored by TED Conferences, LLC. TED and TEDx are trademarks of TED Conferences, LLC. TEDx events are independently organized under license from TED. One Big Talk never charges for, sells, or guarantees speaking slots.
 
