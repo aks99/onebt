@@ -1,0 +1,56 @@
+# Review of the three external documents (31 October 2026)
+
+Reviewed: "Chatgpt - TEDx End to End Product Blueprint" (31 sections, 30 Oct 2026), "Chatgpt - Claude Cowork Kickoff Brief" (companion to the first), and "Chatgpt - Product Strategy and Research Blueprint for a TEDx Speaker Lifecycle Platform" (50-page PDF, research dated September 2026). Judged against blueprint v1.3, the ten non-negotiables in Section 0.3, and the owner's twelve answers of 31 October. The result is blueprint v1.4; every adopted item is marked "(v1.4)" in its home section.
+
+## 1. What the three documents get right, and the blueprint already had
+
+The documents and the blueprint agree on the frame: four pillars, seven stages, one persistent record per talk; idea before event; never promise selection; never submit, never contact organizers; event existence is a different fact from an open call; organizers choose ideas, not profiles; AI is an editor, not an author; no TED marks in the name; honest numbers; a free plan that does one real loop. None of this needed changing.
+
+## 2. Adopted (sixteen ideas, all text-only, all cheap to reverse)
+
+| # | Idea | Where it came from | Where it lives now | Why it earns its place |
+|---|---|---|---|---|
+| 1 | Call-status vocabulary widened (open, announced, rolling, closed, nomination, invitation-only, stale, unknown); "Spaces available" means tickets; a loading form is not an open call; last year's form sets nothing | Doc 1 §8.3, Doc 3 "Research pillar" | 6.2 status rules, 12.3, crawler prompt Phase 3.2 and C.3 | Stops the most expensive error the product can make: telling a member a call is open when it is not |
+| 2 | Every deadline shows its verified date and source type; a deadline with no stated timezone is a date, never an hour | Doc 3 "source provenance", Doc 1 §19.1 | 6.2, 11.5 DeadlineChip, 11.8, 12.3 `deadline_timezone_status` | Trust is the product; this makes the trust visible on every card |
+| 3 | Organizer AI policy per event (allowed / restricted / prohibited / unknown); where prohibited, AI drafting switches off inside that application and the member sees the organizer's words | Doc 3 "AI authorship controls" (TEDxAtlanta example) | F1.2.13, quality gates in 6.3, 12.3 `ai_policy`, crawler prompt, eval 13.15 | Keeps members inside each organizer's rules, which is non-negotiable 6 applied at event level; also a selling point nobody else offers |
+| 4 | Coach-only mode per talk: the AI questions, scores and lints but never inserts text | Doc 3 "Coach Mode / Draft Mode" | 5.8, `talks.coach_only` | Serves members who want every word their own and makes the AI-policy gate a single flag in `runAiAction` |
+| 5 | Authorship meter: "Your words: 91%", computed from version sources, exportable as a note for organizers who ask | Doc 3 "Authorship Log" | F1.3.15, `applications.authorship` | Proof that the two-step flow produced the speaker's talk; answers the "did you use AI" question with a number |
+| 6 | Watch alerts: watch any event, open or closed; alert when a call opens, a deadline appears or moves, a theme is published, a call closes | Doc 3 "Users should be able to watch an event" | F1.2.12, `event_watches` | Turns the weekly crawler diff into the moment members feel the catalogue working for them |
+| 7 | Verify-queue flag rules (deadline passed but page says apply; conflicting dates; broken form; date changed; social newer than site; unclear eligibility; new call; call removed; page unreachable never extends a deadline) | Doc 3 "data-quality operations queue" | A4 Curator Console | Gives the curator a rule set instead of a judgement call |
+| 8 | Optional seventh Idea Brief prompt: what I am not claiming and not selling | Doc 1 §9.1 "not claiming" | 7.2 (g) | Feeds R2 and R5 with the speaker's own limits; costs one text area |
+| 9 | Consent chips on story talking points and beats (named with permission / pseudonymized / composite); linter flags a composite told as one person | Doc 1 §9.2 | F2.15, 7.5 | Protects the people in the stories and the speaker's credibility on stage |
+| 10 | Two more claim statuses (firsthand account; narrowed to match the evidence) and an overclaim word check | Doc 1 §9.4, Doc 3 "Evidence Ledger" | F2.8, `claims.status` | Firsthand observation is the commonest "claim" in an expert's talk and should not be forced into "needs source" |
+| 11 | Staleness propagation: when the idea, brief or a prior stage changes, downstream artifacts are marked "may be outdated"; nothing rewrites silently; submitted snapshots never change | Doc 1 §9.1, W02 | 7.5 | The blueprint had this for the Pitch Pack only; it belongs everywhere on the Talk Record |
+| 12 | Measured pace: after three timed runs the member's own wpm replaces the 150 default in the word budget and prompter | Doc 3 "estimated runtime by speaker's actual measured pace" | F2.17, `talks.measured_wpm` | Text-only version of the one good thing the recording products do; the timer already has the data |
+| 13 | Listener restatement in the live-audience log, compared with the throughline | Doc 1 §4.2, §10.3 | F3.11 | The friend test (F1.1.5) applied to the whole talk; the single best signal that the idea landed |
+| 14 | Publication states (delivered, awaiting upload, in TED review, published, not approved or limited) and launch dates counted from the real URL | Doc 1 §11.1 | F4.1 | Matches what speakers report (months in review) and keeps the launch plan honest |
+| 15 | Eligibility before ranking; unknown stays unknown; closed or invitation-only events shown under "watch" | Doc 1 §8.4, Doc 3 "hard rule outranks semantic similarity" | F1.2.1 | A high match score on a closed call is a trap; this removes it |
+| 16 | Plumbing and measurement: credit reservation with idempotent retries and structured error codes; editors and export independent of the AI provider; untrusted-text rule for crawled snippets with an injection eval; SSRF limits on server fetches; north-star metric with path-specific activation; the founding 30 as the interview cohort; public Idea Test (MVP) and public event status pages (V2); follow-up restraint rules | Doc 1 §14, §16.2, §18.6, §20, §21.2, §23.1, §24; Doc 3 "Free Idea Test", "Search-driven event intelligence", "north star" | 12.4, 12.8, 12.10, 13.15, 14.3, 14.4, F1.2.14, F1.2.15, F1.3.7 | Engineering hygiene that makes existing promises true, and two low-cost acquisition assets that fit "idea before event" |
+
+## 3. Not adopted, and why
+
+| Idea | Documents | Reason |
+|---|---|---|
+| Browser recording, upload, transcription, speech analytics, compare-runs metrics, movement and eye-line analysis, media retention controls, media workers, FFmpeg | All three, extensively | Non-negotiable 7: text only. Owner decision of 31 Oct. The text-only equivalents (timer, prompter, drills, run log, measured pace) stay |
+| Price lists: Free / $149 / $299 / $499 with 80 specialist minutes (Doc 1); Free / $29 / $79 / $149 / Enterprise (Doc 3) | Doc 1 §16, Doc 3 "Freemium" | Pricing settled on 31 Oct: Founding Member $17 / $77 / $147 for 30 seats, then $97 a month; add-ons $497. Doc 1's own margin table shows the service-heavy tier at 59%, which is the case against it |
+| "TEDx commercial gate": keep the TEDx journey behind a feature flag until TED gives written clarification; build a general-speaking product first | Doc 1 §1, §2, §30; kickoff brief | The owner decided on 31 Oct not to send a request to TED. The blueprint's Section 2.3 already draws the line TED's own pages draw (coaching allowed, paying to be chosen not) and positions the product as idea development, preparation, discovery and amplification. The concern is real and is recorded in Appendix C as accepted exposure; it does not change the build |
+| Collaborator, assistant, editor and coach seats; agency and team workspaces; enterprise SSO | Doc 1 §21, Doc 3 "Team accounts" | Out of scope for one plan at $17 with no community; the 30-day interviews will show whether executives need an assistant seat; revisit with retention data |
+| Indigo primary, Inter-only type, slate text, 44 px targets | Doc 1 §13, kickoff brief | Section 11 is settled (Ink and Ivory, Newsreader, Inter, Fraunces, Geist Mono) and already passes the same WCAG 2.2 AA bar; 24 px targets with 8 px spacing is the WCAG criterion and drills already use larger ones |
+| Disable all follow-ups unless the organizer invites them | Doc 1 §8.7 | A status enquiry on one's own public-form application is not an unsolicited pitch; replaced by restraint rules in F1.3.7 (one follow-up, never before a stated decision date, never where the page says not to enquire) |
+| Buffer or social-scheduler integration; talk landing page hosting; speaker one-sheet as a central authority asset | Doc 3 "Marketing pillar" | Section 9.1 rule 4 stands: text in, text out; the member publishes with their own tools. The one-sheet and press kit already exist as V2 PDFs |
+| Free "Selected TEDx Speaker" mode with TEDx preparation at no charge | Doc 3 "Human feedback" | Undercuts the single plan; the invited fast track already exists and the clinic is group-based |
+| Broader "authority OS" positioning: conferences, CFPs, podcasts, keynotes as the durable category | Doc 3 throughout, Doc 1 §6.3 | Right about graduation churn, which Section 10.7 already addresses with the six- and twelve-month plans and Amplify. F4.10 paid-stage pipeline (V3) is the place this grows; the category line stays "independently organized TEDx events and other idea stages" |
+| Concierge pilot and 20 to 40 interviews before any build | Doc 1 §24, §25; Doc 3 "Customer research program" | The owner has a warm audience and a decision to build; the founding 30 become the interview cohort instead (adopted in 14.4) |
+| Reference-talk index annotated by technique | Doc 1 §8.2 | Content work with rights questions around a curated TED list; "Has it been done?" already covers overlap. Could become a V2 content asset; not added to the blueprint |
+| Slide file analyzer | Doc 3 "Slide review" | Requires file upload and image analysis; F2.13 stays a text checklist and planner |
+| Acceptance-probability avoidance, anti-mass-pitch stance, idempotent webhooks, duplicate-submission guard, provenance on facts, RLS as defence in depth | All | Already in the blueprint; no change |
+
+## 4. One caution the documents raise that stays on record
+
+Both ChatGPT blueprints treat TED's "fee-based TEDx services are not legitimate" line as a blocker for any paid TEDx-specific product and recommend written clarification before charging. The owner has decided not to approach TED. The blueprint's position (Section 2.3) is that paid public-speaking preparation and research tooling are permitted and paid selection is not, and the product is built so that it never touches selection: it never submits, never contacts organizers, never sells slots, never shows an acceptance score, and respects each organizer's AI policy. This review records the two documents' view so that the decision is a visible one.
+
+## 5. Files changed
+
+- `TEDx-OS-Master-Blueprint-v1.4.md` (new; v1.3 kept as history)
+- `TEDx-Event-Database-Crawler-Prompt.md` (two optional columns, one explicit status rule, user agent renamed)
+- `TEDx-OS-Feature-Decisions.xlsx` (new; every feature with a decision column for Ash)
