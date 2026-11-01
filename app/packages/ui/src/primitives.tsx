@@ -20,7 +20,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 }
 const buttonBase =
   "inline-flex items-center justify-center gap-2 rounded-[var(--radius)] font-medium transition-colors " +
-  "disabled:opacity-60 disabled:cursor-not-allowed min-h-[24px] min-w-[24px] " +
+  "disabled:opacity-60 disabled:cursor-not-allowed min-w-[24px] pointer-coarse:min-h-11 pointer-coarse:min-w-11 " +
   "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus)]";
 const buttonVariants: Record<ButtonVariant, string> = {
   primary: "bg-[var(--primary)] text-[var(--primary-foreground)] hover:opacity-90",
@@ -29,7 +29,8 @@ const buttonVariants: Record<ButtonVariant, string> = {
   ghost: "bg-transparent text-[var(--text-secondary)] hover:bg-[var(--surface-2)]",
   danger: "bg-[var(--danger-solid)] text-[var(--danger-foreground)] hover:opacity-90",
 };
-const buttonSizes = { sm: "h-8 px-3 text-[14px]", md: "h-10 px-4 text-[16px]", lg: "h-12 px-5 text-[16px]" };
+// 44px targets on touch screens (owner instruction 1 Nov 2026: web and mobile optimized); 40px with a pointer.
+const buttonSizes = { sm: "h-9 px-3 text-[14px]", md: "h-10 px-4 text-[16px]", lg: "h-12 px-5 text-[16px]" };
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function Button(
   { variant = "primary", size = "md", loading = false, loadingLabel = "Working", className, children, disabled, ...rest }, ref) {

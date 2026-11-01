@@ -306,6 +306,83 @@ select tests.expect_error('step3: member cannot claim a seat directly', $q$selec
 select tests.logout();
 reset role;
 
+
+-- ---------------------------------------------------------------
+-- Step 5: Idea Lock, Journey, weekly commitment, fresh-idea check
+-- ---------------------------------------------------------------
+reset role;
+set role authenticated;
+select tests.login('bbbbbbbb-0000-0000-0000-000000000002');
+insert into public.talks (id, user_id, title) values ('7b000000-0000-0000-0000-000000000005', 'bbbbbbbb-0000-0000-0000-000000000002', 'B second talk for step 5');
+-- an unscored idea cannot be locked
+insert into public.ideas (id, user_id, talk_id, title_working, throughline)
+values ('1b000000-0000-0000-0000-000000000051', 'bbbbbbbb-0000-0000-0000-000000000002', '7b000000-0000-0000-0000-000000000005', 'Be your authentic self', 'Be your authentic self and success follows');
+select tests.expect_error('step5: unscored idea cannot be locked', $q$select public.lock_idea('1b000000-0000-0000-0000-000000000051')$q$, 'IDEA_NOT_SCORED');
+-- a platitude scores Level 1 on criteria 1 and 4 and is blocked with no override
+update public.ideas set score = '{"gate_passed":false,"scores":[{"criterion":1,"level":1,"reason":"a theme"},{"criterion":2,"level":2,"reason":""},{"criterion":3,"level":1,"reason":""},{"criterion":4,"level":1,"reason":"self-evident"},{"criterion":5,"level":2,"reason":""},{"criterion":6,"level":2,"reason":""},{"criterion":7,"level":2,"reason":""},{"criterion":8,"level":2,"reason":""},{"criterion":9,"level":2,"reason":""}]}'
+  where id = '1b000000-0000-0000-0000-000000000051';
+select tests.expect_error('step5: platitude cannot be locked', $q$select public.lock_idea('1b000000-0000-0000-0000-000000000051')$q$, 'IDEA_GATE_FAILED');
+select tests.expect_error('step5: platitude cannot be locked even with a reason', $q$select public.lock_idea('1b000000-0000-0000-0000-000000000051', 'I really want this one because it is my brand')$q$, 'IDEA_GATE_FAILED');
+-- Level 2 on evidence needs a written override reason; Level 3 everywhere locks cleanly
+insert into public.ideas (id, user_id, talk_id, title_working, throughline, belief_challenged, score)
+values ('1b000000-0000-0000-0000-000000000052', 'bbbbbbbb-0000-0000-0000-000000000002', '7b000000-0000-0000-0000-000000000005',
+  'Hospital checklists fail without a stop rule', 'Checklists fail when the most junior person cannot stop the room', 'Checklists work because they are thorough',
+  '{"gate_passed":true,"scores":[{"criterion":1,"level":3,"reason":""},{"criterion":2,"level":4,"reason":""},{"criterion":3,"level":3,"reason":""},{"criterion":4,"level":3,"reason":""},{"criterion":5,"level":2,"reason":"anecdotal so far"},{"criterion":6,"level":3,"reason":""},{"criterion":7,"level":3,"reason":""},{"criterion":8,"level":3,"reason":""},{"criterion":9,"level":3,"reason":""}]}');
+select tests.expect_error('step5: weak evidence asks for work before lock', $q$select public.lock_idea('1b000000-0000-0000-0000-000000000052')$q$, 'IDEA_NEEDS_WORK:5');
+select tests.check('step5: lock with an override reason succeeds',
+  (select status from public.lock_idea('1b000000-0000-0000-0000-000000000052', 'The two hospital studies are listed in my evidence notes; I will cite them in the brief.')) = 'locked');
+select tests.check('step5: lock moves the talk to Discover and snapshots the profile',
+  (select stage = 'discover' and idea_id = '1b000000-0000-0000-0000-000000000052' and profile_snapshot is not null and profile_snapshot ? 'expertise_line' and not (profile_snapshot ? 'headshot_path') from public.talks where id = '7b000000-0000-0000-0000-000000000005'));
+select tests.check('step5: lock awards the idea_locked milestone', (select count(*) from public.milestones where user_id = 'bbbbbbbb-0000-0000-0000-000000000002' and talk_id = '7b000000-0000-0000-0000-000000000005' and key = 'idea_locked') = 1);
+select tests.check('step5: lock logs activity for the week', (select count(*) from public.activity_log where user_id = 'bbbbbbbb-0000-0000-0000-000000000002' and kind = 'idea_locked') = 1);
+select tests.expect_error('step5: a second idea cannot be locked on the same talk', $q$select public.lock_idea('1b000000-0000-0000-0000-000000000051', 'x')$q$, 'ANOTHER_IDEA_LOCKED');
+select tests.check('step5: locking the locked idea again is a no-op', (select status from public.lock_idea('1b000000-0000-0000-0000-000000000052')) = 'locked');
+-- a member cannot lock someone else's idea
+select tests.expect_error('step5: cannot lock another member idea', $q$select public.lock_idea('1a000000-0000-0000-0000-000000000001')$q$, 'NOT_FOUND');
+-- milestones cannot be typed in
+select tests.expect_error('step5: member cannot insert a milestone', $q$insert into public.milestones (user_id, talk_id, key) values ('bbbbbbbb-0000-0000-0000-000000000002', '7b000000-0000-0000-0000-000000000005', 'talk_published')$q$, 'permission denied');
+select tests.expect_error('step5: member cannot call award_milestone', $q$select public.award_milestone('bbbbbbbb-0000-0000-0000-000000000002', null, 'talk_published')$q$, 'permission denied');
+-- weekly commitment
+select public.set_week_target(3);
+select public.log_activity('practice_block', '7b000000-0000-0000-0000-000000000005');
+select tests.check('step5: week row counts the lock and the practice block', (select completed = 2 and target = 3 and not paused from public.week_commitments where user_id = 'bbbbbbbb-0000-0000-0000-000000000002' and week_start = public.week_start_of()));
+select public.set_week_paused(true);
+select public.log_activity('practice_block', '7b000000-0000-0000-0000-000000000005');
+select tests.check('step5: a paused week does not count activity', (select completed = 2 and paused from public.week_commitments where user_id = 'bbbbbbbb-0000-0000-0000-000000000002' and week_start = public.week_start_of()));
+select public.set_week_paused(false);
+select tests.check('step5: week starts on Monday', extract(isodow from public.week_start_of()) = 1);
+-- fresh-idea check
+insert into public.prior_stages (id, user_id, organization, topic, year, month, city, audience_size)
+values ('5b000000-0000-0000-0000-000000000001', 'bbbbbbbb-0000-0000-0000-000000000002', 'Nurses association', 'Why surgical checklists fail in the operating room', 2024, 9, 'Pune', 60),
+       ('5b000000-0000-0000-0000-000000000002', 'bbbbbbbb-0000-0000-0000-000000000002', 'Hospital leadership summit', 'Leading hospital teams through budget cuts', 2025, 3, 'Mumbai', 400);
+select tests.check('step5: same-topic prior stage triggers the warning', (select is_overlap from public.prior_stage_overlap('5b000000-0000-0000-0000-000000000001', '7b000000-0000-0000-0000-000000000005')));
+select tests.check('step5: adjacent prior stage does not trigger the warning', (select not is_overlap from public.prior_stage_overlap('5b000000-0000-0000-0000-000000000002', '7b000000-0000-0000-0000-000000000005')));
+select tests.check('step5: overlap names the shared words', (select 'checklists' = any(shared_words) from public.prior_stage_overlap('5b000000-0000-0000-0000-000000000001', '7b000000-0000-0000-0000-000000000005')));
+select tests.check('step5: overlap check on another member stage returns nothing', (select count(*) from public.prior_stage_overlap((select id from public.prior_stages where user_id = 'aaaaaaaa-0000-0000-0000-000000000001' limit 1), '7b000000-0000-0000-0000-000000000005')) = 0);
+-- unlock requires a reason and marks downstream stale
+insert into public.pitch_packs (id, user_id, talk_id) values ('9b000000-0000-0000-0000-000000000005', 'bbbbbbbb-0000-0000-0000-000000000002', '7b000000-0000-0000-0000-000000000005');
+select tests.expect_error('step5: unlock needs a reason', $q$select public.unlock_idea('7b000000-0000-0000-0000-000000000005', 'no')$q$, 'REASON_REQUIRED');
+select public.unlock_idea('7b000000-0000-0000-0000-000000000005', 'Changing the angle to the stop rule itself');
+select tests.check('step5: unlock returns the idea to candidate and the talk to Position',
+  (select status = 'candidate' from public.ideas where id = '1b000000-0000-0000-0000-000000000052') and (select stage = 'position' and idea_id is null from public.talks where id = '7b000000-0000-0000-0000-000000000005'));
+select tests.check('step5: unlock marks the pitch pack stale', (select stale from public.pitch_packs where id = '9b000000-0000-0000-0000-000000000005'));
+select tests.check('step5: member sees no audit rows', (select count(*) from public.audit_log) = 0);
+reset role;
+select tests.check('step5: unlock is in the audit log', (select count(*) from public.audit_log where action = 'idea.unlock' and resource_id = '1b000000-0000-0000-0000-000000000052') >= 1);
+set role authenticated;
+select tests.login('bbbbbbbb-0000-0000-0000-000000000002');
+-- dossier character count
+insert into public.idea_dossiers (id, user_id, talk_id, answers, pasted_material) values ('db000000-0000-0000-0000-000000000005', 'bbbbbbbb-0000-0000-0000-000000000002', '7b000000-0000-0000-0000-000000000005', '{"q1":"abcdefghij","q2":"klmnopqrst"}', repeat('x', 100));
+select tests.check('step5: dossier_char_count adds answers and pasted material', public.dossier_char_count('db000000-0000-0000-0000-000000000005') = 120);
+-- other members see none of B's week, milestones or activity
+select tests.login('aaaaaaaa-0000-0000-0000-000000000001');
+select tests.check('step5: A sees none of B week rows', (select count(*) from public.week_commitments where user_id = 'bbbbbbbb-0000-0000-0000-000000000002') = 0);
+select tests.check('step5: A sees none of B milestones', (select count(*) from public.milestones where user_id = 'bbbbbbbb-0000-0000-0000-000000000002') = 0);
+select tests.check('step5: A sees none of B activity', (select count(*) from public.activity_log where user_id = 'bbbbbbbb-0000-0000-0000-000000000002') = 0);
+select tests.logout();
+reset role;
+
+select name, case when passed then 'PASS' else 'FAIL' end as result, coalesce(left(detail, 90), '') as detail from tests.results where name like 'step5:%' order by passed, name;
 select name, case when passed then 'PASS' else 'FAIL' end as result, coalesce(left(detail, 90), '') as detail from tests.results where name like 'step3:%' order by passed, name;
 select count(*) filter (where passed) as passed, count(*) filter (where not passed) as failed from tests.results;
-select 1 / (case when (select count(*) from tests.results where not passed) = 0 then 1 else 0 end) as all_green_after_step3;
+select 1 / (case when (select count(*) from tests.results where not passed) = 0 then 1 else 0 end) as all_green_after_step5;

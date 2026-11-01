@@ -6,7 +6,7 @@ Paste Stage A first. When it is live and checked, paste Stage B in pieces. The f
 
 Repository: https://github.com/YOUR-GITHUB-USERNAME/onebigtalk
 Raw files:
-- Blueprint: https://raw.githubusercontent.com/YOUR-GITHUB-USERNAME/onebigtalk/main/TEDx-OS-Master-Blueprint-v1.9.md
+- Blueprint: https://raw.githubusercontent.com/YOUR-GITHUB-USERNAME/onebigtalk/main/TEDx-OS-Master-Blueprint-v1.10.md
 - First-release feature list: https://raw.githubusercontent.com/YOUR-GITHUB-USERNAME/onebigtalk/main/MVP-First-Release.md
 - Screens and wireframes: https://raw.githubusercontent.com/YOUR-GITHUB-USERNAME/onebigtalk/main/TEDx-OS-Screen-Inventory-and-Wireframes.md
 
@@ -17,7 +17,7 @@ Raw files:
 ```
 Build the public website for a product called One Big Talk. Never use "TED" or "TEDx" in the site name, logo, domain, favicon or page titles. The product is a web app that guides experts, coaches, consultants and authors through preparing a talk for an independently organized TEDx event: find one idea worth spreading, discover and apply to the right events, write the talk from the speaker's own brief, memorize it and finish under time, then launch the published talk. It is text only (it never records audio or video), it never promises selection and it never sells a speaking slot.
 
-Full specification for reference: https://raw.githubusercontent.com/YOUR-GITHUB-USERNAME/onebigtalk/main/TEDx-OS-Master-Blueprint-v1.9.md (Sections 1, 2.4, 3.6, 10, 11 and screens S0.1 to S0.4 in https://raw.githubusercontent.com/YOUR-GITHUB-USERNAME/onebigtalk/main/TEDx-OS-Screen-Inventory-and-Wireframes.md).
+Full specification for reference: https://raw.githubusercontent.com/YOUR-GITHUB-USERNAME/onebigtalk/main/TEDx-OS-Master-Blueprint-v1.10.md (Sections 1, 2.4, 3.6, 10, 11 and screens S0.1 to S0.4 in https://raw.githubusercontent.com/YOUR-GITHUB-USERNAME/onebigtalk/main/TEDx-OS-Screen-Inventory-and-Wireframes.md).
 
 PAGES
 1. Home. Headline: "One idea. One stage. A system for getting there." Sub-line: "Find the right independently organized TEDx events, write the application, write the talk, memorize it, and launch it." Buttons: "Start free for 3 days" and "See how it works". Under the buttons: "No card. No recording. Nobody can promise you a stage." Four pillar cards: FIND (events open this season, pulled from the events table as a count), WRITE ("Brief, then outline, then script, in your words"), DELIVER ("Memorize cold and finish under time"), AMPLIFY ("Launch the talk the week it goes live"). A journey strip: Position, Discover, Apply, Write, Rehearse, Perform, Amplify. An "Honest numbers" block: "Most open-call city events accept a single-digit percentage of applicants. Members apply to many." A pricing teaser with the three Founding prices and the live count of founding seats left. The promise block (text below). FAQ. Footer with the disclaimer (text below) on every page.

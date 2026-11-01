@@ -2,7 +2,7 @@ import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
 // Refreshes the session cookie and sends signed-out visitors away from member screens.
-const memberPrefixes = ["/today", "/journey", "/find", "/write", "/deliver", "/amplify", "/me", "/admin", "/curate"];
+const memberPrefixes = ["/today", "/journey", "/find", "/write", "/deliver", "/amplify", "/me", "/admin", "/curate", "/onboarding"];
 
 export async function middleware(req: NextRequest) {
   let res = NextResponse.next({ request: req });
