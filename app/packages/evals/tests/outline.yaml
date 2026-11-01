@@ -1,0 +1,684 @@
+- description: 'outline from brief 1: Safety checklists fail when the most jun'
+  vars:
+    slot_minutes: 10
+    target_wpm: 150
+    word_budget: 1450
+    structure_template: ted_four_beat
+    idea_brief:
+      idea: 'Safety checklists fail when the most junior person in the room cannot stop it. I mean this literally: reading
+        a checklist aloud makes a team safe is the belief most people hold, and I have watched it fail.'
+      belief: Reading a checklist aloud makes a team safe. The people who disagree are surgeons who see the timeout as theatre,
+        and their reason is that the current way is cheaper and familiar.
+      story: 'One specific moment: in 2016 I stood in a room where everyone could see the problem and nobody spoke. I remember
+        the hum of the monitor and the clock at 3:04. My sister later told me what it cost them.'
+      evidence: 40 teams observed over two years; WHO programme data (needs source). I also have my own count from two years
+        of notes.
+      action: Ask the quietest person first
+      why_me: I have done this work for over a decade and have never shared this idea from a stage.
+    idea_json:
+      throughline: Safety checklists fail when the most junior person in the room cannot stop it
+      belief_challenged: Reading a checklist aloud makes a team safe
+      antagonist: Surgeons who see the timeout as theatre
+      evidence_notes: 40 teams observed over two years; WHO programme data (needs source)
+      audience_action: Ask the quietest person first
+    expansion_json: {}
+    profile:
+      segment: coach
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.sections.length>=4 && o.sections.some(s=>s.ending_point===true) && ['hook','care','idea'].includes(o.sections[0].kind)
+  - type: javascript
+    value: const o=JSON.parse(output); const idx=o.sections.findIndex(s=>s.kind==='idea'); idx>=0 && idx<=1
+  - type: javascript
+    value: const o=JSON.parse(output); JSON.stringify(o).match(/my book|available on Amazon|book me|learn more at/i)===null
+- description: 'outline from brief 2: Grief is a skill a family can practise b'
+  vars:
+    slot_minutes: 10
+    target_wpm: 150
+    word_budget: 1450
+    structure_template: ted_four_beat
+    idea_brief:
+      idea: 'Grief is a skill a family can practise before anyone dies. I mean this literally: grief begins at the funeral
+        is the belief most people hold, and I have watched it fail.'
+      belief: Grief begins at the funeral. The people who disagree are hospice chaplains who see rehearsal as morbid, and
+        their reason is that the current way is cheaper and familiar.
+      story: 'One specific moment: in 2016 I stood in a room where everyone could see the problem and nobody spoke. I remember
+        the hum of the monitor and the clock at 3:04. A colleague later told me what it cost them.'
+      evidence: Interviews with 60 families; palliative care literature (needs source). I also have my own count from two
+        years of notes.
+      action: Hold one conversation about a death before it comes
+      why_me: I have done this work for over a decade and have never shared this idea from a stage.
+    idea_json:
+      throughline: Grief is a skill a family can practise before anyone dies
+      belief_challenged: Grief begins at the funeral
+      antagonist: Hospice chaplains who see rehearsal as morbid
+      evidence_notes: Interviews with 60 families; palliative care literature (needs source)
+      audience_action: Hold one conversation about a death before it comes
+    expansion_json: {}
+    profile:
+      segment: author
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.sections.length>=4 && o.sections.some(s=>s.ending_point===true) && ['hook','care','idea'].includes(o.sections[0].kind)
+  - type: javascript
+    value: const o=JSON.parse(output); const idx=o.sections.findIndex(s=>s.kind==='idea'); idx>=0 && idx<=1
+  - type: javascript
+    value: const o=JSON.parse(output); JSON.stringify(o).match(/my book|available on Amazon|book me|learn more at/i)===null
+- description: 'outline from brief 3: The best strategy meeting has no slides '
+  vars:
+    slot_minutes: 10
+    target_wpm: 150
+    word_budget: 1450
+    structure_template: ted_four_beat
+    idea_brief:
+      idea: 'The best strategy meeting has no slides and one unanswered question. I mean this literally: decks make decisions
+        clearer is the belief most people hold, and I have watched it fail.'
+      belief: Decks make decisions clearer. The people who disagree are consultants paid by the slide, and their reason is
+        that the current way is cheaper and familiar.
+      story: 'One specific moment: in 2016 I stood in a room where everyone could see the problem and nobody spoke. I remember
+        the hum of the monitor and the clock at 3:04. My sister later told me what it cost them.'
+      evidence: Twelve years of board meetings; Amazon memo practice (needs source). I also have my own count from two years
+        of notes.
+      action: Open your next meeting with the question you cannot answer
+      why_me: I have done this work for over a decade and have never shared this idea from a stage.
+    idea_json:
+      throughline: The best strategy meeting has no slides and one unanswered question
+      belief_challenged: Decks make decisions clearer
+      antagonist: Consultants paid by the slide
+      evidence_notes: Twelve years of board meetings; Amazon memo practice (needs source)
+      audience_action: Open your next meeting with the question you cannot answer
+    expansion_json: {}
+    profile:
+      segment: executive
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.sections.length>=4 && o.sections.some(s=>s.ending_point===true) && ['hook','care','idea'].includes(o.sections[0].kind)
+  - type: javascript
+    value: const o=JSON.parse(output); const idx=o.sections.findIndex(s=>s.kind==='idea'); idx>=0 && idx<=1
+  - type: javascript
+    value: const o=JSON.parse(output); JSON.stringify(o).match(/my book|available on Amazon|book me|learn more at/i)===null
+- description: 'outline from brief 4: Ice forms from the edges inward, and so '
+  vars:
+    slot_minutes: 10
+    target_wpm: 150
+    word_budget: 1450
+    structure_template: ted_four_beat
+    idea_brief:
+      idea: 'Ice forms from the edges inward, and so do institutions. I mean this literally: change starts at the centre is
+        the belief most people hold, and I have watched it fail.'
+      belief: Change starts at the centre. The people who disagree are leadership theorists who focus on the top, and their
+        reason is that the current way is cheaper and familiar.
+      story: 'One specific moment: in 2016 I stood in a room where everyone could see the problem and nobody spoke. I remember
+        the hum of the monitor and the clock at 3:04. A patient later told me what it cost them.'
+      evidence: Field observations of lake ice; organisational case studies (needs source). I also have my own count from
+        two years of notes.
+      action: Find the edge of your organisation and listen there
+      why_me: I have done this work for over a decade and have never shared this idea from a stage.
+    idea_json:
+      throughline: Ice forms from the edges inward, and so do institutions
+      belief_challenged: Change starts at the centre
+      antagonist: Leadership theorists who focus on the top
+      evidence_notes: Field observations of lake ice; organisational case studies (needs source)
+      audience_action: Find the edge of your organisation and listen there
+    expansion_json: {}
+    profile:
+      segment: academic
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.sections.length>=4 && o.sections.some(s=>s.ending_point===true) && ['hook','care','idea'].includes(o.sections[0].kind)
+  - type: javascript
+    value: const o=JSON.parse(output); const idx=o.sections.findIndex(s=>s.kind==='idea'); idx>=0 && idx<=1
+  - type: javascript
+    value: const o=JSON.parse(output); JSON.stringify(o).match(/my book|available on Amazon|book me|learn more at/i)===null
+- description: 'outline from brief 5: Indian cities cool faster when roofs are'
+  vars:
+    slot_minutes: 10
+    target_wpm: 150
+    word_budget: 1450
+    structure_template: ted_four_beat
+    idea_brief:
+      idea: 'Indian cities cool faster when roofs are painted than when trees are planted. I mean this literally: trees are
+        the only answer to urban heat is the belief most people hold, and I have watched it fail.'
+      belief: Trees are the only answer to urban heat. The people who disagree are urban foresters, and their reason is that
+        the current way is cheaper and familiar.
+      story: 'One specific moment: in 2016 I stood in a room where everyone could see the problem and nobody spoke. I remember
+        the hum of the monitor and the clock at 3:04. A colleague later told me what it cost them.'
+      evidence: Roof temperature measurements in Chennai (needs source). I also have my own count from two years of notes.
+      action: Paint one roof white this summer
+      why_me: I have done this work for over a decade and have never shared this idea from a stage.
+    idea_json:
+      throughline: Indian cities cool faster when roofs are painted than when trees are planted
+      belief_challenged: Trees are the only answer to urban heat
+      antagonist: Urban foresters
+      evidence_notes: Roof temperature measurements in Chennai (needs source)
+      audience_action: Paint one roof white this summer
+    expansion_json: {}
+    profile:
+      segment: india
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.sections.length>=4 && o.sections.some(s=>s.ending_point===true) && ['hook','care','idea'].includes(o.sections[0].kind)
+  - type: javascript
+    value: const o=JSON.parse(output); const idx=o.sections.findIndex(s=>s.kind==='idea'); idx>=0 && idx<=1
+  - type: javascript
+    value: const o=JSON.parse(output); JSON.stringify(o).match(/my book|available on Amazon|book me|learn more at/i)===null
+- description: 'outline from brief 6: A team''s silence is data, not consent'
+  vars:
+    slot_minutes: 10
+    target_wpm: 150
+    word_budget: 1450
+    structure_template: ted_four_beat
+    idea_brief:
+      idea: 'A team''s silence is data, not consent. I mean this literally: silence means agreement is the belief most people
+        hold, and I have watched it fail.'
+      belief: Silence means agreement. The people who disagree are managers who equate quiet with alignment, and their reason
+        is that the current way is cheaper and familiar.
+      story: 'One specific moment: in 2016 I stood in a room where everyone could see the problem and nobody spoke. I remember
+        the hum of the monitor and the clock at 3:04. A colleague later told me what it cost them.'
+      evidence: Meeting transcripts from 30 teams (needs source). I also have my own count from two years of notes.
+      action: Count the silences in your next meeting
+      why_me: I have done this work for over a decade and have never shared this idea from a stage.
+    idea_json:
+      throughline: A team's silence is data, not consent
+      belief_challenged: Silence means agreement
+      antagonist: Managers who equate quiet with alignment
+      evidence_notes: Meeting transcripts from 30 teams (needs source)
+      audience_action: Count the silences in your next meeting
+    expansion_json: {}
+    profile:
+      segment: coach
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.sections.length>=4 && o.sections.some(s=>s.ending_point===true) && ['hook','care','idea'].includes(o.sections[0].kind)
+  - type: javascript
+    value: const o=JSON.parse(output); const idx=o.sections.findIndex(s=>s.kind==='idea'); idx>=0 && idx<=1
+  - type: javascript
+    value: const o=JSON.parse(output); JSON.stringify(o).match(/my book|available on Amazon|book me|learn more at/i)===null
+- description: 'outline from brief 7: A novel teaches empathy only when the re'
+  vars:
+    slot_minutes: 10
+    target_wpm: 150
+    word_budget: 1450
+    structure_template: ted_four_beat
+    idea_brief:
+      idea: 'A novel teaches empathy only when the reader is uncomfortable. I mean this literally: reading any fiction builds
+        empathy is the belief most people hold, and I have watched it fail.'
+      belief: Reading any fiction builds empathy. The people who disagree are reading researchers who find no effect, and
+        their reason is that the current way is cheaper and familiar.
+      story: 'One specific moment: in 2016 I stood in a room where everyone could see the problem and nobody spoke. I remember
+        the hum of the monitor and the clock at 3:04. A patient later told me what it cost them.'
+      evidence: Classroom study of 200 students (needs source). I also have my own count from two years of notes.
+      action: Pick the book you least want to read
+      why_me: I have done this work for over a decade and have never shared this idea from a stage.
+    idea_json:
+      throughline: A novel teaches empathy only when the reader is uncomfortable
+      belief_challenged: Reading any fiction builds empathy
+      antagonist: Reading researchers who find no effect
+      evidence_notes: Classroom study of 200 students (needs source)
+      audience_action: Pick the book you least want to read
+    expansion_json: {}
+    profile:
+      segment: author
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.sections.length>=4 && o.sections.some(s=>s.ending_point===true) && ['hook','care','idea'].includes(o.sections[0].kind)
+  - type: javascript
+    value: const o=JSON.parse(output); const idx=o.sections.findIndex(s=>s.kind==='idea'); idx>=0 && idx<=1
+  - type: javascript
+    value: const o=JSON.parse(output); JSON.stringify(o).match(/my book|available on Amazon|book me|learn more at/i)===null
+- description: 'outline from brief 8: Layoffs announced on Fridays cost more t'
+  vars:
+    slot_minutes: 10
+    target_wpm: 150
+    word_budget: 1450
+    structure_template: ted_four_beat
+    idea_brief:
+      idea: 'Layoffs announced on Fridays cost more than layoffs announced on Mondays. I mean this literally: timing does
+        not change the cost of a layoff is the belief most people hold, and I have watched it fail.'
+      belief: Timing does not change the cost of a layoff. The people who disagree are hr leaders who prefer the weekend buffer,
+        and their reason is that the current way is cheaper and familiar.
+      story: 'One specific moment: in 2016 I stood in a room where everyone could see the problem and nobody spoke. I remember
+        the hum of the monitor and the clock at 3:04. A colleague later told me what it cost them.'
+      evidence: Turnover data from 14 companies (needs source). I also have my own count from two years of notes.
+      action: Move your hard news to Monday morning
+      why_me: I have done this work for over a decade and have never shared this idea from a stage.
+    idea_json:
+      throughline: Layoffs announced on Fridays cost more than layoffs announced on Mondays
+      belief_challenged: Timing does not change the cost of a layoff
+      antagonist: HR leaders who prefer the weekend buffer
+      evidence_notes: Turnover data from 14 companies (needs source)
+      audience_action: Move your hard news to Monday morning
+    expansion_json: {}
+    profile:
+      segment: executive
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.sections.length>=4 && o.sections.some(s=>s.ending_point===true) && ['hook','care','idea'].includes(o.sections[0].kind)
+  - type: javascript
+    value: const o=JSON.parse(output); const idx=o.sections.findIndex(s=>s.kind==='idea'); idx>=0 && idx<=1
+  - type: javascript
+    value: const o=JSON.parse(output); JSON.stringify(o).match(/my book|available on Amazon|book me|learn more at/i)===null
+- description: 'outline from brief 9: Mathematics anxiety is caught from paren'
+  vars:
+    slot_minutes: 10
+    target_wpm: 150
+    word_budget: 1450
+    structure_template: ted_four_beat
+    idea_brief:
+      idea: 'Mathematics anxiety is caught from parents, not from teachers. I mean this literally: school causes maths anxiety
+        is the belief most people hold, and I have watched it fail.'
+      belief: School causes maths anxiety. The people who disagree are teachers' unions and curriculum designers, and their
+        reason is that the current way is cheaper and familiar.
+      story: 'One specific moment: in 2016 I stood in a room where everyone could see the problem and nobody spoke. I remember
+        the hum of the monitor and the clock at 3:04. My sister later told me what it cost them.'
+      evidence: Longitudinal study of 1,200 children (needs source). I also have my own count from two years of notes.
+      action: Say one kind thing about numbers at dinner
+      why_me: I have done this work for over a decade and have never shared this idea from a stage.
+    idea_json:
+      throughline: Mathematics anxiety is caught from parents, not from teachers
+      belief_challenged: School causes maths anxiety
+      antagonist: Teachers' unions and curriculum designers
+      evidence_notes: Longitudinal study of 1,200 children (needs source)
+      audience_action: Say one kind thing about numbers at dinner
+    expansion_json: {}
+    profile:
+      segment: academic
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.sections.length>=4 && o.sections.some(s=>s.ending_point===true) && ['hook','care','idea'].includes(o.sections[0].kind)
+  - type: javascript
+    value: const o=JSON.parse(output); const idx=o.sections.findIndex(s=>s.kind==='idea'); idx>=0 && idx<=1
+  - type: javascript
+    value: const o=JSON.parse(output); JSON.stringify(o).match(/my book|available on Amazon|book me|learn more at/i)===null
+- description: 'outline from brief 10: The chai stall is India''s most effective'
+  vars:
+    slot_minutes: 10
+    target_wpm: 150
+    word_budget: 1450
+    structure_template: ted_four_beat
+    idea_brief:
+      idea: 'The chai stall is India''s most effective classroom. I mean this literally: learning happens in schools is the
+        belief most people hold, and I have watched it fail.'
+      belief: Learning happens in schools. The people who disagree are education ministry planners, and their reason is that
+        the current way is cheaper and familiar.
+      story: 'One specific moment: in 2016 I stood in a room where everyone could see the problem and nobody spoke. I remember
+        the hum of the monitor and the clock at 3:04. A patient later told me what it cost them.'
+      evidence: Ethnography in 20 towns (needs source). I also have my own count from two years of notes.
+      action: Ask a question at the next stall you visit
+      why_me: I have done this work for over a decade and have never shared this idea from a stage.
+    idea_json:
+      throughline: The chai stall is India's most effective classroom
+      belief_challenged: Learning happens in schools
+      antagonist: Education ministry planners
+      evidence_notes: Ethnography in 20 towns (needs source)
+      audience_action: Ask a question at the next stall you visit
+    expansion_json: {}
+    profile:
+      segment: india
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.sections.length>=4 && o.sections.some(s=>s.ending_point===true) && ['hook','care','idea'].includes(o.sections[0].kind)
+  - type: javascript
+    value: const o=JSON.parse(output); const idx=o.sections.findIndex(s=>s.kind==='idea'); idx>=0 && idx<=1
+  - type: javascript
+    value: const o=JSON.parse(output); JSON.stringify(o).match(/my book|available on Amazon|book me|learn more at/i)===null
+- description: 'outline from brief 11: Feedback lands only when it arrives befo'
+  vars:
+    slot_minutes: 10
+    target_wpm: 150
+    word_budget: 1450
+    structure_template: ted_four_beat
+    idea_brief:
+      idea: 'Feedback lands only when it arrives before the person asks for it. I mean this literally: feedback should be
+        requested is the belief most people hold, and I have watched it fail.'
+      belief: Feedback should be requested. The people who disagree are coaches who teach 'ask first', and their reason is
+        that the current way is cheaper and familiar.
+      story: 'One specific moment: in 2016 I stood in a room where everyone could see the problem and nobody spoke. I remember
+        the hum of the monitor and the clock at 3:04. A colleague later told me what it cost them.'
+      evidence: Observation of 80 feedback conversations (needs source). I also have my own count from two years of notes.
+      action: Give one piece of unrequested praise today
+      why_me: I have done this work for over a decade and have never shared this idea from a stage.
+    idea_json:
+      throughline: Feedback lands only when it arrives before the person asks for it
+      belief_challenged: Feedback should be requested
+      antagonist: Coaches who teach 'ask first'
+      evidence_notes: Observation of 80 feedback conversations (needs source)
+      audience_action: Give one piece of unrequested praise today
+    expansion_json: {}
+    profile:
+      segment: coach
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.sections.length>=4 && o.sections.some(s=>s.ending_point===true) && ['hook','care','idea'].includes(o.sections[0].kind)
+  - type: javascript
+    value: const o=JSON.parse(output); const idx=o.sections.findIndex(s=>s.kind==='idea'); idx>=0 && idx<=1
+  - type: javascript
+    value: const o=JSON.parse(output); JSON.stringify(o).match(/my book|available on Amazon|book me|learn more at/i)===null
+- description: 'outline from brief 12: A memoir is an argument, not a diary'
+  vars:
+    slot_minutes: 10
+    target_wpm: 150
+    word_budget: 1450
+    structure_template: ted_four_beat
+    idea_brief:
+      idea: 'A memoir is an argument, not a diary. I mean this literally: memoirs record what happened is the belief most
+        people hold, and I have watched it fail.'
+      belief: Memoirs record what happened. The people who disagree are memoir purists, and their reason is that the current
+        way is cheaper and familiar.
+      story: 'One specific moment: in 2016 I stood in a room where everyone could see the problem and nobody spoke. I remember
+        the hum of the monitor and the clock at 3:04. A patient later told me what it cost them.'
+      evidence: Analysis of 50 bestselling memoirs (needs source). I also have my own count from two years of notes.
+      action: Write one sentence stating what your life proves
+      why_me: I have done this work for over a decade and have never shared this idea from a stage.
+    idea_json:
+      throughline: A memoir is an argument, not a diary
+      belief_challenged: Memoirs record what happened
+      antagonist: Memoir purists
+      evidence_notes: Analysis of 50 bestselling memoirs (needs source)
+      audience_action: Write one sentence stating what your life proves
+    expansion_json: {}
+    profile:
+      segment: author
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.sections.length>=4 && o.sections.some(s=>s.ending_point===true) && ['hook','care','idea'].includes(o.sections[0].kind)
+  - type: javascript
+    value: const o=JSON.parse(output); const idx=o.sections.findIndex(s=>s.kind==='idea'); idx>=0 && idx<=1
+  - type: javascript
+    value: const o=JSON.parse(output); JSON.stringify(o).match(/my book|available on Amazon|book me|learn more at/i)===null
+- description: 'outline from brief 13: A company''s culture is what it tolerates'
+  vars:
+    slot_minutes: 10
+    target_wpm: 150
+    word_budget: 1450
+    structure_template: ted_four_beat
+    idea_brief:
+      idea: 'A company''s culture is what it tolerates on its worst day. I mean this literally: culture is what is written
+        on the wall is the belief most people hold, and I have watched it fail.'
+      belief: Culture is what is written on the wall. The people who disagree are values consultants, and their reason is
+        that the current way is cheaper and familiar.
+      story: 'One specific moment: in 2016 I stood in a room where everyone could see the problem and nobody spoke. I remember
+        the hum of the monitor and the clock at 3:04. A colleague later told me what it cost them.'
+      evidence: Interviews after six crises (needs source). I also have my own count from two years of notes.
+      action: Name the thing you tolerated last week
+      why_me: I have done this work for over a decade and have never shared this idea from a stage.
+    idea_json:
+      throughline: A company's culture is what it tolerates on its worst day
+      belief_challenged: Culture is what is written on the wall
+      antagonist: Values consultants
+      evidence_notes: Interviews after six crises (needs source)
+      audience_action: Name the thing you tolerated last week
+    expansion_json: {}
+    profile:
+      segment: executive
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.sections.length>=4 && o.sections.some(s=>s.ending_point===true) && ['hook','care','idea'].includes(o.sections[0].kind)
+  - type: javascript
+    value: const o=JSON.parse(output); const idx=o.sections.findIndex(s=>s.kind==='idea'); idx>=0 && idx<=1
+  - type: javascript
+    value: const o=JSON.parse(output); JSON.stringify(o).match(/my book|available on Amazon|book me|learn more at/i)===null
+- description: 'outline from brief 14: Sleep is when the brain decides what was'
+  vars:
+    slot_minutes: 10
+    target_wpm: 150
+    word_budget: 1450
+    structure_template: ted_four_beat
+    idea_brief:
+      idea: 'Sleep is when the brain decides what was worth learning. I mean this literally: sleep rests the brain is the
+        belief most people hold, and I have watched it fail.'
+      belief: Sleep rests the brain. The people who disagree are productivity gurus who praise four hours, and their reason
+        is that the current way is cheaper and familiar.
+      story: 'One specific moment: in 2016 I stood in a room where everyone could see the problem and nobody spoke. I remember
+        the hum of the monitor and the clock at 3:04. A colleague later told me what it cost them.'
+      evidence: Memory consolidation studies (needs source). I also have my own count from two years of notes.
+      action: Protect the hour before sleep from screens
+      why_me: I have done this work for over a decade and have never shared this idea from a stage.
+    idea_json:
+      throughline: Sleep is when the brain decides what was worth learning
+      belief_challenged: Sleep rests the brain
+      antagonist: Productivity gurus who praise four hours
+      evidence_notes: Memory consolidation studies (needs source)
+      audience_action: Protect the hour before sleep from screens
+    expansion_json: {}
+    profile:
+      segment: academic
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.sections.length>=4 && o.sections.some(s=>s.ending_point===true) && ['hook','care','idea'].includes(o.sections[0].kind)
+  - type: javascript
+    value: const o=JSON.parse(output); const idx=o.sections.findIndex(s=>s.kind==='idea'); idx>=0 && idx<=1
+  - type: javascript
+    value: const o=JSON.parse(output); JSON.stringify(o).match(/my book|available on Amazon|book me|learn more at/i)===null
+- description: 'outline from brief 15: Village water committees outperform city'
+  vars:
+    slot_minutes: 10
+    target_wpm: 150
+    word_budget: 1450
+    structure_template: ted_four_beat
+    idea_brief:
+      idea: 'Village water committees outperform city utilities on one measure: trust. I mean this literally: scale fixes
+        water supply is the belief most people hold, and I have watched it fail.'
+      belief: Scale fixes water supply. The people who disagree are infrastructure economists, and their reason is that the
+        current way is cheaper and familiar.
+      story: 'One specific moment: in 2016 I stood in a room where everyone could see the problem and nobody spoke. I remember
+        the hum of the monitor and the clock at 3:04. A colleague later told me what it cost them.'
+      evidence: Survey of 40 committees in Maharashtra (needs source). I also have my own count from two years of notes.
+      action: Meet the person who manages your water
+      why_me: I have done this work for over a decade and have never shared this idea from a stage.
+    idea_json:
+      throughline: 'Village water committees outperform city utilities on one measure: trust'
+      belief_challenged: Scale fixes water supply
+      antagonist: Infrastructure economists
+      evidence_notes: Survey of 40 committees in Maharashtra (needs source)
+      audience_action: Meet the person who manages your water
+    expansion_json: {}
+    profile:
+      segment: india
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.sections.length>=4 && o.sections.some(s=>s.ending_point===true) && ['hook','care','idea'].includes(o.sections[0].kind)
+  - type: javascript
+    value: const o=JSON.parse(output); const idx=o.sections.findIndex(s=>s.kind==='idea'); idx>=0 && idx<=1
+  - type: javascript
+    value: const o=JSON.parse(output); JSON.stringify(o).match(/my book|available on Amazon|book me|learn more at/i)===null
+- description: 'outline from brief 16 (thin): Burnout is a boundary problem disguised '
+  vars:
+    slot_minutes: 10
+    target_wpm: 150
+    word_budget: 1450
+    structure_template: ted_four_beat
+    idea_brief:
+      idea: 'Burnout is a boundary problem disguised as a workload problem. I mean this literally: burnout comes from too
+        much work is the belief most people hold, and I have watched it fail.'
+      belief: Burnout comes from too much work. The people who disagree are workload reformers, and their reason is that the
+        current way is cheaper and familiar.
+      story: ''
+      evidence: ''
+      action: Say no once this week and watch what happens
+      why_me: I have done this work for over a decade and have never shared this idea from a stage.
+    idea_json:
+      throughline: Burnout is a boundary problem disguised as a workload problem
+      belief_challenged: Burnout comes from too much work
+      antagonist: Workload reformers
+      evidence_notes: Coaching notes from 200 clients, anonymised (needs source)
+      audience_action: Say no once this week and watch what happens
+    expansion_json: {}
+    profile:
+      segment: coach
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.sections.length>=4 && o.sections.some(s=>s.ending_point===true) && ['hook','care','idea'].includes(o.sections[0].kind)
+  - type: javascript
+    value: const o=JSON.parse(output); const idx=o.sections.findIndex(s=>s.kind==='idea'); idx>=0 && idx<=1
+  - type: javascript
+    value: const o=JSON.parse(output); JSON.stringify(o).match(/my book|available on Amazon|book me|learn more at/i)===null
+  - type: javascript
+    value: const o=JSON.parse(output); o.sections.flatMap(s=>s.talking_points).some(p=>p.kind==='to_find')
+  - type: javascript
+    value: const o=JSON.parse(output); !o.sections.flatMap(s=>s.talking_points).some(p=>p.kind==='story' && p.source!=='to_find'
+      && p.text.length>40)
+- description: 'outline from brief 17 (thin): Children learn to read faster from books'
+  vars:
+    slot_minutes: 10
+    target_wpm: 150
+    word_budget: 1450
+    structure_template: ted_four_beat
+    idea_brief:
+      idea: 'Children learn to read faster from books that scare them a little. I mean this literally: reading should be gentle
+        is the belief most people hold, and I have watched it fail.'
+      belief: Reading should be gentle. The people who disagree are protective parents, and their reason is that the current
+        way is cheaper and familiar.
+      story: ''
+      evidence: ''
+      action: Read one slightly scary story aloud
+      why_me: I have done this work for over a decade and have never shared this idea from a stage.
+    idea_json:
+      throughline: Children learn to read faster from books that scare them a little
+      belief_challenged: Reading should be gentle
+      antagonist: Protective parents
+      evidence_notes: Classroom reading logs across 12 schools (needs source)
+      audience_action: Read one slightly scary story aloud
+    expansion_json: {}
+    profile:
+      segment: author
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.sections.length>=4 && o.sections.some(s=>s.ending_point===true) && ['hook','care','idea'].includes(o.sections[0].kind)
+  - type: javascript
+    value: const o=JSON.parse(output); const idx=o.sections.findIndex(s=>s.kind==='idea'); idx>=0 && idx<=1
+  - type: javascript
+    value: const o=JSON.parse(output); JSON.stringify(o).match(/my book|available on Amazon|book me|learn more at/i)===null
+  - type: javascript
+    value: const o=JSON.parse(output); o.sections.flatMap(s=>s.talking_points).some(p=>p.kind==='to_find')
+  - type: javascript
+    value: const o=JSON.parse(output); !o.sections.flatMap(s=>s.talking_points).some(p=>p.kind==='story' && p.source!=='to_find'
+      && p.text.length>40)
+- description: 'outline from brief 18 (thin): The founder who stays too long is the co'
+  vars:
+    slot_minutes: 10
+    target_wpm: 150
+    word_budget: 1450
+    structure_template: ted_four_beat
+    idea_brief:
+      idea: 'The founder who stays too long is the company''s biggest unpriced risk. I mean this literally: founders should
+        lead as long as they can is the belief most people hold, and I have watched it fail.'
+      belief: Founders should lead as long as they can. The people who disagree are founder-led investors, and their reason
+        is that the current way is cheaper and familiar.
+      story: ''
+      evidence: ''
+      action: Write your own succession date
+      why_me: I have done this work for over a decade and have never shared this idea from a stage.
+    idea_json:
+      throughline: The founder who stays too long is the company's biggest unpriced risk
+      belief_challenged: Founders should lead as long as they can
+      antagonist: Founder-led investors
+      evidence_notes: Outcomes of 70 founder transitions (needs source)
+      audience_action: Write your own succession date
+    expansion_json: {}
+    profile:
+      segment: executive
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.sections.length>=4 && o.sections.some(s=>s.ending_point===true) && ['hook','care','idea'].includes(o.sections[0].kind)
+  - type: javascript
+    value: const o=JSON.parse(output); const idx=o.sections.findIndex(s=>s.kind==='idea'); idx>=0 && idx<=1
+  - type: javascript
+    value: const o=JSON.parse(output); JSON.stringify(o).match(/my book|available on Amazon|book me|learn more at/i)===null
+  - type: javascript
+    value: const o=JSON.parse(output); o.sections.flatMap(s=>s.talking_points).some(p=>p.kind==='to_find')
+  - type: javascript
+    value: const o=JSON.parse(output); !o.sections.flatMap(s=>s.talking_points).some(p=>p.kind==='story' && p.source!=='to_find'
+      && p.text.length>40)
+- description: 'outline from brief 19 (thin): Honeybees vote, and they are better at i'
+  vars:
+    slot_minutes: 10
+    target_wpm: 150
+    word_budget: 1450
+    structure_template: ted_four_beat
+    idea_brief:
+      idea: 'Honeybees vote, and they are better at it than we are. I mean this literally: animals do not make collective
+        decisions is the belief most people hold, and I have watched it fail.'
+      belief: Animals do not make collective decisions. The people who disagree are political scientists, and their reason
+        is that the current way is cheaper and familiar.
+      story: ''
+      evidence: ''
+      action: Let the quietest option speak in your next vote
+      why_me: I have done this work for over a decade and have never shared this idea from a stage.
+    idea_json:
+      throughline: Honeybees vote, and they are better at it than we are
+      belief_challenged: Animals do not make collective decisions
+      antagonist: Political scientists
+      evidence_notes: Swarm decision research (needs source)
+      audience_action: Let the quietest option speak in your next vote
+    expansion_json: {}
+    profile:
+      segment: academic
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.sections.length>=4 && o.sections.some(s=>s.ending_point===true) && ['hook','care','idea'].includes(o.sections[0].kind)
+  - type: javascript
+    value: const o=JSON.parse(output); const idx=o.sections.findIndex(s=>s.kind==='idea'); idx>=0 && idx<=1
+  - type: javascript
+    value: const o=JSON.parse(output); JSON.stringify(o).match(/my book|available on Amazon|book me|learn more at/i)===null
+  - type: javascript
+    value: const o=JSON.parse(output); o.sections.flatMap(s=>s.talking_points).some(p=>p.kind==='to_find')
+  - type: javascript
+    value: const o=JSON.parse(output); !o.sections.flatMap(s=>s.talking_points).some(p=>p.kind==='story' && p.source!=='to_find'
+      && p.text.length>40)
+- description: 'outline from brief 20 (thin): Street vendors are the city''s most accur'
+  vars:
+    slot_minutes: 10
+    target_wpm: 150
+    word_budget: 1450
+    structure_template: ted_four_beat
+    idea_brief:
+      idea: 'Street vendors are the city''s most accurate economists. I mean this literally: economic data comes from statistics
+        offices is the belief most people hold, and I have watched it fail.'
+      belief: Economic data comes from statistics offices. The people who disagree are statisticians, and their reason is
+        that the current way is cheaper and familiar.
+      story: ''
+      evidence: ''
+      action: Ask a vendor what changed this month
+      why_me: I have done this work for over a decade and have never shared this idea from a stage.
+    idea_json:
+      throughline: Street vendors are the city's most accurate economists
+      belief_challenged: Economic data comes from statistics offices
+      antagonist: Statisticians
+      evidence_notes: Vendor price diaries in three cities (needs source)
+      audience_action: Ask a vendor what changed this month
+    expansion_json: {}
+    profile:
+      segment: india
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.sections.length>=4 && o.sections.some(s=>s.ending_point===true) && ['hook','care','idea'].includes(o.sections[0].kind)
+  - type: javascript
+    value: const o=JSON.parse(output); const idx=o.sections.findIndex(s=>s.kind==='idea'); idx>=0 && idx<=1
+  - type: javascript
+    value: const o=JSON.parse(output); JSON.stringify(o).match(/my book|available on Amazon|book me|learn more at/i)===null
+  - type: javascript
+    value: const o=JSON.parse(output); o.sections.flatMap(s=>s.talking_points).some(p=>p.kind==='to_find')
+  - type: javascript
+    value: const o=JSON.parse(output); !o.sections.flatMap(s=>s.talking_points).some(p=>p.kind==='story' && p.source!=='to_find'
+      && p.text.length>40)

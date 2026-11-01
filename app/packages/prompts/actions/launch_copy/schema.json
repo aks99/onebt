@@ -1,0 +1,42 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "personal_email": {
+      "type": "string"
+    },
+    "linkedin_post": {
+      "type": "string"
+    },
+    "newsletter_block": {
+      "type": "string"
+    },
+    "email_signature_line": {
+      "type": "string"
+    },
+    "ten_second_angles": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "blogger_outreach": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "bio_line": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "personal_email",
+    "linkedin_post",
+    "newsletter_block",
+    "email_signature_line",
+    "ten_second_angles",
+    "blogger_outreach",
+    "bio_line"
+  ]
+}

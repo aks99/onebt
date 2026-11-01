@@ -1,0 +1,33 @@
+name: Prompt evals (Promptfoo, blueprint 13.15)
+on:
+  push:
+    paths: ["app/packages/prompts/**", "app/packages/evals/**", ".github/workflows/evals.yml"]
+  workflow_dispatch:
+jobs:
+  structure:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: app } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with: { version: 10 }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: pnpm, cache-dependency-path: app/pnpm-lock.yaml }
+      - run: pnpm install --frozen-lockfile
+      - run: node packages/prompts/scripts/check-prompts.mjs
+      - run: node packages/evals/scripts/check-suite.mjs
+  evals:
+    needs: structure
+    runs-on: ubuntu-latest
+    if: ${{ secrets.ANTHROPIC_API_KEY != '' }}
+    defaults: { run: { working-directory: app/packages/evals } }
+    env: { ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }} }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - name: Run every suite; a regression fails the job and blocks deploy
+        run: bash scripts/run-all.sh
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: promptfoo-results, path: app/packages/evals/results/*.json }

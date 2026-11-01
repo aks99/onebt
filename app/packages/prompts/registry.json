@@ -1,0 +1,33 @@
+{
+  "$comment": "One row per action. model per blueprint 12.4; credits per 10.3; allowance = the member-facing counter consumed; fairUse = counter and cap for 'unlimited' items; plan = minimum plan (spark means free members may use it within their one-time allowances); gates = server-side checks runAiAction enforces before any model call; lint = run the Content-Guideline Linter on the output; version = active prompt file.",
+  "actions": {
+    "linter":               { "model": "haiku",  "credits": 0,  "plan": "spark", "gates": [], "lint": false, "version": "v1", "maxTokens": 1500 },
+    "idea_generator":       { "model": "sonnet", "credits": 10, "plan": "spark", "allowance": "idea_batch", "gates": ["dossier_min_300"], "lint": true, "version": "v1", "maxTokens": 4000 },
+    "idea_scorecard":       { "model": "haiku",  "credits": 5,  "plan": "spark", "fairUse": { "key": "scorecards", "cap": 60 }, "gates": [], "lint": false, "version": "v1", "maxTokens": 2000 },
+    "idea_expansion":       { "model": "sonnet", "credits": 10, "plan": "spark", "fairUse": { "key": "expansions", "cap": 60 }, "gates": [], "lint": true, "version": "v1", "maxTokens": 3000 },
+    "throughline_refine":   { "model": "sonnet", "credits": 3,  "plan": "spark", "fairUse": { "key": "scorecards", "cap": 60 }, "gates": [], "lint": true, "version": "v1", "maxTokens": 800 },
+    "brief_completeness":   { "model": "haiku",  "credits": 2,  "plan": "spark", "gates": [], "lint": false, "version": "v1", "maxTokens": 1500 },
+    "prior_stages_framing": { "model": "sonnet", "credits": 5,  "plan": "member", "fairUse": { "key": "framing", "cap": 20 }, "gates": ["idea_locked"], "lint": true, "version": "v1", "maxTokens": 1200 },
+    "experience_summary":   { "model": "sonnet", "credits": 5,  "plan": "member", "fairUse": { "key": "framing", "cap": 20 }, "gates": ["idea_locked"], "lint": true, "version": "v1", "maxTokens": 800 },
+    "readiness_review":     { "model": "haiku",  "credits": 5,  "plan": "member", "fairUse": { "key": "readiness", "cap": 60 }, "gates": [], "lint": false, "version": "v1", "maxTokens": 4000 },
+    "pitch_pack":           { "model": "sonnet", "credits": 15, "plan": "spark", "gates": ["idea_locked"], "lint": true, "version": "v1", "maxTokens": 5000 },
+    "personalization":      { "model": "sonnet", "credits": 15, "plan": "member", "allowance": "tailored_application", "gates": ["research_step_complete", "organizer_ai_policy"], "lint": true, "version": "v1", "maxTokens": 4000 },
+    "outline":              { "model": "sonnet", "credits": 20, "plan": "member", "allowance": "outline", "gates": ["brief_minimum", "idea_locked"], "lint": true, "version": "v1", "maxTokens": 6000 },
+    "script_section":       { "model": "sonnet", "credits": 60, "plan": "member", "allowance": "script_draft", "allowanceOncePer": "script_version", "gates": ["outline_final"], "lint": true, "version": "v1", "maxTokens": 3000 },
+    "editing_pass":         { "model": "sonnet", "credits": 25, "plan": "member", "allowance": "editing_pass", "gates": [], "lint": true, "version": "v1", "maxTokens": 6000 },
+    "factcheck":            { "model": "haiku",  "credits": 10, "plan": "member", "fairUse": { "key": "factcheck", "cap": 10 }, "gates": [], "lint": false, "version": "v1", "maxTokens": 4000 },
+    "beat_map":             { "model": "haiku",  "credits": 2,  "plan": "member", "gates": ["script_locked"], "lint": false, "version": "v1", "maxTokens": 6000 },
+    "run_log_summary":      { "model": "haiku",  "credits": 1,  "plan": "member", "flag": "run_log", "gates": [], "lint": false, "version": "v1", "maxTokens": 600 },
+    "clip_plan":            { "model": "sonnet", "credits": 10, "plan": "member", "flag": "clip_plan", "gates": [], "lint": true, "version": "v1", "maxTokens": 3000 },
+    "launch_copy":          { "model": "sonnet", "credits": 15, "plan": "member", "gates": [], "lint": true, "version": "v1", "maxTokens": 4000 },
+    "upload_pack":          { "model": "sonnet", "credits": 5,  "plan": "member", "gates": [], "lint": true, "version": "v1", "maxTokens": 1500 },
+    "launch_plan":          { "model": "sonnet", "credits": 5,  "plan": "member", "gates": [], "lint": false, "version": "v1", "maxTokens": 3000 },
+    "bio_updater":          { "model": "sonnet", "credits": 3,  "plan": "spark", "gates": [], "lint": true, "version": "v1", "maxTokens": 1200 },
+    "event_tagging":        { "model": "haiku",  "credits": 0,  "plan": "curator", "gates": [], "lint": false, "version": "v1", "maxTokens": 600 },
+    "idea_test":            { "model": "haiku",  "credits": 0,  "plan": "public", "gates": [], "lint": false, "version": "v1", "maxTokens": 600 }
+  },
+  "models": {
+    "sonnet": { "id": "claude-sonnet-5-5", "inputPerMTok": 2.0, "outputPerMTok": 10.0, "cacheReadPerMTok": 0.10 },
+    "haiku":  { "id": "claude-haiku-5-5",  "inputPerMTok": 0.10, "outputPerMTok": 0.50, "cacheReadPerMTok": 0.01 }
+  }
+}

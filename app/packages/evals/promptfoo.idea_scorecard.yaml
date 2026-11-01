@@ -1,0 +1,58 @@
+description: 'One Big Talk eval: idea_scorecard (blueprint 13.15)'
+prompts:
+- file://prompts/render.mjs:idea_scorecard
+providers:
+- id: anthropic:messages:claude-haiku-5-5
+  label: idea_scorecard (haiku)
+  config:
+    max_tokens: 2000
+    temperature: 0
+    tools:
+    - name: return_result
+      description: Return the result in the required structure.
+      input_schema:
+        type: object
+        additionalProperties: false
+        properties:
+          scores:
+            type: array
+            items:
+              type: object
+              additionalProperties: false
+              properties:
+                criterion:
+                  type: integer
+                  minimum: 1
+                  maximum: 9
+                level:
+                  type: integer
+                  minimum: 1
+                  maximum: 4
+                reason:
+                  type: string
+              required:
+              - criterion
+              - level
+              - reason
+          gate_passed:
+            type: boolean
+          fixes:
+            type: array
+            items:
+              type: string
+          similar_talks_to_check:
+            type: array
+            items:
+              type: string
+        required:
+        - scores
+        - gate_passed
+        - fixes
+        - similar_talks_to_check
+    tool_choice:
+      type: tool
+      name: return_result
+defaultTest:
+  options:
+    transform: 'typeof output === ''object'' ? JSON.stringify(output) : output'
+tests: file://tests/idea_scorecard.yaml

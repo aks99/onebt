@@ -1,0 +1,44 @@
+description: 'One Big Talk eval: prior_stages (blueprint 13.15)'
+prompts:
+- file://prompts/render.mjs:prior_stages_framing
+providers:
+- id: anthropic:messages:claude-sonnet-5-5
+  label: prior_stages_framing (sonnet)
+  config:
+    max_tokens: 1200
+    temperature: 0
+    tools:
+    - name: return_result
+      description: Return the result in the required structure.
+      input_schema:
+        type: object
+        additionalProperties: false
+        properties:
+          experience_sentences:
+            type: string
+          first_time_sentence:
+            type: string
+          overlap_warning:
+            type: array
+            items:
+              type: object
+              additionalProperties: false
+              properties:
+                entry_id:
+                  type: string
+                why:
+                  type: string
+              required:
+              - entry_id
+              - why
+        required:
+        - experience_sentences
+        - first_time_sentence
+        - overlap_warning
+    tool_choice:
+      type: tool
+      name: return_result
+defaultTest:
+  options:
+    transform: 'typeof output === ''object'' ? JSON.stringify(output) : output'
+tests: file://tests/prior_stages.yaml

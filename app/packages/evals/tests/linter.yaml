@@ -1,0 +1,881 @@
+- description: 'must flag R2: My book, available on Amazon, explains the method '
+  vars:
+    text: My book, available on Amazon, explains the method in detail.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R2')
+- description: 'must flag R2: Book me for your next leadership offsite.'
+  vars:
+    text: Book me for your next leadership offsite.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R2')
+- description: 'must flag R2: Learn more at my website after the talk.'
+  vars:
+    text: Learn more at my website after the talk.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R2')
+- description: 'must flag R2: Our program has helped two thousand clients.'
+  vars:
+    text: Our program has helped two thousand clients.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R2')
+- description: 'must flag R2: Buy the workbook to go deeper.'
+  vars:
+    text: Buy the workbook to go deeper.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R2')
+- description: 'must flag R2: Enroll in my six-week course for the full system.'
+  vars:
+    text: Enroll in my six-week course for the full system.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R2')
+- description: 'must flag R2: My company builds the software that fixes this.'
+  vars:
+    text: My company builds the software that fixes this.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R2')
+- description: 'must flag R2: Hire us and we will install the checklist in your '
+  vars:
+    text: Hire us and we will install the checklist in your hospital.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R2')
+- description: 'must flag R2: Donate to the foundation I run.'
+  vars:
+    text: Donate to the foundation I run.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R2')
+- description: 'must flag R2: The second edition of my book comes out in March.'
+  vars:
+    text: The second edition of my book comes out in March.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R2')
+- description: 'must flag R2: Visit the link in my bio.'
+  vars:
+    text: Visit the link in my bio.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R2')
+- description: 'must flag R2: My podcast covers this every week.'
+  vars:
+    text: My podcast covers this every week.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R2')
+- description: 'must flag R3: As a coach, I see this in every client.'
+  vars:
+    text: As a coach, I see this in every client.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R3')
+- description: 'must flag R3: As a professional speaker I have shared stages wor'
+  vars:
+    text: As a professional speaker I have shared stages worldwide.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R3')
+- description: 'must flag R3: I am a motivational speaker and this is my signatu'
+  vars:
+    text: I am a motivational speaker and this is my signature keynote.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R3')
+- description: 'must flag R3: I can speak on any topic you need.'
+  vars:
+    text: I can speak on any topic you need.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R3')
+- description: 'must flag R3: Follow your passion and the rest will follow.'
+  vars:
+    text: Follow your passion and the rest will follow.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R3')
+- description: 'must flag R3: Be your authentic self and success arrives.'
+  vars:
+    text: Be your authentic self and success arrives.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R3')
+- description: 'must flag R3: As a keynote speaker, I know what audiences want.'
+  vars:
+    text: As a keynote speaker, I know what audiences want.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R3')
+- description: 'must flag R3: I am a life coach who helps people unlock their po'
+  vars:
+    text: I am a life coach who helps people unlock their potential.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R3')
+- description: 'must flag R3: My audiences always leave inspired to chase their '
+  vars:
+    text: My audiences always leave inspired to chase their dreams.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R3')
+- description: 'must flag R3: As a certified coach with a five-step framework, I'
+  vars:
+    text: As a certified coach with a five-step framework, I transform teams.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R3')
+- description: 'must flag R3: I have shared this message on many TEDx stages alr'
+  vars:
+    text: I have shared this message on many TEDx stages already.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R3')
+- description: 'must flag R3: Any TEDx event that will have me is a fit.'
+  vars:
+    text: Any TEDx event that will have me is a fit.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R3')
+- description: 'must flag R4: Vote for my party if you want this fixed.'
+  vars:
+    text: Vote for my party if you want this fixed.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R4')
+- description: 'must flag R4: Only through accepting my faith can a person be wh'
+  vars:
+    text: Only through accepting my faith can a person be whole.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R4')
+- description: 'must flag R4: The other side are traitors to this country.'
+  vars:
+    text: The other side are traitors to this country.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R4')
+- description: 'must flag R4: Join our movement and reject the corrupt elite.'
+  vars:
+    text: Join our movement and reject the corrupt elite.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R4')
+- description: 'must flag R4: Manifest abundance and the universe will respond.'
+  vars:
+    text: Manifest abundance and the universe will respond.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R4')
+- description: 'must flag R4: Crystal energy aligns the body''s frequencies.'
+  vars:
+    text: Crystal energy aligns the body's frequencies.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R4')
+- description: 'must flag R5: This diet cures diabetes in ninety days.'
+  vars:
+    text: This diet cures diabetes in ninety days.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R5')
+- description: 'must flag R5: Meditation heals cancer when practised daily.'
+  vars:
+    text: Meditation heals cancer when practised daily.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R5')
+- description: 'must flag R5: Quantum consciousness explains why my method works'
+  vars:
+    text: Quantum consciousness explains why my method works.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R5')
+- description: 'must flag R5: Energy healing removes trauma from the cells.'
+  vars:
+    text: Energy healing removes trauma from the cells.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R5')
+- description: 'must flag R5: Vaccines are the cause of this epidemic of autism.'
+  vars:
+    text: Vaccines are the cause of this epidemic of autism.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R5')
+- description: 'must flag R5: My supplement reverses ageing.'
+  vars:
+    text: My supplement reverses ageing.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R5')
+- description: 'must flag R5: This technique guarantees weight loss for everyone'
+  vars:
+    text: This technique guarantees weight loss for everyone.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R5')
+- description: 'must flag R5: Homeopathy treats infections better than antibioti'
+  vars:
+    text: Homeopathy treats infections better than antibiotics.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R5')
+- description: 'must flag R9: This course taught me to write the application thi'
+  vars:
+    text: This course taught me to write the application this way.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R9')
+- description: 'must flag R9: My coach says I should lead with the story.'
+  vars:
+    text: My coach says I should lead with the story.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R9')
+- description: 'must flag R9: I prepared this with One Big Talk.'
+  vars:
+    text: I prepared this with One Big Talk.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R9')
+- description: 'must flag R9: A TEDx coaching program helped me shape this pitch'
+  vars:
+    text: A TEDx coaching program helped me shape this pitch.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R9')
+- description: 'must flag R9: I used an application-writing service for this.'
+  vars:
+    text: I used an application-writing service for this.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R9')
+- description: 'must flag R9: My mentor from the speaker academy reviewed it.'
+  vars:
+    text: My mentor from the speaker academy reviewed it.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R9')
+- description: 'must flag R10: I have given this talk at three conferences.'
+  vars:
+    text: I have given this talk at three conferences.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R10')
+- description: 'must flag R10: I''ve delivered this talk to hospital boards across'
+  vars:
+    text: I've delivered this talk to hospital boards across India.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R10')
+- description: 'must flag R10: I have spoken on this topic many times.'
+  vars:
+    text: I have spoken on this topic many times.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R10')
+- description: 'must flag R10: My signature keynote on this has been seen by thou'
+  vars:
+    text: My signature keynote on this has been seen by thousands.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R10')
+- description: 'must flag R10: Audiences loved this talk when I gave it in Pune.'
+  vars:
+    text: Audiences loved this talk when I gave it in Pune.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R10')
+- description: 'must flag R10: I''ve presented this idea at two universities.'
+  vars:
+    text: I've presented this idea at two universities.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R10')
+- description: 'must flag R10: My TEDx talk at TEDxRiverside covered the same gro'
+  vars:
+    text: My TEDx talk at TEDxRiverside covered the same ground.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R10')
+- description: 'must flag R10: This is a talk I have given dozens of times.'
+  vars:
+    text: This is a talk I have given dozens of times.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R10')
+- description: 'must flag R10: I shared this exact idea on a podcast tour.'
+  vars:
+    text: I shared this exact idea on a podcast tour.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R10')
+- description: 'must flag R10: I have delivered this idea to every team I have le'
+  vars:
+    text: I have delivered this idea to every team I have led.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R10')
+- description: 'must flag R10: This talk is already polished from years on stage.'
+  vars:
+    text: This talk is already polished from years on stage.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R10')
+- description: 'must flag R10: Organizers who booked this talk before can vouch f'
+  vars:
+    text: Organizers who booked this talk before can vouch for it.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R10')
+- description: 'must flag R10: I gave this presentation at my hospital''s grand ro'
+  vars:
+    text: I gave this presentation at my hospital's grand rounds.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R10')
+- description: 'must flag R10: The same talk won an award at a speaking contest.'
+  vars:
+    text: The same talk won an award at a speaking contest.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R10')
+- description: 'must flag R10: I perform this talk regularly for corporate client'
+  vars:
+    text: I perform this talk regularly for corporate clients.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R10')
+- description: 'must flag R10: This is the talk I am known for on the circuit.'
+  vars:
+    text: This is the talk I am known for on the circuit.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.some(f => f.rule === 'R10')
+- description: 'clean: Safety checklists fail when the most junior person'
+  vars:
+    text: Safety checklists fail when the most junior person in the room cannot stop it.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.length === 0 && JSON.parse(output).blocking === false
+- description: 'clean: In 2019 I watched a surgeon read a checklist aloud'
+  vars:
+    text: In 2019 I watched a surgeon read a checklist aloud while nobody listened.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.length === 0 && JSON.parse(output).blocking === false
+- description: 'clean: The evidence suggests a 30 percent drop in complic'
+  vars:
+    text: The evidence suggests a 30 percent drop in complications, but the studies are small.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.length === 0 && JSON.parse(output).blocking === false
+- description: 'clean: I have spent eleven years in operating theatres as'
+  vars:
+    text: I have spent eleven years in operating theatres as a nurse.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.length === 0 && JSON.parse(output).blocking === false
+- description: 'clean: Most hospitals measure compliance, not whether any'
+  vars:
+    text: Most hospitals measure compliance, not whether anyone felt able to speak.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.length === 0 && JSON.parse(output).blocking === false
+- description: 'clean: What if the pause before the first incision belong'
+  vars:
+    text: What if the pause before the first incision belonged to the quietest person?
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.length === 0 && JSON.parse(output).blocking === false
+- description: 'clean: My research followed forty teams for two years.'
+  vars:
+    text: My research followed forty teams for two years.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.length === 0 && JSON.parse(output).blocking === false
+- description: 'clean: The belief I challenge is that reading the list is'
+  vars:
+    text: The belief I challenge is that reading the list is the same as using it.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.length === 0 && JSON.parse(output).blocking === false
+- description: 'clean: This matters now because surgical volume is rising'
+  vars:
+    text: This matters now because surgical volume is rising faster than staffing.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.length === 0 && JSON.parse(output).blocking === false
+- description: 'clean: I am a cardiologist who treats patients in Dallas.'
+  vars:
+    text: I am a cardiologist who treats patients in Dallas.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.length === 0 && JSON.parse(output).blocking === false
+- description: 'clean: The audience can leave with one habit: ask the qui'
+  vars:
+    text: 'The audience can leave with one habit: ask the quietest person first.'
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.length === 0 && JSON.parse(output).blocking === false
+- description: 'clean: I grew up in Chennai and trained in Edinburgh.'
+  vars:
+    text: I grew up in Chennai and trained in Edinburgh.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.length === 0 && JSON.parse(output).blocking === false
+- description: 'clean: Three of my colleagues disagree with me, and I wil'
+  vars:
+    text: Three of my colleagues disagree with me, and I will say why.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.length === 0 && JSON.parse(output).blocking === false
+- description: 'clean: A checklist is a social act dressed as a form.'
+  vars:
+    text: A checklist is a social act dressed as a form.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.length === 0 && JSON.parse(output).blocking === false
+- description: 'clean: I have spoken to audiences of 40 to 400 on adjacen'
+  vars:
+    text: I have spoken to audiences of 40 to 400 on adjacent subjects, and this idea would be shared for the first time on
+      a TEDx stage.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.length === 0 && JSON.parse(output).blocking === false
+- description: 'clean: The data come from the WHO surgical safety program'
+  vars:
+    text: The data come from the WHO surgical safety programme and need a source note.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.length === 0 && JSON.parse(output).blocking === false
+- description: 'clean: We counted interruptions in ninety operations.'
+  vars:
+    text: We counted interruptions in ninety operations.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.length === 0 && JSON.parse(output).blocking === false
+- description: 'clean: I would like a TEDx stage to be the first place th'
+  vars:
+    text: I would like a TEDx stage to be the first place this idea is heard.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.length === 0 && JSON.parse(output).blocking === false
+- description: 'clean: The story I can tell is about one night shift in 2'
+  vars:
+    text: The story I can tell is about one night shift in 2016.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.length === 0 && JSON.parse(output).blocking === false
+- description: 'clean: Teams that rehearsed speaking up had fewer near mi'
+  vars:
+    text: Teams that rehearsed speaking up had fewer near misses, with the caveat that this is observational.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.length === 0 && JSON.parse(output).blocking === false
+- description: 'clean: I teach anaesthetists how to run a timeout.'
+  vars:
+    text: I teach anaesthetists how to run a timeout.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.length === 0 && JSON.parse(output).blocking === false
+- description: 'clean: This idea is rooted in Mumbai hospitals and releva'
+  vars:
+    text: This idea is rooted in Mumbai hospitals and relevant anywhere people work in hierarchies.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.length === 0 && JSON.parse(output).blocking === false
+- description: 'clean: I am happy to be coached and can commit to weekly '
+  vars:
+    text: I am happy to be coached and can commit to weekly rehearsals.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.length === 0 && JSON.parse(output).blocking === false
+- description: 'clean: I have never shared this idea from a stage.'
+  vars:
+    text: I have never shared this idea from a stage.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.length === 0 && JSON.parse(output).blocking === false
+- description: 'clean: My bio: a nurse educator with a doctorate in patie'
+  vars:
+    text: 'My bio: a nurse educator with a doctorate in patient safety.'
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.length === 0 && JSON.parse(output).blocking === false
+- description: 'clean: The talk would run about ten minutes with one stor'
+  vars:
+    text: The talk would run about ten minutes with one story and two numbers.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.length === 0 && JSON.parse(output).blocking === false
+- description: 'clean: I am a physicist who studies how ice forms.'
+  vars:
+    text: I am a physicist who studies how ice forms.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.length === 0 && JSON.parse(output).blocking === false
+- description: 'clean: My evidence is a field study, not a clinical trial'
+  vars:
+    text: My evidence is a field study, not a clinical trial, and I will say so.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.length === 0 && JSON.parse(output).blocking === false
+- description: 'clean: I want the audience to see a form differently, not'
+  vars:
+    text: I want the audience to see a form differently, not to buy anything.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.length === 0 && JSON.parse(output).blocking === false
+- description: 'clean: Who disagrees: surgeons who see the timeout as the'
+  vars:
+    text: 'Who disagrees: surgeons who see the timeout as theatre.'
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.length === 0 && JSON.parse(output).blocking === false
+- description: 'clean: The belief is widespread and understandable.'
+  vars:
+    text: The belief is widespread and understandable.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.length === 0 && JSON.parse(output).blocking === false
+- description: 'clean: In our ward the quietest nurse is usually right.'
+  vars:
+    text: In our ward the quietest nurse is usually right.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.length === 0 && JSON.parse(output).blocking === false
+- description: 'clean: I moved to Toronto in 2010 and lead a small team t'
+  vars:
+    text: I moved to Toronto in 2010 and lead a small team there.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.length === 0 && JSON.parse(output).blocking === false
+- description: 'clean: A winnable first step: one question at the start o'
+  vars:
+    text: 'A winnable first step: one question at the start of every meeting.'
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.length === 0 && JSON.parse(output).blocking === false
+- description: 'clean: I write a newsletter about clinical culture.'
+  vars:
+    text: I write a newsletter about clinical culture.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.length === 0 && JSON.parse(output).blocking === false
+- description: 'clean: This is not medical advice; it is an observation a'
+  vars:
+    text: This is not medical advice; it is an observation about how teams talk.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.length === 0 && JSON.parse(output).blocking === false
+- description: 'clean: My connection to Boulder is the three years I spen'
+  vars:
+    text: My connection to Boulder is the three years I spent at the university hospital.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.length === 0 && JSON.parse(output).blocking === false
+- description: 'clean: The counterargument is that checklists save time, '
+  vars:
+    text: The counterargument is that checklists save time, and I will address it.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.length === 0 && JSON.parse(output).blocking === false
+- description: 'clean: I prefer to build the talk from my own notes rathe'
+  vars:
+    text: I prefer to build the talk from my own notes rather than templates.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.length === 0 && JSON.parse(output).blocking === false
+- description: 'clean: I ran the numbers again and the effect held in two'
+  vars:
+    text: I ran the numbers again and the effect held in two of three units.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.length === 0 && JSON.parse(output).blocking === false
+- description: 'clean: I will bring the annotated script with references.'
+  vars:
+    text: I will bring the annotated script with references.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.length === 0 && JSON.parse(output).blocking === false
+- description: 'clean: The idea applies to cockpits and kitchens as much '
+  vars:
+    text: The idea applies to cockpits and kitchens as much as to operating rooms.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.length === 0 && JSON.parse(output).blocking === false
+- description: 'clean: I have no financial interest in any product mentio'
+  vars:
+    text: I have no financial interest in any product mentioned.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.length === 0 && JSON.parse(output).blocking === false
+- description: 'clean: My work has been peer reviewed in two nursing jour'
+  vars:
+    text: My work has been peer reviewed in two nursing journals.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.length === 0 && JSON.parse(output).blocking === false
+- description: 'clean: I want to reduce the risk of harm, not promise to '
+  vars:
+    text: I want to reduce the risk of harm, not promise to eliminate it.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.length === 0 && JSON.parse(output).blocking === false
+- description: 'clean: The story is about a patient; I have permission to'
+  vars:
+    text: The story is about a patient; I have permission to tell it with a changed name.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.length === 0 && JSON.parse(output).blocking === false
+- description: 'clean: I am still learning how to speak without notes.'
+  vars:
+    text: I am still learning how to speak without notes.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.length === 0 && JSON.parse(output).blocking === false
+- description: 'clean: The talk ends with a picture of a quieter, safer r'
+  vars:
+    text: The talk ends with a picture of a quieter, safer room.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.length === 0 && JSON.parse(output).blocking === false
+- description: 'clean: I can rehearse three to five hours a week from now'
+  vars:
+    text: I can rehearse three to five hours a week from now until the event.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.length === 0 && JSON.parse(output).blocking === false
+- description: 'clean: The theme of your event, Thresholds, is where this'
+  vars:
+    text: The theme of your event, Thresholds, is where this idea lives.
+    context: application
+  assert:
+  - type: is-json
+  - type: javascript
+    value: JSON.parse(output).flags.length === 0 && JSON.parse(output).blocking === false

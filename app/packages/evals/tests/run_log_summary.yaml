@@ -1,0 +1,213 @@
+- description: run log 1
+  vars:
+    slot_s: 600
+    duration_s: 640
+    dropped:
+    - b15
+    - b3
+    - b18
+    forced: nothing
+    fix: slow the opening
+    history:
+    - duration_s: 660
+    - duration_s: 640
+    states:
+      b3: learning
+      b7: new
+      b12: known
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); !/(voice|sounded|body|gesture|posture|relax|breathe|practice more|great job)/i.test(JSON.stringify(o))
+  - type: javascript
+    value: const o=JSON.parse(output); const d=["b15", "b3", "b18"]; d.length===0 || d.some(x=>o.next_drill.beat_ids.includes(x))
+- description: run log 2
+  vars:
+    slot_s: 600
+    duration_s: 655
+    dropped: []
+    forced: the close
+    fix: land ending point 1
+    history:
+    - duration_s: 660
+    - duration_s: 640
+    states:
+      b3: learning
+      b7: new
+      b12: known
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); !/(voice|sounded|body|gesture|posture|relax|breathe|practice more|great job)/i.test(JSON.stringify(o))
+  - type: javascript
+    value: const o=JSON.parse(output); const d=[]; d.length===0 || d.some(x=>o.next_drill.beat_ids.includes(x))
+- description: run log 3
+  vars:
+    slot_s: 600
+    duration_s: 655
+    dropped: []
+    forced: nothing
+    fix: slow the opening
+    history:
+    - duration_s: 660
+    - duration_s: 640
+    states:
+      b3: learning
+      b7: new
+      b12: known
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); !/(voice|sounded|body|gesture|posture|relax|breathe|practice more|great job)/i.test(JSON.stringify(o))
+  - type: javascript
+    value: const o=JSON.parse(output); const d=[]; d.length===0 || d.some(x=>o.next_drill.beat_ids.includes(x))
+- description: run log 4
+  vars:
+    slot_s: 600
+    duration_s: 612
+    dropped: []
+    forced: the close
+    fix: land ending point 1
+    history:
+    - duration_s: 660
+    - duration_s: 640
+    states:
+      b3: learning
+      b7: new
+      b12: known
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); !/(voice|sounded|body|gesture|posture|relax|breathe|practice more|great job)/i.test(JSON.stringify(o))
+  - type: javascript
+    value: const o=JSON.parse(output); const d=[]; d.length===0 || d.some(x=>o.next_drill.beat_ids.includes(x))
+- description: run log 5
+  vars:
+    slot_s: 600
+    duration_s: 655
+    dropped:
+    - b15
+    - b7
+    forced: the close
+    fix: slow the opening
+    history:
+    - duration_s: 660
+    - duration_s: 640
+    states:
+      b3: learning
+      b7: new
+      b12: known
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); !/(voice|sounded|body|gesture|posture|relax|breathe|practice more|great job)/i.test(JSON.stringify(o))
+  - type: javascript
+    value: const o=JSON.parse(output); const d=["b15", "b7"]; d.length===0 || d.some(x=>o.next_drill.beat_ids.includes(x))
+- description: run log 6
+  vars:
+    slot_s: 600
+    duration_s: 655
+    dropped:
+    - b3
+    forced: nothing
+    fix: land ending point 1
+    history:
+    - duration_s: 660
+    - duration_s: 640
+    states:
+      b3: learning
+      b7: new
+      b12: known
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); !/(voice|sounded|body|gesture|posture|relax|breathe|practice more|great job)/i.test(JSON.stringify(o))
+  - type: javascript
+    value: const o=JSON.parse(output); const d=["b3"]; d.length===0 || d.some(x=>o.next_drill.beat_ids.includes(x))
+- description: run log 7
+  vars:
+    slot_s: 600
+    duration_s: 655
+    dropped:
+    - b3
+    - b18
+    forced: the close
+    fix: land ending point 1
+    history:
+    - duration_s: 660
+    - duration_s: 640
+    states:
+      b3: learning
+      b7: new
+      b12: known
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); !/(voice|sounded|body|gesture|posture|relax|breathe|practice more|great job)/i.test(JSON.stringify(o))
+  - type: javascript
+    value: const o=JSON.parse(output); const d=["b3", "b18"]; d.length===0 || d.some(x=>o.next_drill.beat_ids.includes(x))
+- description: run log 8
+  vars:
+    slot_s: 600
+    duration_s: 575
+    dropped:
+    - b18
+    - b15
+    - b7
+    forced: nothing
+    fix: slow the opening
+    history:
+    - duration_s: 660
+    - duration_s: 640
+    states:
+      b3: learning
+      b7: new
+      b12: known
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); !/(voice|sounded|body|gesture|posture|relax|breathe|practice more|great job)/i.test(JSON.stringify(o))
+  - type: javascript
+    value: const o=JSON.parse(output); const d=["b18", "b15", "b7"]; d.length===0 || d.some(x=>o.next_drill.beat_ids.includes(x))
+- description: run log 9
+  vars:
+    slot_s: 600
+    duration_s: 612
+    dropped:
+    - b12
+    - b7
+    forced: nothing
+    fix: land ending point 1
+    history:
+    - duration_s: 660
+    - duration_s: 640
+    states:
+      b3: learning
+      b7: new
+      b12: known
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); !/(voice|sounded|body|gesture|posture|relax|breathe|practice more|great job)/i.test(JSON.stringify(o))
+  - type: javascript
+    value: const o=JSON.parse(output); const d=["b12", "b7"]; d.length===0 || d.some(x=>o.next_drill.beat_ids.includes(x))
+- description: run log 10
+  vars:
+    slot_s: 600
+    duration_s: 655
+    dropped: []
+    forced: the statistics
+    fix: slow the opening
+    history:
+    - duration_s: 660
+    - duration_s: 640
+    states:
+      b3: learning
+      b7: new
+      b12: known
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); !/(voice|sounded|body|gesture|posture|relax|breathe|practice more|great job)/i.test(JSON.stringify(o))
+  - type: javascript
+    value: const o=JSON.parse(output); const d=[]; d.length===0 || d.some(x=>o.next_drill.beat_ids.includes(x))

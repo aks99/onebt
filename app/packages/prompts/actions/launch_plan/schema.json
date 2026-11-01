@@ -1,0 +1,40 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "when": {
+            "type": "string",
+            "description": "ISO date or relative"
+          },
+          "text": {
+            "type": "string"
+          },
+          "phase": {
+            "type": "string",
+            "enum": [
+              "pre",
+              "launch",
+              "first_48h",
+              "weeks_1_8",
+              "ongoing"
+            ]
+          }
+        },
+        "required": [
+          "when",
+          "text",
+          "phase"
+        ]
+      }
+    }
+  },
+  "required": [
+    "items"
+  ]
+}

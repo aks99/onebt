@@ -1,0 +1,36 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "looks_for": {
+      "type": "string"
+    },
+    "open_call_likelihood": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high"
+      ]
+    },
+    "reason": {
+      "type": "string"
+    },
+    "injection_detected": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "tags",
+    "looks_for",
+    "open_call_likelihood",
+    "reason",
+    "injection_detected"
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "answers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "key": {
+            "type": "string",
+            "enum": [
+              "idea",
+              "belief",
+              "story",
+              "evidence",
+              "action",
+              "why_me",
+              "not_claiming"
+            ]
+          },
+          "present": {
+            "type": "boolean"
+          },
+          "strength": {
+            "type": "string",
+            "enum": [
+              "thin",
+              "adequate",
+              "strong"
+            ]
+          },
+          "ask": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "key",
+          "present",
+          "strength",
+          "ask"
+        ]
+      }
+    },
+    "ready_for_outline": {
+      "type": "boolean"
+    },
+    "note": {
+      "type": "string",
+      "description": "one sentence"
+    }
+  },
+  "required": [
+    "answers",
+    "ready_for_outline",
+    "note"
+  ]
+}

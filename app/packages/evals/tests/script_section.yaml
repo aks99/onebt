@@ -1,0 +1,1286 @@
+- description: 'script hook from finalized outline 1: Safety checklists fail when the most jun'
+  vars:
+    section_id: s1
+    kind: hook
+    target_words: 150
+    writing_sample: I write short. I say what I saw. I do not dress it up.
+    outline_json:
+      sections:
+      - id: s1
+        kind: hook
+        purpose: a specific moment
+        talking_points:
+        - id: p1
+          kind: story
+          text: the room at 3:04 where nobody spoke
+          source: brief
+          consent: pseudonymized
+        target_seconds: 60
+        target_words: 150
+        ending_point: false
+      - id: s2
+        kind: idea
+        purpose: state the idea
+        talking_points:
+        - id: p2
+          kind: claim
+          text: Safety checklists fail when the most junior person in the room cannot stop it
+          source: idea_card
+          consent: not_a_story
+        - id: p3
+          kind: claim
+          text: 'the belief it challenges: Reading a checklist aloud makes a team safe'
+          source: idea_card
+          consent: not_a_story
+        target_seconds: 60
+        target_words: 150
+        ending_point: false
+      - id: s5
+        kind: close
+        purpose: new bliss and one action
+        talking_points:
+        - id: p9
+          kind: claim
+          text: Ask the quietest person first
+          source: idea_card
+          consent: not_a_story
+        target_seconds: 60
+        target_words: 150
+        ending_point: true
+    prior_text: ''
+    profile:
+      segment: coach
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); const n=o.text.trim().split(/\s+/).length; n>=120 && n<=185
+  - type: javascript
+    value: const o=JSON.parse(output); const ids=o.covered_point_ids.concat(o.uncovered.map(u=>u.id)); ["p1"].every(id=>ids.includes(id))
+  - type: javascript
+    value: const o=JSON.parse(output); !/(I have given this talk|I've delivered this talk|spoken on this topic many times|my
+      book|available on Amazon|learn more at)/i.test(o.text)
+  - type: javascript
+    value: '!output.includes(String.fromCharCode(0x2014)) && !/[A-Za-z]!/.test(JSON.parse(output).text)'
+  - type: javascript
+    value: const t=JSON.parse(output).text.trim(); !/^(hi|hello|good (morning|evening)|thank you|today I)/i.test(t)
+- description: 'script idea from finalized outline 2: Grief is a skill a family can practise b'
+  vars:
+    section_id: s2
+    kind: idea
+    target_words: 150
+    writing_sample: I write short. I say what I saw. I do not dress it up.
+    outline_json:
+      sections:
+      - id: s1
+        kind: hook
+        purpose: a specific moment
+        talking_points:
+        - id: p1
+          kind: story
+          text: the room at 3:04 where nobody spoke
+          source: brief
+          consent: pseudonymized
+        target_seconds: 60
+        target_words: 150
+        ending_point: false
+      - id: s2
+        kind: idea
+        purpose: state the idea
+        talking_points:
+        - id: p2
+          kind: claim
+          text: Grief is a skill a family can practise before anyone dies
+          source: idea_card
+          consent: not_a_story
+        - id: p3
+          kind: claim
+          text: 'the belief it challenges: Grief begins at the funeral'
+          source: idea_card
+          consent: not_a_story
+        target_seconds: 60
+        target_words: 150
+        ending_point: false
+      - id: s5
+        kind: close
+        purpose: new bliss and one action
+        talking_points:
+        - id: p9
+          kind: claim
+          text: Hold one conversation about a death before it comes
+          source: idea_card
+          consent: not_a_story
+        target_seconds: 60
+        target_words: 150
+        ending_point: true
+    prior_text: ''
+    profile:
+      segment: author
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); const n=o.text.trim().split(/\s+/).length; n>=120 && n<=185
+  - type: javascript
+    value: const o=JSON.parse(output); const ids=o.covered_point_ids.concat(o.uncovered.map(u=>u.id)); ["p2", "p3"].every(id=>ids.includes(id))
+  - type: javascript
+    value: const o=JSON.parse(output); !/(I have given this talk|I've delivered this talk|spoken on this topic many times|my
+      book|available on Amazon|learn more at)/i.test(o.text)
+  - type: javascript
+    value: '!output.includes(String.fromCharCode(0x2014)) && !/[A-Za-z]!/.test(JSON.parse(output).text)'
+- description: 'script close from finalized outline 3: The best strategy meeting has no slides '
+  vars:
+    section_id: s5
+    kind: close
+    target_words: 150
+    writing_sample: I write short. I say what I saw. I do not dress it up.
+    outline_json:
+      sections:
+      - id: s1
+        kind: hook
+        purpose: a specific moment
+        talking_points:
+        - id: p1
+          kind: story
+          text: the room at 3:04 where nobody spoke
+          source: brief
+          consent: pseudonymized
+        target_seconds: 60
+        target_words: 150
+        ending_point: false
+      - id: s2
+        kind: idea
+        purpose: state the idea
+        talking_points:
+        - id: p2
+          kind: claim
+          text: The best strategy meeting has no slides and one unanswered question
+          source: idea_card
+          consent: not_a_story
+        - id: p3
+          kind: claim
+          text: 'the belief it challenges: Decks make decisions clearer'
+          source: idea_card
+          consent: not_a_story
+        target_seconds: 60
+        target_words: 150
+        ending_point: false
+      - id: s5
+        kind: close
+        purpose: new bliss and one action
+        talking_points:
+        - id: p9
+          kind: claim
+          text: Open your next meeting with the question you cannot answer
+          source: idea_card
+          consent: not_a_story
+        target_seconds: 60
+        target_words: 150
+        ending_point: true
+    prior_text: ''
+    profile:
+      segment: executive
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); const n=o.text.trim().split(/\s+/).length; n>=120 && n<=185
+  - type: javascript
+    value: const o=JSON.parse(output); const ids=o.covered_point_ids.concat(o.uncovered.map(u=>u.id)); ["p9"].every(id=>ids.includes(id))
+  - type: javascript
+    value: const o=JSON.parse(output); !/(I have given this talk|I've delivered this talk|spoken on this topic many times|my
+      book|available on Amazon|learn more at)/i.test(o.text)
+  - type: javascript
+    value: '!output.includes(String.fromCharCode(0x2014)) && !/[A-Za-z]!/.test(JSON.parse(output).text)'
+  - type: javascript
+    value: const t=JSON.parse(output).text; !/(in summary|to summarize|in conclusion|let me recap)/i.test(t)
+- description: 'script hook from finalized outline 4: Ice forms from the edges inward, and so '
+  vars:
+    section_id: s1
+    kind: hook
+    target_words: 150
+    writing_sample: I write short. I say what I saw. I do not dress it up.
+    outline_json:
+      sections:
+      - id: s1
+        kind: hook
+        purpose: a specific moment
+        talking_points:
+        - id: p1
+          kind: story
+          text: the room at 3:04 where nobody spoke
+          source: brief
+          consent: pseudonymized
+        target_seconds: 60
+        target_words: 150
+        ending_point: false
+      - id: s2
+        kind: idea
+        purpose: state the idea
+        talking_points:
+        - id: p2
+          kind: claim
+          text: Ice forms from the edges inward, and so do institutions
+          source: idea_card
+          consent: not_a_story
+        - id: p3
+          kind: claim
+          text: 'the belief it challenges: Change starts at the centre'
+          source: idea_card
+          consent: not_a_story
+        target_seconds: 60
+        target_words: 150
+        ending_point: false
+      - id: s5
+        kind: close
+        purpose: new bliss and one action
+        talking_points:
+        - id: p9
+          kind: claim
+          text: Find the edge of your organisation and listen there
+          source: idea_card
+          consent: not_a_story
+        target_seconds: 60
+        target_words: 150
+        ending_point: true
+    prior_text: ''
+    profile:
+      segment: academic
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); const n=o.text.trim().split(/\s+/).length; n>=120 && n<=185
+  - type: javascript
+    value: const o=JSON.parse(output); const ids=o.covered_point_ids.concat(o.uncovered.map(u=>u.id)); ["p1"].every(id=>ids.includes(id))
+  - type: javascript
+    value: const o=JSON.parse(output); !/(I have given this talk|I've delivered this talk|spoken on this topic many times|my
+      book|available on Amazon|learn more at)/i.test(o.text)
+  - type: javascript
+    value: '!output.includes(String.fromCharCode(0x2014)) && !/[A-Za-z]!/.test(JSON.parse(output).text)'
+  - type: javascript
+    value: const t=JSON.parse(output).text.trim(); !/^(hi|hello|good (morning|evening)|thank you|today I)/i.test(t)
+- description: 'script idea from finalized outline 5: Indian cities cool faster when roofs are'
+  vars:
+    section_id: s2
+    kind: idea
+    target_words: 150
+    writing_sample: I write short. I say what I saw. I do not dress it up.
+    outline_json:
+      sections:
+      - id: s1
+        kind: hook
+        purpose: a specific moment
+        talking_points:
+        - id: p1
+          kind: story
+          text: the room at 3:04 where nobody spoke
+          source: brief
+          consent: pseudonymized
+        target_seconds: 60
+        target_words: 150
+        ending_point: false
+      - id: s2
+        kind: idea
+        purpose: state the idea
+        talking_points:
+        - id: p2
+          kind: claim
+          text: Indian cities cool faster when roofs are painted than when trees are planted
+          source: idea_card
+          consent: not_a_story
+        - id: p3
+          kind: claim
+          text: 'the belief it challenges: Trees are the only answer to urban heat'
+          source: idea_card
+          consent: not_a_story
+        target_seconds: 60
+        target_words: 150
+        ending_point: false
+      - id: s5
+        kind: close
+        purpose: new bliss and one action
+        talking_points:
+        - id: p9
+          kind: claim
+          text: Paint one roof white this summer
+          source: idea_card
+          consent: not_a_story
+        target_seconds: 60
+        target_words: 150
+        ending_point: true
+    prior_text: ''
+    profile:
+      segment: india
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); const n=o.text.trim().split(/\s+/).length; n>=120 && n<=185
+  - type: javascript
+    value: const o=JSON.parse(output); const ids=o.covered_point_ids.concat(o.uncovered.map(u=>u.id)); ["p2", "p3"].every(id=>ids.includes(id))
+  - type: javascript
+    value: const o=JSON.parse(output); !/(I have given this talk|I've delivered this talk|spoken on this topic many times|my
+      book|available on Amazon|learn more at)/i.test(o.text)
+  - type: javascript
+    value: '!output.includes(String.fromCharCode(0x2014)) && !/[A-Za-z]!/.test(JSON.parse(output).text)'
+- description: 'script close from finalized outline 6: A team''s silence is data, not consent'
+  vars:
+    section_id: s5
+    kind: close
+    target_words: 150
+    writing_sample: I write short. I say what I saw. I do not dress it up.
+    outline_json:
+      sections:
+      - id: s1
+        kind: hook
+        purpose: a specific moment
+        talking_points:
+        - id: p1
+          kind: story
+          text: the room at 3:04 where nobody spoke
+          source: brief
+          consent: pseudonymized
+        target_seconds: 60
+        target_words: 150
+        ending_point: false
+      - id: s2
+        kind: idea
+        purpose: state the idea
+        talking_points:
+        - id: p2
+          kind: claim
+          text: A team's silence is data, not consent
+          source: idea_card
+          consent: not_a_story
+        - id: p3
+          kind: claim
+          text: 'the belief it challenges: Silence means agreement'
+          source: idea_card
+          consent: not_a_story
+        target_seconds: 60
+        target_words: 150
+        ending_point: false
+      - id: s5
+        kind: close
+        purpose: new bliss and one action
+        talking_points:
+        - id: p9
+          kind: claim
+          text: Count the silences in your next meeting
+          source: idea_card
+          consent: not_a_story
+        target_seconds: 60
+        target_words: 150
+        ending_point: true
+    prior_text: ''
+    profile:
+      segment: coach
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); const n=o.text.trim().split(/\s+/).length; n>=120 && n<=185
+  - type: javascript
+    value: const o=JSON.parse(output); const ids=o.covered_point_ids.concat(o.uncovered.map(u=>u.id)); ["p9"].every(id=>ids.includes(id))
+  - type: javascript
+    value: const o=JSON.parse(output); !/(I have given this talk|I've delivered this talk|spoken on this topic many times|my
+      book|available on Amazon|learn more at)/i.test(o.text)
+  - type: javascript
+    value: '!output.includes(String.fromCharCode(0x2014)) && !/[A-Za-z]!/.test(JSON.parse(output).text)'
+  - type: javascript
+    value: const t=JSON.parse(output).text; !/(in summary|to summarize|in conclusion|let me recap)/i.test(t)
+- description: 'script hook from finalized outline 7: A novel teaches empathy only when the re'
+  vars:
+    section_id: s1
+    kind: hook
+    target_words: 150
+    writing_sample: I write short. I say what I saw. I do not dress it up.
+    outline_json:
+      sections:
+      - id: s1
+        kind: hook
+        purpose: a specific moment
+        talking_points:
+        - id: p1
+          kind: story
+          text: the room at 3:04 where nobody spoke
+          source: brief
+          consent: pseudonymized
+        target_seconds: 60
+        target_words: 150
+        ending_point: false
+      - id: s2
+        kind: idea
+        purpose: state the idea
+        talking_points:
+        - id: p2
+          kind: claim
+          text: A novel teaches empathy only when the reader is uncomfortable
+          source: idea_card
+          consent: not_a_story
+        - id: p3
+          kind: claim
+          text: 'the belief it challenges: Reading any fiction builds empathy'
+          source: idea_card
+          consent: not_a_story
+        target_seconds: 60
+        target_words: 150
+        ending_point: false
+      - id: s5
+        kind: close
+        purpose: new bliss and one action
+        talking_points:
+        - id: p9
+          kind: claim
+          text: Pick the book you least want to read
+          source: idea_card
+          consent: not_a_story
+        target_seconds: 60
+        target_words: 150
+        ending_point: true
+    prior_text: ''
+    profile:
+      segment: author
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); const n=o.text.trim().split(/\s+/).length; n>=120 && n<=185
+  - type: javascript
+    value: const o=JSON.parse(output); const ids=o.covered_point_ids.concat(o.uncovered.map(u=>u.id)); ["p1"].every(id=>ids.includes(id))
+  - type: javascript
+    value: const o=JSON.parse(output); !/(I have given this talk|I've delivered this talk|spoken on this topic many times|my
+      book|available on Amazon|learn more at)/i.test(o.text)
+  - type: javascript
+    value: '!output.includes(String.fromCharCode(0x2014)) && !/[A-Za-z]!/.test(JSON.parse(output).text)'
+  - type: javascript
+    value: const t=JSON.parse(output).text.trim(); !/^(hi|hello|good (morning|evening)|thank you|today I)/i.test(t)
+- description: 'script idea from finalized outline 8: Layoffs announced on Fridays cost more t'
+  vars:
+    section_id: s2
+    kind: idea
+    target_words: 150
+    writing_sample: I write short. I say what I saw. I do not dress it up.
+    outline_json:
+      sections:
+      - id: s1
+        kind: hook
+        purpose: a specific moment
+        talking_points:
+        - id: p1
+          kind: story
+          text: the room at 3:04 where nobody spoke
+          source: brief
+          consent: pseudonymized
+        target_seconds: 60
+        target_words: 150
+        ending_point: false
+      - id: s2
+        kind: idea
+        purpose: state the idea
+        talking_points:
+        - id: p2
+          kind: claim
+          text: Layoffs announced on Fridays cost more than layoffs announced on Mondays
+          source: idea_card
+          consent: not_a_story
+        - id: p3
+          kind: claim
+          text: 'the belief it challenges: Timing does not change the cost of a layoff'
+          source: idea_card
+          consent: not_a_story
+        target_seconds: 60
+        target_words: 150
+        ending_point: false
+      - id: s5
+        kind: close
+        purpose: new bliss and one action
+        talking_points:
+        - id: p9
+          kind: claim
+          text: Move your hard news to Monday morning
+          source: idea_card
+          consent: not_a_story
+        target_seconds: 60
+        target_words: 150
+        ending_point: true
+    prior_text: ''
+    profile:
+      segment: executive
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); const n=o.text.trim().split(/\s+/).length; n>=120 && n<=185
+  - type: javascript
+    value: const o=JSON.parse(output); const ids=o.covered_point_ids.concat(o.uncovered.map(u=>u.id)); ["p2", "p3"].every(id=>ids.includes(id))
+  - type: javascript
+    value: const o=JSON.parse(output); !/(I have given this talk|I've delivered this talk|spoken on this topic many times|my
+      book|available on Amazon|learn more at)/i.test(o.text)
+  - type: javascript
+    value: '!output.includes(String.fromCharCode(0x2014)) && !/[A-Za-z]!/.test(JSON.parse(output).text)'
+- description: 'script close from finalized outline 9: Mathematics anxiety is caught from paren'
+  vars:
+    section_id: s5
+    kind: close
+    target_words: 150
+    writing_sample: I write short. I say what I saw. I do not dress it up.
+    outline_json:
+      sections:
+      - id: s1
+        kind: hook
+        purpose: a specific moment
+        talking_points:
+        - id: p1
+          kind: story
+          text: the room at 3:04 where nobody spoke
+          source: brief
+          consent: pseudonymized
+        target_seconds: 60
+        target_words: 150
+        ending_point: false
+      - id: s2
+        kind: idea
+        purpose: state the idea
+        talking_points:
+        - id: p2
+          kind: claim
+          text: Mathematics anxiety is caught from parents, not from teachers
+          source: idea_card
+          consent: not_a_story
+        - id: p3
+          kind: claim
+          text: 'the belief it challenges: School causes maths anxiety'
+          source: idea_card
+          consent: not_a_story
+        target_seconds: 60
+        target_words: 150
+        ending_point: false
+      - id: s5
+        kind: close
+        purpose: new bliss and one action
+        talking_points:
+        - id: p9
+          kind: claim
+          text: Say one kind thing about numbers at dinner
+          source: idea_card
+          consent: not_a_story
+        target_seconds: 60
+        target_words: 150
+        ending_point: true
+    prior_text: ''
+    profile:
+      segment: academic
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); const n=o.text.trim().split(/\s+/).length; n>=120 && n<=185
+  - type: javascript
+    value: const o=JSON.parse(output); const ids=o.covered_point_ids.concat(o.uncovered.map(u=>u.id)); ["p9"].every(id=>ids.includes(id))
+  - type: javascript
+    value: const o=JSON.parse(output); !/(I have given this talk|I've delivered this talk|spoken on this topic many times|my
+      book|available on Amazon|learn more at)/i.test(o.text)
+  - type: javascript
+    value: '!output.includes(String.fromCharCode(0x2014)) && !/[A-Za-z]!/.test(JSON.parse(output).text)'
+  - type: javascript
+    value: const t=JSON.parse(output).text; !/(in summary|to summarize|in conclusion|let me recap)/i.test(t)
+- description: 'script hook from finalized outline 10: The chai stall is India''s most effective'
+  vars:
+    section_id: s1
+    kind: hook
+    target_words: 150
+    writing_sample: I write short. I say what I saw. I do not dress it up.
+    outline_json:
+      sections:
+      - id: s1
+        kind: hook
+        purpose: a specific moment
+        talking_points:
+        - id: p1
+          kind: story
+          text: the room at 3:04 where nobody spoke
+          source: brief
+          consent: pseudonymized
+        target_seconds: 60
+        target_words: 150
+        ending_point: false
+      - id: s2
+        kind: idea
+        purpose: state the idea
+        talking_points:
+        - id: p2
+          kind: claim
+          text: The chai stall is India's most effective classroom
+          source: idea_card
+          consent: not_a_story
+        - id: p3
+          kind: claim
+          text: 'the belief it challenges: Learning happens in schools'
+          source: idea_card
+          consent: not_a_story
+        target_seconds: 60
+        target_words: 150
+        ending_point: false
+      - id: s5
+        kind: close
+        purpose: new bliss and one action
+        talking_points:
+        - id: p9
+          kind: claim
+          text: Ask a question at the next stall you visit
+          source: idea_card
+          consent: not_a_story
+        target_seconds: 60
+        target_words: 150
+        ending_point: true
+    prior_text: ''
+    profile:
+      segment: india
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); const n=o.text.trim().split(/\s+/).length; n>=120 && n<=185
+  - type: javascript
+    value: const o=JSON.parse(output); const ids=o.covered_point_ids.concat(o.uncovered.map(u=>u.id)); ["p1"].every(id=>ids.includes(id))
+  - type: javascript
+    value: const o=JSON.parse(output); !/(I have given this talk|I've delivered this talk|spoken on this topic many times|my
+      book|available on Amazon|learn more at)/i.test(o.text)
+  - type: javascript
+    value: '!output.includes(String.fromCharCode(0x2014)) && !/[A-Za-z]!/.test(JSON.parse(output).text)'
+  - type: javascript
+    value: const t=JSON.parse(output).text.trim(); !/^(hi|hello|good (morning|evening)|thank you|today I)/i.test(t)
+- description: 'script idea from finalized outline 11: Feedback lands only when it arrives befo'
+  vars:
+    section_id: s2
+    kind: idea
+    target_words: 150
+    writing_sample: I write short. I say what I saw. I do not dress it up.
+    outline_json:
+      sections:
+      - id: s1
+        kind: hook
+        purpose: a specific moment
+        talking_points:
+        - id: p1
+          kind: story
+          text: the room at 3:04 where nobody spoke
+          source: brief
+          consent: pseudonymized
+        target_seconds: 60
+        target_words: 150
+        ending_point: false
+      - id: s2
+        kind: idea
+        purpose: state the idea
+        talking_points:
+        - id: p2
+          kind: claim
+          text: Feedback lands only when it arrives before the person asks for it
+          source: idea_card
+          consent: not_a_story
+        - id: p3
+          kind: claim
+          text: 'the belief it challenges: Feedback should be requested'
+          source: idea_card
+          consent: not_a_story
+        target_seconds: 60
+        target_words: 150
+        ending_point: false
+      - id: s5
+        kind: close
+        purpose: new bliss and one action
+        talking_points:
+        - id: p9
+          kind: claim
+          text: Give one piece of unrequested praise today
+          source: idea_card
+          consent: not_a_story
+        target_seconds: 60
+        target_words: 150
+        ending_point: true
+    prior_text: ''
+    profile:
+      segment: coach
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); const n=o.text.trim().split(/\s+/).length; n>=120 && n<=185
+  - type: javascript
+    value: const o=JSON.parse(output); const ids=o.covered_point_ids.concat(o.uncovered.map(u=>u.id)); ["p2", "p3"].every(id=>ids.includes(id))
+  - type: javascript
+    value: const o=JSON.parse(output); !/(I have given this talk|I've delivered this talk|spoken on this topic many times|my
+      book|available on Amazon|learn more at)/i.test(o.text)
+  - type: javascript
+    value: '!output.includes(String.fromCharCode(0x2014)) && !/[A-Za-z]!/.test(JSON.parse(output).text)'
+- description: 'script close from finalized outline 12: A memoir is an argument, not a diary'
+  vars:
+    section_id: s5
+    kind: close
+    target_words: 150
+    writing_sample: I write short. I say what I saw. I do not dress it up.
+    outline_json:
+      sections:
+      - id: s1
+        kind: hook
+        purpose: a specific moment
+        talking_points:
+        - id: p1
+          kind: story
+          text: the room at 3:04 where nobody spoke
+          source: brief
+          consent: pseudonymized
+        target_seconds: 60
+        target_words: 150
+        ending_point: false
+      - id: s2
+        kind: idea
+        purpose: state the idea
+        talking_points:
+        - id: p2
+          kind: claim
+          text: A memoir is an argument, not a diary
+          source: idea_card
+          consent: not_a_story
+        - id: p3
+          kind: claim
+          text: 'the belief it challenges: Memoirs record what happened'
+          source: idea_card
+          consent: not_a_story
+        target_seconds: 60
+        target_words: 150
+        ending_point: false
+      - id: s5
+        kind: close
+        purpose: new bliss and one action
+        talking_points:
+        - id: p9
+          kind: claim
+          text: Write one sentence stating what your life proves
+          source: idea_card
+          consent: not_a_story
+        target_seconds: 60
+        target_words: 150
+        ending_point: true
+    prior_text: ''
+    profile:
+      segment: author
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); const n=o.text.trim().split(/\s+/).length; n>=120 && n<=185
+  - type: javascript
+    value: const o=JSON.parse(output); const ids=o.covered_point_ids.concat(o.uncovered.map(u=>u.id)); ["p9"].every(id=>ids.includes(id))
+  - type: javascript
+    value: const o=JSON.parse(output); !/(I have given this talk|I've delivered this talk|spoken on this topic many times|my
+      book|available on Amazon|learn more at)/i.test(o.text)
+  - type: javascript
+    value: '!output.includes(String.fromCharCode(0x2014)) && !/[A-Za-z]!/.test(JSON.parse(output).text)'
+  - type: javascript
+    value: const t=JSON.parse(output).text; !/(in summary|to summarize|in conclusion|let me recap)/i.test(t)
+- description: 'script hook from finalized outline 13: A company''s culture is what it tolerates'
+  vars:
+    section_id: s1
+    kind: hook
+    target_words: 150
+    writing_sample: I write short. I say what I saw. I do not dress it up.
+    outline_json:
+      sections:
+      - id: s1
+        kind: hook
+        purpose: a specific moment
+        talking_points:
+        - id: p1
+          kind: story
+          text: the room at 3:04 where nobody spoke
+          source: brief
+          consent: pseudonymized
+        target_seconds: 60
+        target_words: 150
+        ending_point: false
+      - id: s2
+        kind: idea
+        purpose: state the idea
+        talking_points:
+        - id: p2
+          kind: claim
+          text: A company's culture is what it tolerates on its worst day
+          source: idea_card
+          consent: not_a_story
+        - id: p3
+          kind: claim
+          text: 'the belief it challenges: Culture is what is written on the wall'
+          source: idea_card
+          consent: not_a_story
+        target_seconds: 60
+        target_words: 150
+        ending_point: false
+      - id: s5
+        kind: close
+        purpose: new bliss and one action
+        talking_points:
+        - id: p9
+          kind: claim
+          text: Name the thing you tolerated last week
+          source: idea_card
+          consent: not_a_story
+        target_seconds: 60
+        target_words: 150
+        ending_point: true
+    prior_text: ''
+    profile:
+      segment: executive
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); const n=o.text.trim().split(/\s+/).length; n>=120 && n<=185
+  - type: javascript
+    value: const o=JSON.parse(output); const ids=o.covered_point_ids.concat(o.uncovered.map(u=>u.id)); ["p1"].every(id=>ids.includes(id))
+  - type: javascript
+    value: const o=JSON.parse(output); !/(I have given this talk|I've delivered this talk|spoken on this topic many times|my
+      book|available on Amazon|learn more at)/i.test(o.text)
+  - type: javascript
+    value: '!output.includes(String.fromCharCode(0x2014)) && !/[A-Za-z]!/.test(JSON.parse(output).text)'
+  - type: javascript
+    value: const t=JSON.parse(output).text.trim(); !/^(hi|hello|good (morning|evening)|thank you|today I)/i.test(t)
+- description: 'script idea from finalized outline 14: Sleep is when the brain decides what was'
+  vars:
+    section_id: s2
+    kind: idea
+    target_words: 150
+    writing_sample: I write short. I say what I saw. I do not dress it up.
+    outline_json:
+      sections:
+      - id: s1
+        kind: hook
+        purpose: a specific moment
+        talking_points:
+        - id: p1
+          kind: story
+          text: the room at 3:04 where nobody spoke
+          source: brief
+          consent: pseudonymized
+        target_seconds: 60
+        target_words: 150
+        ending_point: false
+      - id: s2
+        kind: idea
+        purpose: state the idea
+        talking_points:
+        - id: p2
+          kind: claim
+          text: Sleep is when the brain decides what was worth learning
+          source: idea_card
+          consent: not_a_story
+        - id: p3
+          kind: claim
+          text: 'the belief it challenges: Sleep rests the brain'
+          source: idea_card
+          consent: not_a_story
+        target_seconds: 60
+        target_words: 150
+        ending_point: false
+      - id: s5
+        kind: close
+        purpose: new bliss and one action
+        talking_points:
+        - id: p9
+          kind: claim
+          text: Protect the hour before sleep from screens
+          source: idea_card
+          consent: not_a_story
+        target_seconds: 60
+        target_words: 150
+        ending_point: true
+    prior_text: ''
+    profile:
+      segment: academic
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); const n=o.text.trim().split(/\s+/).length; n>=120 && n<=185
+  - type: javascript
+    value: const o=JSON.parse(output); const ids=o.covered_point_ids.concat(o.uncovered.map(u=>u.id)); ["p2", "p3"].every(id=>ids.includes(id))
+  - type: javascript
+    value: const o=JSON.parse(output); !/(I have given this talk|I've delivered this talk|spoken on this topic many times|my
+      book|available on Amazon|learn more at)/i.test(o.text)
+  - type: javascript
+    value: '!output.includes(String.fromCharCode(0x2014)) && !/[A-Za-z]!/.test(JSON.parse(output).text)'
+- description: 'script close from finalized outline 15: Village water committees outperform city'
+  vars:
+    section_id: s5
+    kind: close
+    target_words: 150
+    writing_sample: I write short. I say what I saw. I do not dress it up.
+    outline_json:
+      sections:
+      - id: s1
+        kind: hook
+        purpose: a specific moment
+        talking_points:
+        - id: p1
+          kind: story
+          text: the room at 3:04 where nobody spoke
+          source: brief
+          consent: pseudonymized
+        target_seconds: 60
+        target_words: 150
+        ending_point: false
+      - id: s2
+        kind: idea
+        purpose: state the idea
+        talking_points:
+        - id: p2
+          kind: claim
+          text: 'Village water committees outperform city utilities on one measure: trust'
+          source: idea_card
+          consent: not_a_story
+        - id: p3
+          kind: claim
+          text: 'the belief it challenges: Scale fixes water supply'
+          source: idea_card
+          consent: not_a_story
+        target_seconds: 60
+        target_words: 150
+        ending_point: false
+      - id: s5
+        kind: close
+        purpose: new bliss and one action
+        talking_points:
+        - id: p9
+          kind: claim
+          text: Meet the person who manages your water
+          source: idea_card
+          consent: not_a_story
+        target_seconds: 60
+        target_words: 150
+        ending_point: true
+    prior_text: ''
+    profile:
+      segment: india
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); const n=o.text.trim().split(/\s+/).length; n>=120 && n<=185
+  - type: javascript
+    value: const o=JSON.parse(output); const ids=o.covered_point_ids.concat(o.uncovered.map(u=>u.id)); ["p9"].every(id=>ids.includes(id))
+  - type: javascript
+    value: const o=JSON.parse(output); !/(I have given this talk|I've delivered this talk|spoken on this topic many times|my
+      book|available on Amazon|learn more at)/i.test(o.text)
+  - type: javascript
+    value: '!output.includes(String.fromCharCode(0x2014)) && !/[A-Za-z]!/.test(JSON.parse(output).text)'
+  - type: javascript
+    value: const t=JSON.parse(output).text; !/(in summary|to summarize|in conclusion|let me recap)/i.test(t)
+- description: 'script hook from finalized outline 16: Burnout is a boundary problem disguised '
+  vars:
+    section_id: s1
+    kind: hook
+    target_words: 150
+    writing_sample: I write short. I say what I saw. I do not dress it up.
+    outline_json:
+      sections:
+      - id: s1
+        kind: hook
+        purpose: a specific moment
+        talking_points:
+        - id: p1
+          kind: story
+          text: the room at 3:04 where nobody spoke
+          source: brief
+          consent: pseudonymized
+        target_seconds: 60
+        target_words: 150
+        ending_point: false
+      - id: s2
+        kind: idea
+        purpose: state the idea
+        talking_points:
+        - id: p2
+          kind: claim
+          text: Burnout is a boundary problem disguised as a workload problem
+          source: idea_card
+          consent: not_a_story
+        - id: p3
+          kind: claim
+          text: 'the belief it challenges: Burnout comes from too much work'
+          source: idea_card
+          consent: not_a_story
+        target_seconds: 60
+        target_words: 150
+        ending_point: false
+      - id: s5
+        kind: close
+        purpose: new bliss and one action
+        talking_points:
+        - id: p9
+          kind: claim
+          text: Say no once this week and watch what happens
+          source: idea_card
+          consent: not_a_story
+        target_seconds: 60
+        target_words: 150
+        ending_point: true
+    prior_text: ''
+    profile:
+      segment: coach
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); const n=o.text.trim().split(/\s+/).length; n>=120 && n<=185
+  - type: javascript
+    value: const o=JSON.parse(output); const ids=o.covered_point_ids.concat(o.uncovered.map(u=>u.id)); ["p1"].every(id=>ids.includes(id))
+  - type: javascript
+    value: const o=JSON.parse(output); !/(I have given this talk|I've delivered this talk|spoken on this topic many times|my
+      book|available on Amazon|learn more at)/i.test(o.text)
+  - type: javascript
+    value: '!output.includes(String.fromCharCode(0x2014)) && !/[A-Za-z]!/.test(JSON.parse(output).text)'
+  - type: javascript
+    value: const t=JSON.parse(output).text.trim(); !/^(hi|hello|good (morning|evening)|thank you|today I)/i.test(t)
+- description: 'script idea from finalized outline 17: Children learn to read faster from books'
+  vars:
+    section_id: s2
+    kind: idea
+    target_words: 150
+    writing_sample: I write short. I say what I saw. I do not dress it up.
+    outline_json:
+      sections:
+      - id: s1
+        kind: hook
+        purpose: a specific moment
+        talking_points:
+        - id: p1
+          kind: story
+          text: the room at 3:04 where nobody spoke
+          source: brief
+          consent: pseudonymized
+        target_seconds: 60
+        target_words: 150
+        ending_point: false
+      - id: s2
+        kind: idea
+        purpose: state the idea
+        talking_points:
+        - id: p2
+          kind: claim
+          text: Children learn to read faster from books that scare them a little
+          source: idea_card
+          consent: not_a_story
+        - id: p3
+          kind: claim
+          text: 'the belief it challenges: Reading should be gentle'
+          source: idea_card
+          consent: not_a_story
+        target_seconds: 60
+        target_words: 150
+        ending_point: false
+      - id: s5
+        kind: close
+        purpose: new bliss and one action
+        talking_points:
+        - id: p9
+          kind: claim
+          text: Read one slightly scary story aloud
+          source: idea_card
+          consent: not_a_story
+        target_seconds: 60
+        target_words: 150
+        ending_point: true
+    prior_text: ''
+    profile:
+      segment: author
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); const n=o.text.trim().split(/\s+/).length; n>=120 && n<=185
+  - type: javascript
+    value: const o=JSON.parse(output); const ids=o.covered_point_ids.concat(o.uncovered.map(u=>u.id)); ["p2", "p3"].every(id=>ids.includes(id))
+  - type: javascript
+    value: const o=JSON.parse(output); !/(I have given this talk|I've delivered this talk|spoken on this topic many times|my
+      book|available on Amazon|learn more at)/i.test(o.text)
+  - type: javascript
+    value: '!output.includes(String.fromCharCode(0x2014)) && !/[A-Za-z]!/.test(JSON.parse(output).text)'
+- description: 'script close from finalized outline 18: The founder who stays too long is the co'
+  vars:
+    section_id: s5
+    kind: close
+    target_words: 150
+    writing_sample: I write short. I say what I saw. I do not dress it up.
+    outline_json:
+      sections:
+      - id: s1
+        kind: hook
+        purpose: a specific moment
+        talking_points:
+        - id: p1
+          kind: story
+          text: the room at 3:04 where nobody spoke
+          source: brief
+          consent: pseudonymized
+        target_seconds: 60
+        target_words: 150
+        ending_point: false
+      - id: s2
+        kind: idea
+        purpose: state the idea
+        talking_points:
+        - id: p2
+          kind: claim
+          text: The founder who stays too long is the company's biggest unpriced risk
+          source: idea_card
+          consent: not_a_story
+        - id: p3
+          kind: claim
+          text: 'the belief it challenges: Founders should lead as long as they can'
+          source: idea_card
+          consent: not_a_story
+        target_seconds: 60
+        target_words: 150
+        ending_point: false
+      - id: s5
+        kind: close
+        purpose: new bliss and one action
+        talking_points:
+        - id: p9
+          kind: claim
+          text: Write your own succession date
+          source: idea_card
+          consent: not_a_story
+        target_seconds: 60
+        target_words: 150
+        ending_point: true
+    prior_text: ''
+    profile:
+      segment: executive
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); const n=o.text.trim().split(/\s+/).length; n>=120 && n<=185
+  - type: javascript
+    value: const o=JSON.parse(output); const ids=o.covered_point_ids.concat(o.uncovered.map(u=>u.id)); ["p9"].every(id=>ids.includes(id))
+  - type: javascript
+    value: const o=JSON.parse(output); !/(I have given this talk|I've delivered this talk|spoken on this topic many times|my
+      book|available on Amazon|learn more at)/i.test(o.text)
+  - type: javascript
+    value: '!output.includes(String.fromCharCode(0x2014)) && !/[A-Za-z]!/.test(JSON.parse(output).text)'
+  - type: javascript
+    value: const t=JSON.parse(output).text; !/(in summary|to summarize|in conclusion|let me recap)/i.test(t)
+- description: 'script hook from finalized outline 19: Honeybees vote, and they are better at i'
+  vars:
+    section_id: s1
+    kind: hook
+    target_words: 150
+    writing_sample: I write short. I say what I saw. I do not dress it up.
+    outline_json:
+      sections:
+      - id: s1
+        kind: hook
+        purpose: a specific moment
+        talking_points:
+        - id: p1
+          kind: story
+          text: the room at 3:04 where nobody spoke
+          source: brief
+          consent: pseudonymized
+        target_seconds: 60
+        target_words: 150
+        ending_point: false
+      - id: s2
+        kind: idea
+        purpose: state the idea
+        talking_points:
+        - id: p2
+          kind: claim
+          text: Honeybees vote, and they are better at it than we are
+          source: idea_card
+          consent: not_a_story
+        - id: p3
+          kind: claim
+          text: 'the belief it challenges: Animals do not make collective decisions'
+          source: idea_card
+          consent: not_a_story
+        target_seconds: 60
+        target_words: 150
+        ending_point: false
+      - id: s5
+        kind: close
+        purpose: new bliss and one action
+        talking_points:
+        - id: p9
+          kind: claim
+          text: Let the quietest option speak in your next vote
+          source: idea_card
+          consent: not_a_story
+        target_seconds: 60
+        target_words: 150
+        ending_point: true
+    prior_text: ''
+    profile:
+      segment: academic
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); const n=o.text.trim().split(/\s+/).length; n>=120 && n<=185
+  - type: javascript
+    value: const o=JSON.parse(output); const ids=o.covered_point_ids.concat(o.uncovered.map(u=>u.id)); ["p1"].every(id=>ids.includes(id))
+  - type: javascript
+    value: const o=JSON.parse(output); !/(I have given this talk|I've delivered this talk|spoken on this topic many times|my
+      book|available on Amazon|learn more at)/i.test(o.text)
+  - type: javascript
+    value: '!output.includes(String.fromCharCode(0x2014)) && !/[A-Za-z]!/.test(JSON.parse(output).text)'
+  - type: javascript
+    value: const t=JSON.parse(output).text.trim(); !/^(hi|hello|good (morning|evening)|thank you|today I)/i.test(t)
+- description: 'script idea from finalized outline 20: Street vendors are the city''s most accur'
+  vars:
+    section_id: s2
+    kind: idea
+    target_words: 150
+    writing_sample: I write short. I say what I saw. I do not dress it up.
+    outline_json:
+      sections:
+      - id: s1
+        kind: hook
+        purpose: a specific moment
+        talking_points:
+        - id: p1
+          kind: story
+          text: the room at 3:04 where nobody spoke
+          source: brief
+          consent: pseudonymized
+        target_seconds: 60
+        target_words: 150
+        ending_point: false
+      - id: s2
+        kind: idea
+        purpose: state the idea
+        talking_points:
+        - id: p2
+          kind: claim
+          text: Street vendors are the city's most accurate economists
+          source: idea_card
+          consent: not_a_story
+        - id: p3
+          kind: claim
+          text: 'the belief it challenges: Economic data comes from statistics offices'
+          source: idea_card
+          consent: not_a_story
+        target_seconds: 60
+        target_words: 150
+        ending_point: false
+      - id: s5
+        kind: close
+        purpose: new bliss and one action
+        talking_points:
+        - id: p9
+          kind: claim
+          text: Ask a vendor what changed this month
+          source: idea_card
+          consent: not_a_story
+        target_seconds: 60
+        target_words: 150
+        ending_point: true
+    prior_text: ''
+    profile:
+      segment: india
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); const n=o.text.trim().split(/\s+/).length; n>=120 && n<=185
+  - type: javascript
+    value: const o=JSON.parse(output); const ids=o.covered_point_ids.concat(o.uncovered.map(u=>u.id)); ["p2", "p3"].every(id=>ids.includes(id))
+  - type: javascript
+    value: const o=JSON.parse(output); !/(I have given this talk|I've delivered this talk|spoken on this topic many times|my
+      book|available on Amazon|learn more at)/i.test(o.text)
+  - type: javascript
+    value: '!output.includes(String.fromCharCode(0x2014)) && !/[A-Za-z]!/.test(JSON.parse(output).text)'

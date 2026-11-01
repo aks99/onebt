@@ -1,0 +1,31 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "idea_or_topic": {
+      "type": "string"
+    },
+    "idea_or_pitch": {
+      "type": "string"
+    },
+    "who_disagrees": {
+      "type": "string"
+    },
+    "evidence_needed": {
+      "type": "string"
+    },
+    "open_questions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "idea_or_topic",
+    "idea_or_pitch",
+    "who_disagrees",
+    "evidence_needed",
+    "open_questions"
+  ]
+}

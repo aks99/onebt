@@ -1,0 +1,68 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "ideas": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "title_working": {
+            "type": "string",
+            "description": "specific, verb-driven, no generic praise"
+          },
+          "throughline": {
+            "type": "string",
+            "description": "15 words or fewer, a claim someone could disagree with"
+          },
+          "belief_challenged": {
+            "type": "string"
+          },
+          "antagonist": {
+            "type": "string"
+          },
+          "evidence_base": {
+            "type": "string"
+          },
+          "audience_action": {
+            "type": "string",
+            "description": "one small winnable first step"
+          },
+          "why_this_speaker": {
+            "type": "string",
+            "description": "original work or lived experience; no credentials dump"
+          },
+          "talk_type": {
+            "type": "string",
+            "enum": [
+              "big idea",
+              "small idea",
+              "awe and wonder",
+              "issue",
+              "artist statement"
+            ]
+          },
+          "risk_notes": {
+            "type": "string",
+            "description": "any R1-R5 concern, or 'none'"
+          }
+        },
+        "required": [
+          "title_working",
+          "throughline",
+          "belief_challenged",
+          "antagonist",
+          "evidence_base",
+          "audience_action",
+          "why_this_speaker",
+          "talk_type",
+          "risk_notes"
+        ]
+      }
+    }
+  },
+  "required": [
+    "ideas"
+  ]
+}

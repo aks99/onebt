@@ -1,0 +1,105 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "scores": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "criterion": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 8
+          },
+          "level": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4
+          },
+          "reason": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "criterion",
+          "level",
+          "reason"
+        ]
+      }
+    },
+    "gate_passed": {
+      "type": "boolean"
+    },
+    "linter": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "flags": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "rule": {
+                "type": "string"
+              },
+              "quote": {
+                "type": "string"
+              },
+              "why": {
+                "type": "string"
+              },
+              "fix": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "rule",
+              "quote",
+              "why",
+              "fix"
+            ]
+          }
+        },
+        "blocking": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "flags",
+        "blocking"
+      ]
+    },
+    "rewrites": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "field": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "field",
+          "text"
+        ]
+      }
+    },
+    "organizer_eyes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "scores",
+    "gate_passed",
+    "linter",
+    "rewrites",
+    "organizer_eyes"
+  ]
+}

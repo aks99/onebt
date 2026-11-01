@@ -1,0 +1,36 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "experience_sentences": {
+      "type": "string"
+    },
+    "first_time_sentence": {
+      "type": "string"
+    },
+    "overlap_warning": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "entry_id": {
+            "type": "string"
+          },
+          "why": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "entry_id",
+          "why"
+        ]
+      }
+    }
+  },
+  "required": [
+    "experience_sentences",
+    "first_time_sentence",
+    "overlap_warning"
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "titles": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "description": "specific, verb-driven, searchable, 60 characters or fewer"
+      }
+    },
+    "one_sentence": {
+      "type": "string",
+      "description": "15 words or fewer"
+    },
+    "idea_statement": {
+      "type": "string",
+      "description": "180 to 230 words: surprising claim, belief it challenges, evidence or observation, why now, who it helps"
+    },
+    "why_now": {
+      "type": "string",
+      "description": "90 to 130 words"
+    },
+    "why_you": {
+      "type": "string",
+      "description": "90 to 130 words; original work and lived experience; no coach, speaker or author-of framing"
+    },
+    "accomplishment": {
+      "type": "string",
+      "description": "100 words or fewer, one concrete thing"
+    },
+    "bio_150": {
+      "type": "string"
+    },
+    "bio_250": {
+      "type": "string"
+    },
+    "youtube_bio": {
+      "type": "string",
+      "description": "4 to 7 sentences answering why should I trust this person"
+    },
+    "pitch_video_script_90s": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "idea_0_30": {
+          "type": "string"
+        },
+        "why_it_matters_30_60": {
+          "type": "string"
+        },
+        "why_you_60_90": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "idea_0_30",
+        "why_it_matters_30_60",
+        "why_you_60_90"
+      ]
+    },
+    "needs_source": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "titles",
+    "one_sentence",
+    "idea_statement",
+    "why_now",
+    "why_you",
+    "accomplishment",
+    "bio_150",
+    "bio_250",
+    "youtube_bio",
+    "pitch_video_script_90s",
+    "needs_source"
+  ]
+}

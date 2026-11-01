@@ -1,0 +1,54 @@
+description: 'One Big Talk eval: personalization (blueprint 13.15)'
+prompts:
+- file://prompts/render.mjs:personalization
+providers:
+- id: anthropic:messages:claude-sonnet-5-5
+  label: personalization (sonnet)
+  config:
+    max_tokens: 4000
+    temperature: 0
+    tools:
+    - name: return_result
+      description: Return the result in the required structure.
+      input_schema:
+        type: object
+        additionalProperties: false
+        properties:
+          fields:
+            type: array
+            items:
+              type: object
+              additionalProperties: false
+              properties:
+                key:
+                  type: string
+                  description: form field key
+                text:
+                  type: string
+              required:
+              - key
+              - text
+          what_changed:
+            type: array
+            items:
+              type: string
+          cautions:
+            type: array
+            items:
+              type: string
+          theme_phrases_used:
+            type: array
+            items:
+              type: string
+        required:
+        - fields
+        - what_changed
+        - cautions
+        - theme_phrases_used
+    tool_choice:
+      type: tool
+      name: return_result
+defaultTest:
+  options:
+    transform: 'typeof output === ''object'' ? JSON.stringify(output) : output'
+tests: file://tests/personalization.yaml

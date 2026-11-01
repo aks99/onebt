@@ -1,0 +1,117 @@
+description: 'One Big Talk eval: story_consent (blueprint 13.15)'
+prompts:
+- file://prompts/render.mjs:outline
+providers:
+- id: anthropic:messages:claude-sonnet-5-5
+  label: outline (sonnet)
+  config:
+    max_tokens: 6000
+    temperature: 0
+    tools:
+    - name: return_result
+      description: Return the result in the required structure.
+      input_schema:
+        type: object
+        additionalProperties: false
+        properties:
+          sections:
+            type: array
+            items:
+              type: object
+              additionalProperties: false
+              properties:
+                id:
+                  type: string
+                kind:
+                  type: string
+                  enum:
+                  - hook
+                  - care
+                  - idea
+                  - evidence
+                  - implication
+                  - cta
+                  - close
+                purpose:
+                  type: string
+                  description: one line
+                talking_points:
+                  type: array
+                  items:
+                    type: object
+                    additionalProperties: false
+                    properties:
+                      id:
+                        type: string
+                      kind:
+                        type: string
+                        enum:
+                        - claim
+                        - example
+                        - number
+                        - story
+                        - to_find
+                      text:
+                        type: string
+                      source:
+                        type: string
+                        enum:
+                        - brief
+                        - idea_card
+                        - expansion
+                        - to_find
+                      consent:
+                        type: string
+                        enum:
+                        - named_with_permission
+                        - pseudonymized
+                        - composite
+                        - not_a_story
+                    required:
+                    - id
+                    - kind
+                    - text
+                    - source
+                    - consent
+                story_slot:
+                  type: boolean
+                target_seconds:
+                  type: integer
+                  minimum: 10
+                target_words:
+                  type: integer
+                  minimum: 10
+                ending_point:
+                  type: boolean
+                claims_needing_sources:
+                  type: array
+                  items:
+                    type: string
+              required:
+              - id
+              - kind
+              - purpose
+              - talking_points
+              - story_slot
+              - target_seconds
+              - target_words
+              - ending_point
+              - claims_needing_sources
+          total_words:
+            type: integer
+            minimum: 0
+          notes:
+            type: array
+            items:
+              type: string
+        required:
+        - sections
+        - total_words
+        - notes
+    tool_choice:
+      type: tool
+      name: return_result
+defaultTest:
+  options:
+    transform: 'typeof output === ''object'' ? JSON.stringify(output) : output'
+tests: file://tests/story_consent.yaml

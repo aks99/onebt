@@ -1,0 +1,26 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "paragraph": {
+      "type": "string",
+      "description": "about 60 words"
+    },
+    "word_count": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 120
+    },
+    "used_entries": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "paragraph",
+    "word_count",
+    "used_entries"
+  ]
+}

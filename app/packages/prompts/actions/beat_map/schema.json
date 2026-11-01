@@ -1,0 +1,46 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "beats": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "order": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "section_id": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "first_words": {
+            "type": "string"
+          },
+          "purpose": {
+            "type": "string"
+          },
+          "target_seconds": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "required": [
+          "order",
+          "section_id",
+          "text",
+          "first_words",
+          "purpose",
+          "target_seconds"
+        ]
+      }
+    }
+  },
+  "required": [
+    "beats"
+  ]
+}

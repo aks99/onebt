@@ -1,0 +1,55 @@
+description: 'One Big Talk eval: script_section (blueprint 13.15)'
+prompts:
+- file://prompts/render.mjs:script_section
+providers:
+- id: anthropic:messages:claude-sonnet-5-5
+  label: script_section (sonnet)
+  config:
+    max_tokens: 3000
+    temperature: 0
+    tools:
+    - name: return_result
+      description: Return the result in the required structure.
+      input_schema:
+        type: object
+        additionalProperties: false
+        properties:
+          text:
+            type: string
+          word_count:
+            type: integer
+            minimum: 0
+          covered_point_ids:
+            type: array
+            items:
+              type: string
+          uncovered:
+            type: array
+            items:
+              type: object
+              additionalProperties: false
+              properties:
+                id:
+                  type: string
+                why:
+                  type: string
+              required:
+              - id
+              - why
+          claims:
+            type: array
+            items:
+              type: string
+        required:
+        - text
+        - word_count
+        - covered_point_ids
+        - uncovered
+        - claims
+    tool_choice:
+      type: tool
+      name: return_result
+defaultTest:
+  options:
+    transform: 'typeof output === ''object'' ? JSON.stringify(output) : output'
+tests: file://tests/script_section.yaml

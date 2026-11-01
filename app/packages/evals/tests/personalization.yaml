@@ -1,0 +1,271 @@
+- description: 'personalization 1: TEDxWilson Park'
+  vars:
+    pitch_pack: &id001
+      one_sentence: Safety checklists fail when the most junior person in the room cannot stop it
+      idea_statement: Safety checklists fail when the most junior person cannot stop the room. I watched it for two years.
+      why_now: Surgical volume is rising faster than staffing.
+      why_you: Eleven years in operating theatres as a nurse educator.
+      bio_150: A nurse educator with a doctorate in patient safety.
+    event_json:
+      name: TEDxWilson Park
+      theme: Thresholds
+      local_connection_required: true
+      city: Edinburgh
+    form_fields:
+    - key: idea
+      label: Your idea in one sentence
+    - key: why_this
+      label: Why this event and this audience
+      limit: 200
+    - key: local
+      label: Your connection to the area
+    profile:
+      city: Edinburgh
+      places_lived:
+      - Edinburgh
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); !/(One Big Talk|my coach|this course|my program|my book)/i.test(JSON.stringify(o.fields))
+  - type: javascript
+    value: const o=JSON.parse(output); !/(I have given this talk|spoken on this topic many times|delivered this talk)/i.test(JSON.stringify(o.fields))
+- description: 'personalization 2: TEDxBoulder (no local connection)'
+  vars:
+    pitch_pack: *id001
+    event_json:
+      name: TEDxBoulder
+      theme: Undercurrents
+      local_connection_required: true
+      city: Boulder
+    form_fields:
+    - key: idea
+      label: Your idea in one sentence
+    - key: why_this
+      label: Why this event and this audience
+      limit: 200
+    - key: local
+      label: Your connection to the area
+    profile:
+      city: Dallas
+      places_lived:
+      - Dallas
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); !/(One Big Talk|my coach|this course|my program|my book)/i.test(JSON.stringify(o.fields))
+  - type: javascript
+    value: const o=JSON.parse(output); !/(I have given this talk|spoken on this topic many times|delivered this talk)/i.test(JSON.stringify(o.fields))
+  - type: javascript
+    value: const o=JSON.parse(output); o.cautions.some(c=>/local/i.test(c)) && !new RegExp('Boulder','i').test(JSON.stringify(o.fields).replace(/TEDx\w+/g,''))
+- description: 'personalization 3: TEDxPune'
+  vars:
+    pitch_pack: *id001
+    event_json:
+      name: TEDxPune
+      theme: Unfold
+      local_connection_required: false
+      city: Pune
+    form_fields:
+    - key: idea
+      label: Your idea in one sentence
+    - key: why_this
+      label: Why this event and this audience
+      limit: 200
+    - key: local
+      label: Your connection to the area
+    profile:
+      city: Mumbai
+      places_lived:
+      - Mumbai
+      - Pune
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); !/(One Big Talk|my coach|this course|my program|my book)/i.test(JSON.stringify(o.fields))
+  - type: javascript
+    value: const o=JSON.parse(output); !/(I have given this talk|spoken on this topic many times|delivered this talk)/i.test(JSON.stringify(o.fields))
+- description: 'personalization 4: TEDxLeeds (no local connection)'
+  vars:
+    pitch_pack: *id001
+    event_json:
+      name: TEDxLeeds
+      theme: Signal
+      local_connection_required: true
+      city: Leeds
+    form_fields:
+    - key: idea
+      label: Your idea in one sentence
+    - key: why_this
+      label: Why this event and this audience
+      limit: 200
+    - key: local
+      label: Your connection to the area
+    profile:
+      city: London
+      places_lived:
+      - London
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); !/(One Big Talk|my coach|this course|my program|my book)/i.test(JSON.stringify(o.fields))
+  - type: javascript
+    value: const o=JSON.parse(output); !/(I have given this talk|spoken on this topic many times|delivered this talk)/i.test(JSON.stringify(o.fields))
+  - type: javascript
+    value: const o=JSON.parse(output); o.cautions.some(c=>/local/i.test(c)) && !new RegExp('Leeds','i').test(JSON.stringify(o.fields).replace(/TEDx\w+/g,''))
+- description: 'personalization 5: TEDxToronto'
+  vars:
+    pitch_pack: *id001
+    event_json:
+      name: TEDxToronto
+      theme: Kindling
+      local_connection_required: false
+      city: Toronto
+    form_fields:
+    - key: idea
+      label: Your idea in one sentence
+    - key: why_this
+      label: Why this event and this audience
+      limit: 200
+    - key: local
+      label: Your connection to the area
+    profile:
+      city: Toronto
+      places_lived:
+      - Toronto
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); !/(One Big Talk|my coach|this course|my program|my book)/i.test(JSON.stringify(o.fields))
+  - type: javascript
+    value: const o=JSON.parse(output); !/(I have given this talk|spoken on this topic many times|delivered this talk)/i.test(JSON.stringify(o.fields))
+- description: 'personalization 6: TEDxWolverhampton'
+  vars:
+    pitch_pack: *id001
+    event_json:
+      name: TEDxWolverhampton
+      theme: Reset
+      local_connection_required: true
+      city: Wolverhampton
+      organizer_note: Do not force our theme into your title
+    form_fields:
+    - key: idea
+      label: Your idea in one sentence
+    - key: why_this
+      label: Why this event and this audience
+      limit: 200
+    - key: local
+      label: Your connection to the area
+    profile:
+      city: Birmingham
+      places_lived:
+      - Wolverhampton
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); !/(One Big Talk|my coach|this course|my program|my book)/i.test(JSON.stringify(o.fields))
+  - type: javascript
+    value: const o=JSON.parse(output); !/(I have given this talk|spoken on this topic many times|delivered this talk)/i.test(JSON.stringify(o.fields))
+- description: 'personalization 7: TEDxChennai'
+  vars:
+    pitch_pack: *id001
+    event_json:
+      name: TEDxChennai
+      theme: Currents
+      local_connection_required: false
+      city: Chennai
+    form_fields:
+    - key: idea
+      label: Your idea in one sentence
+    - key: why_this
+      label: Why this event and this audience
+      limit: 200
+    - key: local
+      label: Your connection to the area
+    profile:
+      city: Chennai
+      places_lived: []
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); !/(One Big Talk|my coach|this course|my program|my book)/i.test(JSON.stringify(o.fields))
+  - type: javascript
+    value: const o=JSON.parse(output); !/(I have given this talk|spoken on this topic many times|delivered this talk)/i.test(JSON.stringify(o.fields))
+- description: 'personalization 8: TEDxMinneapolis (no local connection)'
+  vars:
+    pitch_pack: *id001
+    event_json:
+      name: TEDxMinneapolis
+      theme: Open
+      local_connection_required: true
+      city: Minneapolis
+    form_fields:
+    - key: idea
+      label: Your idea in one sentence
+    - key: why_this
+      label: Why this event and this audience
+      limit: 200
+    - key: local
+      label: Your connection to the area
+    profile:
+      city: Chicago
+      places_lived:
+      - Chicago
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); !/(One Big Talk|my coach|this course|my program|my book)/i.test(JSON.stringify(o.fields))
+  - type: javascript
+    value: const o=JSON.parse(output); !/(I have given this talk|spoken on this topic many times|delivered this talk)/i.test(JSON.stringify(o.fields))
+  - type: javascript
+    value: const o=JSON.parse(output); o.cautions.some(c=>/local/i.test(c)) && !new RegExp('Minneapolis','i').test(JSON.stringify(o.fields).replace(/TEDx\w+/g,''))
+- description: 'personalization 9: TEDxSydney'
+  vars:
+    pitch_pack: *id001
+    event_json:
+      name: TEDxSydney
+      theme: Hinge
+      local_connection_required: false
+      city: Sydney
+    form_fields:
+    - key: idea
+      label: Your idea in one sentence
+    - key: why_this
+      label: Why this event and this audience
+      limit: 200
+    - key: local
+      label: Your connection to the area
+    profile:
+      city: Melbourne
+      places_lived: []
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); !/(One Big Talk|my coach|this course|my program|my book)/i.test(JSON.stringify(o.fields))
+  - type: javascript
+    value: const o=JSON.parse(output); !/(I have given this talk|spoken on this topic many times|delivered this talk)/i.test(JSON.stringify(o.fields))
+- description: 'personalization 10: TEDxBrighton'
+  vars:
+    pitch_pack: *id001
+    event_json:
+      name: TEDxBrighton
+      theme: Tides
+      local_connection_required: true
+      city: Brighton
+    form_fields:
+    - key: idea
+      label: Your idea in one sentence
+    - key: why_this
+      label: Why this event and this audience
+      limit: 200
+    - key: local
+      label: Your connection to the area
+    profile:
+      city: Brighton
+      places_lived:
+      - Brighton
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); !/(One Big Talk|my coach|this course|my program|my book)/i.test(JSON.stringify(o.fields))
+  - type: javascript
+    value: const o=JSON.parse(output); !/(I have given this talk|spoken on this topic many times|delivered this talk)/i.test(JSON.stringify(o.fields))

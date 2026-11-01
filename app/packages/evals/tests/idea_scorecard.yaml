@@ -1,0 +1,630 @@
+- description: 'platitude fails gate: Be your authentic self.'
+  vars:
+    idea_json:
+      throughline: Be your authentic self.
+      belief_challenged: ''
+      antagonist: ''
+      evidence_notes: ''
+      audience_action: ''
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.gate_passed===false && o.scores.find(s=>s.criterion===1).level===1
+- description: 'platitude fails gate: Follow your passion and success will follow.'
+  vars:
+    idea_json:
+      throughline: Follow your passion and success will follow.
+      belief_challenged: ''
+      antagonist: ''
+      evidence_notes: ''
+      audience_action: ''
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.gate_passed===false && o.scores.find(s=>s.criterion===1).level===1
+- description: 'platitude fails gate: Believe in yourself.'
+  vars:
+    idea_json:
+      throughline: Believe in yourself.
+      belief_challenged: ''
+      antagonist: ''
+      evidence_notes: ''
+      audience_action: ''
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.gate_passed===false && o.scores.find(s=>s.criterion===1).level===1
+- description: 'platitude fails gate: Never give up on your dreams.'
+  vars:
+    idea_json:
+      throughline: Never give up on your dreams.
+      belief_challenged: ''
+      antagonist: ''
+      evidence_notes: ''
+      audience_action: ''
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.gate_passed===false && o.scores.find(s=>s.criterion===1).level===1
+- description: 'platitude fails gate: Live each day as if it were your last.'
+  vars:
+    idea_json:
+      throughline: Live each day as if it were your last.
+      belief_challenged: ''
+      antagonist: ''
+      evidence_notes: ''
+      audience_action: ''
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.gate_passed===false && o.scores.find(s=>s.criterion===1).level===1
+- description: 'platitude fails gate: Everything happens for a reason.'
+  vars:
+    idea_json:
+      throughline: Everything happens for a reason.
+      belief_challenged: ''
+      antagonist: ''
+      evidence_notes: ''
+      audience_action: ''
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.gate_passed===false && o.scores.find(s=>s.criterion===1).level===1
+- description: 'platitude fails gate: Kindness changes the world.'
+  vars:
+    idea_json:
+      throughline: Kindness changes the world.
+      belief_challenged: ''
+      antagonist: ''
+      evidence_notes: ''
+      audience_action: ''
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.gate_passed===false && o.scores.find(s=>s.criterion===1).level===1
+- description: 'platitude fails gate: You are enough.'
+  vars:
+    idea_json:
+      throughline: You are enough.
+      belief_challenged: ''
+      antagonist: ''
+      evidence_notes: ''
+      audience_action: ''
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.gate_passed===false && o.scores.find(s=>s.criterion===1).level===1
+- description: 'platitude fails gate: Step out of your comfort zone.'
+  vars:
+    idea_json:
+      throughline: Step out of your comfort zone.
+      belief_challenged: ''
+      antagonist: ''
+      evidence_notes: ''
+      audience_action: ''
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.gate_passed===false && o.scores.find(s=>s.criterion===1).level===1
+- description: 'platitude fails gate: Attitude is everything.'
+  vars:
+    idea_json:
+      throughline: Attitude is everything.
+      belief_challenged: ''
+      antagonist: ''
+      evidence_notes: ''
+      audience_action: ''
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.gate_passed===false && o.scores.find(s=>s.criterion===1).level===1
+- description: 'topic fails criterion 1: Artificial intelligence.'
+  vars:
+    idea_json:
+      throughline: Artificial intelligence.
+      belief_challenged: ''
+      antagonist: ''
+      evidence_notes: ''
+      audience_action: ''
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.scores.find(s=>s.criterion===1).level<=2 && o.gate_passed===false
+- description: 'topic fails criterion 1: The future of work.'
+  vars:
+    idea_json:
+      throughline: The future of work.
+      belief_challenged: ''
+      antagonist: ''
+      evidence_notes: ''
+      audience_action: ''
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.scores.find(s=>s.criterion===1).level<=2 && o.gate_passed===false
+- description: 'topic fails criterion 1: Mental health.'
+  vars:
+    idea_json:
+      throughline: Mental health.
+      belief_challenged: ''
+      antagonist: ''
+      evidence_notes: ''
+      audience_action: ''
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.scores.find(s=>s.criterion===1).level<=2 && o.gate_passed===false
+- description: 'topic fails criterion 1: Climate change.'
+  vars:
+    idea_json:
+      throughline: Climate change.
+      belief_challenged: ''
+      antagonist: ''
+      evidence_notes: ''
+      audience_action: ''
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.scores.find(s=>s.criterion===1).level<=2 && o.gate_passed===false
+- description: 'topic fails criterion 1: My journey from poverty to CEO.'
+  vars:
+    idea_json:
+      throughline: My journey from poverty to CEO.
+      belief_challenged: ''
+      antagonist: ''
+      evidence_notes: ''
+      audience_action: ''
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.scores.find(s=>s.criterion===1).level<=2 && o.gate_passed===false
+- description: 'topic fails criterion 1: Leadership.'
+  vars:
+    idea_json:
+      throughline: Leadership.
+      belief_challenged: ''
+      antagonist: ''
+      evidence_notes: ''
+      audience_action: ''
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.scores.find(s=>s.criterion===1).level<=2 && o.gate_passed===false
+- description: 'topic fails criterion 1: The history of jazz.'
+  vars:
+    idea_json:
+      throughline: The history of jazz.
+      belief_challenged: ''
+      antagonist: ''
+      evidence_notes: ''
+      audience_action: ''
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.scores.find(s=>s.criterion===1).level<=2 && o.gate_passed===false
+- description: 'topic fails criterion 1: Women in technology.'
+  vars:
+    idea_json:
+      throughline: Women in technology.
+      belief_challenged: ''
+      antagonist: ''
+      evidence_notes: ''
+      audience_action: ''
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.scores.find(s=>s.criterion===1).level<=2 && o.gate_passed===false
+- description: 'topic fails criterion 1: Education reform.'
+  vars:
+    idea_json:
+      throughline: Education reform.
+      belief_challenged: ''
+      antagonist: ''
+      evidence_notes: ''
+      audience_action: ''
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.scores.find(s=>s.criterion===1).level<=2 && o.gate_passed===false
+- description: 'topic fails criterion 1: The gut microbiome.'
+  vars:
+    idea_json:
+      throughline: The gut microbiome.
+      belief_challenged: ''
+      antagonist: ''
+      evidence_notes: ''
+      audience_action: ''
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.scores.find(s=>s.criterion===1).level<=2 && o.gate_passed===false
+- description: 'real idea passes gate (coach): Safety checklists fail when the most jun'
+  vars:
+    idea_json:
+      throughline: Safety checklists fail when the most junior person in the room cannot stop it
+      belief_challenged: Reading a checklist aloud makes a team safe
+      antagonist: Surgeons who see the timeout as theatre
+      evidence_notes: 40 teams observed over two years; WHO programme data (needs source)
+      audience_action: Ask the quietest person first
+      segment: coach
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.gate_passed===true && o.scores.length===9 && o.scores.every(s=>s.reason.length>10)
+- description: 'real idea passes gate (author): Grief is a skill a family can practise b'
+  vars:
+    idea_json:
+      throughline: Grief is a skill a family can practise before anyone dies
+      belief_challenged: Grief begins at the funeral
+      antagonist: Hospice chaplains who see rehearsal as morbid
+      evidence_notes: Interviews with 60 families; palliative care literature (needs source)
+      audience_action: Hold one conversation about a death before it comes
+      segment: author
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.gate_passed===true && o.scores.length===9 && o.scores.every(s=>s.reason.length>10)
+- description: 'real idea passes gate (executive): The best strategy meeting has no slides '
+  vars:
+    idea_json:
+      throughline: The best strategy meeting has no slides and one unanswered question
+      belief_challenged: Decks make decisions clearer
+      antagonist: Consultants paid by the slide
+      evidence_notes: Twelve years of board meetings; Amazon memo practice (needs source)
+      audience_action: Open your next meeting with the question you cannot answer
+      segment: executive
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.gate_passed===true && o.scores.length===9 && o.scores.every(s=>s.reason.length>10)
+- description: 'real idea passes gate (academic): Ice forms from the edges inward, and so '
+  vars:
+    idea_json:
+      throughline: Ice forms from the edges inward, and so do institutions
+      belief_challenged: Change starts at the centre
+      antagonist: Leadership theorists who focus on the top
+      evidence_notes: Field observations of lake ice; organisational case studies (needs source)
+      audience_action: Find the edge of your organisation and listen there
+      segment: academic
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.gate_passed===true && o.scores.length===9 && o.scores.every(s=>s.reason.length>10)
+- description: 'real idea passes gate (india): Indian cities cool faster when roofs are'
+  vars:
+    idea_json:
+      throughline: Indian cities cool faster when roofs are painted than when trees are planted
+      belief_challenged: Trees are the only answer to urban heat
+      antagonist: Urban foresters
+      evidence_notes: Roof temperature measurements in Chennai (needs source)
+      audience_action: Paint one roof white this summer
+      segment: india
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.gate_passed===true && o.scores.length===9 && o.scores.every(s=>s.reason.length>10)
+- description: 'real idea passes gate (coach): A team''s silence is data, not consent'
+  vars:
+    idea_json:
+      throughline: A team's silence is data, not consent
+      belief_challenged: Silence means agreement
+      antagonist: Managers who equate quiet with alignment
+      evidence_notes: Meeting transcripts from 30 teams (needs source)
+      audience_action: Count the silences in your next meeting
+      segment: coach
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.gate_passed===true && o.scores.length===9 && o.scores.every(s=>s.reason.length>10)
+- description: 'real idea passes gate (author): A novel teaches empathy only when the re'
+  vars:
+    idea_json:
+      throughline: A novel teaches empathy only when the reader is uncomfortable
+      belief_challenged: Reading any fiction builds empathy
+      antagonist: Reading researchers who find no effect
+      evidence_notes: Classroom study of 200 students (needs source)
+      audience_action: Pick the book you least want to read
+      segment: author
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.gate_passed===true && o.scores.length===9 && o.scores.every(s=>s.reason.length>10)
+- description: 'real idea passes gate (executive): Layoffs announced on Fridays cost more t'
+  vars:
+    idea_json:
+      throughline: Layoffs announced on Fridays cost more than layoffs announced on Mondays
+      belief_challenged: Timing does not change the cost of a layoff
+      antagonist: HR leaders who prefer the weekend buffer
+      evidence_notes: Turnover data from 14 companies (needs source)
+      audience_action: Move your hard news to Monday morning
+      segment: executive
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.gate_passed===true && o.scores.length===9 && o.scores.every(s=>s.reason.length>10)
+- description: 'real idea passes gate (academic): Mathematics anxiety is caught from paren'
+  vars:
+    idea_json:
+      throughline: Mathematics anxiety is caught from parents, not from teachers
+      belief_challenged: School causes maths anxiety
+      antagonist: Teachers' unions and curriculum designers
+      evidence_notes: Longitudinal study of 1,200 children (needs source)
+      audience_action: Say one kind thing about numbers at dinner
+      segment: academic
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.gate_passed===true && o.scores.length===9 && o.scores.every(s=>s.reason.length>10)
+- description: 'real idea passes gate (india): The chai stall is India''s most effective'
+  vars:
+    idea_json:
+      throughline: The chai stall is India's most effective classroom
+      belief_challenged: Learning happens in schools
+      antagonist: Education ministry planners
+      evidence_notes: Ethnography in 20 towns (needs source)
+      audience_action: Ask a question at the next stall you visit
+      segment: india
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.gate_passed===true && o.scores.length===9 && o.scores.every(s=>s.reason.length>10)
+- description: 'real idea passes gate (coach): Feedback lands only when it arrives befo'
+  vars:
+    idea_json:
+      throughline: Feedback lands only when it arrives before the person asks for it
+      belief_challenged: Feedback should be requested
+      antagonist: Coaches who teach 'ask first'
+      evidence_notes: Observation of 80 feedback conversations (needs source)
+      audience_action: Give one piece of unrequested praise today
+      segment: coach
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.gate_passed===true && o.scores.length===9 && o.scores.every(s=>s.reason.length>10)
+- description: 'real idea passes gate (author): A memoir is an argument, not a diary'
+  vars:
+    idea_json:
+      throughline: A memoir is an argument, not a diary
+      belief_challenged: Memoirs record what happened
+      antagonist: Memoir purists
+      evidence_notes: Analysis of 50 bestselling memoirs (needs source)
+      audience_action: Write one sentence stating what your life proves
+      segment: author
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.gate_passed===true && o.scores.length===9 && o.scores.every(s=>s.reason.length>10)
+- description: 'real idea passes gate (executive): A company''s culture is what it tolerates'
+  vars:
+    idea_json:
+      throughline: A company's culture is what it tolerates on its worst day
+      belief_challenged: Culture is what is written on the wall
+      antagonist: Values consultants
+      evidence_notes: Interviews after six crises (needs source)
+      audience_action: Name the thing you tolerated last week
+      segment: executive
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.gate_passed===true && o.scores.length===9 && o.scores.every(s=>s.reason.length>10)
+- description: 'real idea passes gate (academic): Sleep is when the brain decides what was'
+  vars:
+    idea_json:
+      throughline: Sleep is when the brain decides what was worth learning
+      belief_challenged: Sleep rests the brain
+      antagonist: Productivity gurus who praise four hours
+      evidence_notes: Memory consolidation studies (needs source)
+      audience_action: Protect the hour before sleep from screens
+      segment: academic
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.gate_passed===true && o.scores.length===9 && o.scores.every(s=>s.reason.length>10)
+- description: 'real idea passes gate (india): Village water committees outperform city'
+  vars:
+    idea_json:
+      throughline: 'Village water committees outperform city utilities on one measure: trust'
+      belief_challenged: Scale fixes water supply
+      antagonist: Infrastructure economists
+      evidence_notes: Survey of 40 committees in Maharashtra (needs source)
+      audience_action: Meet the person who manages your water
+      segment: india
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.gate_passed===true && o.scores.length===9 && o.scores.every(s=>s.reason.length>10)
+- description: 'real idea passes gate (coach): Burnout is a boundary problem disguised '
+  vars:
+    idea_json:
+      throughline: Burnout is a boundary problem disguised as a workload problem
+      belief_challenged: Burnout comes from too much work
+      antagonist: Workload reformers
+      evidence_notes: Coaching notes from 200 clients, anonymised (needs source)
+      audience_action: Say no once this week and watch what happens
+      segment: coach
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.gate_passed===true && o.scores.length===9 && o.scores.every(s=>s.reason.length>10)
+- description: 'real idea passes gate (author): Children learn to read faster from books'
+  vars:
+    idea_json:
+      throughline: Children learn to read faster from books that scare them a little
+      belief_challenged: Reading should be gentle
+      antagonist: Protective parents
+      evidence_notes: Classroom reading logs across 12 schools (needs source)
+      audience_action: Read one slightly scary story aloud
+      segment: author
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.gate_passed===true && o.scores.length===9 && o.scores.every(s=>s.reason.length>10)
+- description: 'real idea passes gate (executive): The founder who stays too long is the co'
+  vars:
+    idea_json:
+      throughline: The founder who stays too long is the company's biggest unpriced risk
+      belief_challenged: Founders should lead as long as they can
+      antagonist: Founder-led investors
+      evidence_notes: Outcomes of 70 founder transitions (needs source)
+      audience_action: Write your own succession date
+      segment: executive
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.gate_passed===true && o.scores.length===9 && o.scores.every(s=>s.reason.length>10)
+- description: 'real idea passes gate (academic): Honeybees vote, and they are better at i'
+  vars:
+    idea_json:
+      throughline: Honeybees vote, and they are better at it than we are
+      belief_challenged: Animals do not make collective decisions
+      antagonist: Political scientists
+      evidence_notes: Swarm decision research (needs source)
+      audience_action: Let the quietest option speak in your next vote
+      segment: academic
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.gate_passed===true && o.scores.length===9 && o.scores.every(s=>s.reason.length>10)
+- description: 'real idea passes gate (india): Street vendors are the city''s most accur'
+  vars:
+    idea_json:
+      throughline: Street vendors are the city's most accurate economists
+      belief_challenged: Economic data comes from statistics offices
+      antagonist: Statisticians
+      evidence_notes: Vendor price diaries in three cities (needs source)
+      audience_action: Ask a vendor what changed this month
+      segment: india
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.gate_passed===true && o.scores.length===9 && o.scores.every(s=>s.reason.length>10)
+- description: 'real idea passes gate (coach): A question asked twice is more powerful '
+  vars:
+    idea_json:
+      throughline: A question asked twice is more powerful than an answer given once
+      belief_challenged: Good leaders answer questions
+      antagonist: Decisive-leadership advocates
+      evidence_notes: Coaching session transcripts (needs source)
+      audience_action: Repeat the question before you answer
+      segment: coach
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.gate_passed===true && o.scores.length===9 && o.scores.every(s=>s.reason.length>10)
+- description: 'real idea passes gate (author): Translation is the most honest form of r'
+  vars:
+    idea_json:
+      throughline: Translation is the most honest form of reading
+      belief_challenged: Reading a translation is second best
+      antagonist: Monolingual critics
+      evidence_notes: Comparative reading study (needs source)
+      audience_action: Read one page in a language you half know
+      segment: author
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.gate_passed===true && o.scores.length===9 && o.scores.every(s=>s.reason.length>10)
+- description: 'real idea passes gate (executive): Your calendar is the only strategy docum'
+  vars:
+    idea_json:
+      throughline: Your calendar is the only strategy document that tells the truth
+      belief_challenged: Strategy lives in documents
+      antagonist: Strategy officers
+      evidence_notes: Calendar audits of 40 executives (needs source)
+      audience_action: Audit one week of your calendar
+      segment: executive
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.gate_passed===true && o.scores.length===9 && o.scores.every(s=>s.reason.length>10)
+- description: 'real idea passes gate (academic): Volcanoes made the first farms possible'
+  vars:
+    idea_json:
+      throughline: Volcanoes made the first farms possible
+      belief_challenged: Farming began where rivers flooded
+      antagonist: Agricultural historians
+      evidence_notes: Soil chemistry of early sites (needs source)
+      audience_action: Look at the soil under the oldest field near you
+      segment: academic
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.gate_passed===true && o.scores.length===9 && o.scores.every(s=>s.reason.length>10)
+- description: 'real idea passes gate (india): Festival economics explain Indian inflat'
+  vars:
+    idea_json:
+      throughline: Festival economics explain Indian inflation better than central bank models
+      belief_challenged: Inflation is a monetary story
+      antagonist: Macroeconomists
+      evidence_notes: Price series around festivals (needs source)
+      audience_action: Watch prices in the week before the next festival
+      segment: india
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.gate_passed===true && o.scores.length===9 && o.scores.every(s=>s.reason.length>10)
+- description: 'real idea passes gate (coach): Confidence is a side effect of preparati'
+  vars:
+    idea_json:
+      throughline: Confidence is a side effect of preparation, never a prerequisite
+      belief_challenged: You need confidence to begin
+      antagonist: Mindset coaches
+      evidence_notes: Rehearsal logs of 150 speakers (needs source)
+      audience_action: Prepare one thing more than feels necessary
+      segment: coach
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.gate_passed===true && o.scores.length===9 && o.scores.every(s=>s.reason.length>10)
+- description: 'real idea passes gate (author): Every bestseller list is a map of a nati'
+  vars:
+    idea_json:
+      throughline: Every bestseller list is a map of a nation's fears
+      belief_challenged: Bestsellers reflect taste
+      antagonist: Literary critics
+      evidence_notes: Fifty years of lists coded by theme (needs source)
+      audience_action: Read the top ten as a single document
+      segment: author
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.gate_passed===true && o.scores.length===9 && o.scores.every(s=>s.reason.length>10)
+- description: 'real idea passes gate (executive): Remote teams fail at endings, not beginn'
+  vars:
+    idea_json:
+      throughline: Remote teams fail at endings, not beginnings
+      belief_challenged: Remote work fails at onboarding
+      antagonist: HR onboarding experts
+      evidence_notes: Exit data from 12 remote firms (needs source)
+      audience_action: Design how your next project ends before it starts
+      segment: executive
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.gate_passed===true && o.scores.length===9 && o.scores.every(s=>s.reason.length>10)
+- description: 'real idea passes gate (academic): Dark skies are a public health intervent'
+  vars:
+    idea_json:
+      throughline: Dark skies are a public health intervention
+      belief_challenged: Light at night is harmless
+      antagonist: Lighting engineers
+      evidence_notes: Sleep and lighting studies (needs source)
+      audience_action: Turn off one outdoor light tonight
+      segment: academic
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.gate_passed===true && o.scores.length===9 && o.scores.every(s=>s.reason.length>10)
+- description: 'real idea passes gate (india): The Indian wedding is a logistics master'
+  vars:
+    idea_json:
+      throughline: The Indian wedding is a logistics masterclass that business schools ignore
+      belief_challenged: Weddings are ceremonies, not operations
+      antagonist: Operations faculty
+      evidence_notes: Observation of 30 weddings (needs source)
+      audience_action: Borrow one wedding practice for your next project
+      segment: india
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); o.gate_passed===true && o.scores.length===9 && o.scores.every(s=>s.reason.length>10)

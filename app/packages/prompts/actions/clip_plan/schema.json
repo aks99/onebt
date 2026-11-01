@@ -1,0 +1,53 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "clips": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "start_cue": {
+            "type": "string",
+            "description": "first 6 words"
+          },
+          "end_cue": {
+            "type": "string",
+            "description": "last 6 words"
+          },
+          "est_seconds": {
+            "type": "integer",
+            "minimum": 30,
+            "maximum": 60
+          },
+          "hook": {
+            "type": "string"
+          },
+          "quote": {
+            "type": "string"
+          },
+          "caption_text": {
+            "type": "string",
+            "description": "60 characters or fewer"
+          },
+          "post_text": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "start_cue",
+          "end_cue",
+          "est_seconds",
+          "hook",
+          "quote",
+          "caption_text",
+          "post_text"
+        ]
+      }
+    }
+  },
+  "required": [
+    "clips"
+  ]
+}

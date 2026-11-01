@@ -9,7 +9,7 @@ One Big Talk is an independent product and is not affiliated with, endorsed by, 
 ## Start here
 
 1. `START-HERE.md`: the handoff for any AI or new team member. Project instructions, non-negotiables, the state of the work, the read order and the open items. Read it first.
-2. `TEDx-OS-Master-Blueprint-v1.8.md`: the complete product definition (about 36,000 words). Source of truth for scope, pricing, design tokens, data model, prompts, legal constraints and the build order. Older versions are in `blueprint-history/`.
+2. `TEDx-OS-Master-Blueprint-v1.9.md`: the complete product definition (about 36,000 words). Source of truth for scope, pricing, design tokens, data model, prompts, legal constraints and the build order. Older versions are in `blueprint-history/`.
 3. `MVP-First-Release.md` and `TEDx-OS-Feature-Decisions.xlsx` (also `.csv`): every feature with the owner's decision of 1 November 2026. The first release is every row marked MVP.
 4. `TEDx-OS-Screen-Inventory-and-Wireframes.md`: every first-release screen, its five states and a low-fidelity wireframe. Read before any UI work.
 5. `TEDx-Event-Database-Crawler-Prompt.md`: the Claude Code prompt the owner runs on his own machine to build the event database, and how the app imports it (weekly Google Sheet sync). The app itself never crawls.
@@ -19,7 +19,7 @@ One Big Talk is an independent product and is not affiliated with, endorsed by, 
 | Path | What it holds |
 |---|---|
 | `START-HERE.md` | Handoff and project instructions for any AI or person |
-| `TEDx-OS-Master-Blueprint-v1.8.md` | Current blueprint (source of truth) |
+| `TEDx-OS-Master-Blueprint-v1.9.md` | Current blueprint (source of truth) |
 | `blueprint-history/` | v1, v1.1, v1.2, v1.3, v1.4 (history only) |
 | `MVP-First-Release.md`, `TEDx-OS-Feature-Decisions.xlsx`, `.csv` | The decided feature set |
 | `TEDx-OS-Feature-Catalogue-for-Selection.md` | The original catalogue the decisions were made from |

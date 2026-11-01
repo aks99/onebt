@@ -1,0 +1,51 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "text": {
+      "type": "string"
+    },
+    "word_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "covered_point_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "uncovered": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "why": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "why"
+        ]
+      }
+    },
+    "claims": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "text",
+    "word_count",
+    "covered_point_ids",
+    "uncovered",
+    "claims"
+  ]
+}

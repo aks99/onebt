@@ -1,0 +1,46 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "trend": {
+      "type": "string"
+    },
+    "next_drill": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "read_cover_recite",
+            "cue_cards",
+            "blank_fill",
+            "chaining"
+          ]
+        },
+        "beat_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "why": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind",
+        "beat_ids",
+        "why"
+      ]
+    },
+    "timing_advice": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "trend",
+    "next_drill",
+    "timing_advice"
+  ]
+}

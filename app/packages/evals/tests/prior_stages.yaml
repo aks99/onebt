@@ -1,0 +1,227 @@
+- description: prior stages 1
+  vars:
+    prior_stages:
+    - id: e1
+      month: 3
+      year: 2025
+      city: Mumbai
+      organization: Hospital leadership summit
+      audience_size: 400
+      topic: Leading hospital teams
+    - id: e2
+      month: 9
+      year: 2024
+      city: Pune
+      organization: Nurses' association
+      audience_size: 60
+      topic: Night-shift staffing
+    idea_json: &id001
+      throughline: Safety checklists fail when the most junior person in the room cannot stop it
+      belief_challenged: Reading a checklist aloud makes a team safe
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); !/(this talk|this idea|this topic)/i.test(o.experience_sentences)
+  - type: javascript
+    value: const o=JSON.parse(output); /first/i.test(o.first_time_sentence)
+  - type: javascript
+    value: const o=JSON.parse(output); !/gave a presentation/i.test(o.experience_sentences)
+  - type: javascript
+    value: const o=JSON.parse(output); o.overlap_warning.length===0
+- description: prior stages 2
+  vars:
+    prior_stages:
+    - id: e1
+      month: 1
+      year: 2024
+      city: Toronto
+      organization: Rotary club
+      audience_size: 40
+      topic: Volunteering in clinics
+    idea_json: *id001
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); !/(this talk|this idea|this topic)/i.test(o.experience_sentences)
+  - type: javascript
+    value: const o=JSON.parse(output); /first/i.test(o.first_time_sentence)
+  - type: javascript
+    value: const o=JSON.parse(output); !/gave a presentation/i.test(o.experience_sentences)
+  - type: javascript
+    value: const o=JSON.parse(output); o.overlap_warning.length===0
+- description: prior stages 3
+  vars:
+    prior_stages:
+    - id: e1
+      month: 6
+      year: 2023
+      city: Dallas
+      organization: University guest lecture
+      audience_size: 120
+      topic: Cardiology for first-year students
+      result_line: invited back
+    idea_json: *id001
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); !/(this talk|this idea|this topic)/i.test(o.experience_sentences)
+  - type: javascript
+    value: const o=JSON.parse(output); /first/i.test(o.first_time_sentence)
+  - type: javascript
+    value: const o=JSON.parse(output); !/gave a presentation/i.test(o.experience_sentences)
+  - type: javascript
+    value: const o=JSON.parse(output); o.overlap_warning.length===0
+- description: prior stages 4
+  vars:
+    prior_stages:
+    - id: e1
+      month: 5
+      year: 2025
+      city: Chennai
+      organization: Marketing conference
+      audience_size: 300
+      topic: Digital education
+    - id: e2
+      month: 11
+      year: 2024
+      city: Bengaluru
+      organization: Startup meetup
+      audience_size: 80
+      topic: Course design
+    idea_json: *id001
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); !/(this talk|this idea|this topic)/i.test(o.experience_sentences)
+  - type: javascript
+    value: const o=JSON.parse(output); /first/i.test(o.first_time_sentence)
+  - type: javascript
+    value: const o=JSON.parse(output); !/gave a presentation/i.test(o.experience_sentences)
+  - type: javascript
+    value: const o=JSON.parse(output); o.overlap_warning.length===0
+- description: prior stages 5
+  vars:
+    prior_stages:
+    - id: e1
+      month: 2
+      year: 2025
+      city: London
+      organization: Toastmasters club
+      audience_size: 25
+      topic: A story about my grandmother
+    idea_json: *id001
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); !/(this talk|this idea|this topic)/i.test(o.experience_sentences)
+  - type: javascript
+    value: const o=JSON.parse(output); /first/i.test(o.first_time_sentence)
+  - type: javascript
+    value: const o=JSON.parse(output); !/gave a presentation/i.test(o.experience_sentences)
+  - type: javascript
+    value: const o=JSON.parse(output); o.overlap_warning.length===0
+- description: prior stages 6 (overlap)
+  vars:
+    prior_stages:
+    - id: e1
+      month: 4
+      year: 2025
+      city: Edinburgh
+      organization: Patient safety congress
+      audience_size: 500
+      topic: Why surgical checklists fail when nurses cannot stop the surgeon
+    idea_json: *id001
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); !/(this talk|this idea|this topic)/i.test(o.experience_sentences)
+  - type: javascript
+    value: const o=JSON.parse(output); /first/i.test(o.first_time_sentence)
+  - type: javascript
+    value: const o=JSON.parse(output); !/gave a presentation/i.test(o.experience_sentences)
+  - type: javascript
+    value: const o=JSON.parse(output); o.overlap_warning.length>0
+- description: prior stages 7 (overlap)
+  vars:
+    prior_stages:
+    - id: e1
+      month: 8
+      year: 2024
+      city: Delhi
+      organization: Nursing college
+      audience_size: 200
+      topic: Speaking up in the operating theatre
+    - id: e2
+      month: 3
+      year: 2023
+      city: Delhi
+      organization: Alumni dinner
+      audience_size: 50
+      topic: My career
+    idea_json: *id001
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); !/(this talk|this idea|this topic)/i.test(o.experience_sentences)
+  - type: javascript
+    value: const o=JSON.parse(output); /first/i.test(o.first_time_sentence)
+  - type: javascript
+    value: const o=JSON.parse(output); !/gave a presentation/i.test(o.experience_sentences)
+  - type: javascript
+    value: const o=JSON.parse(output); o.overlap_warning.length>0
+- description: prior stages 8 (overlap)
+  vars:
+    prior_stages:
+    - id: e1
+      month: 10
+      year: 2025
+      city: Boston
+      organization: Quality improvement forum
+      audience_size: 150
+      topic: Checklist culture and the junior voice
+    idea_json: *id001
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); !/(this talk|this idea|this topic)/i.test(o.experience_sentences)
+  - type: javascript
+    value: const o=JSON.parse(output); /first/i.test(o.first_time_sentence)
+  - type: javascript
+    value: const o=JSON.parse(output); !/gave a presentation/i.test(o.experience_sentences)
+  - type: javascript
+    value: const o=JSON.parse(output); o.overlap_warning.length>0
+- description: prior stages 9
+  vars:
+    prior_stages: []
+    idea_json: *id001
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); !/(this talk|this idea|this topic)/i.test(o.experience_sentences)
+  - type: javascript
+    value: const o=JSON.parse(output); /first/i.test(o.first_time_sentence)
+  - type: javascript
+    value: const o=JSON.parse(output); !/gave a presentation/i.test(o.experience_sentences)
+  - type: javascript
+    value: const o=JSON.parse(output); o.overlap_warning.length===0
+- description: prior stages 10
+  vars:
+    prior_stages:
+    - id: e1
+      month: 7
+      year: 2022
+      city: Sydney
+      organization: Company lunch and learn
+      audience_size: 30
+      topic: Email habits
+    idea_json: *id001
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); !/(this talk|this idea|this topic)/i.test(o.experience_sentences)
+  - type: javascript
+    value: const o=JSON.parse(output); /first/i.test(o.first_time_sentence)
+  - type: javascript
+    value: const o=JSON.parse(output); !/gave a presentation/i.test(o.experience_sentences)
+  - type: javascript
+    value: const o=JSON.parse(output); o.overlap_warning.length===0

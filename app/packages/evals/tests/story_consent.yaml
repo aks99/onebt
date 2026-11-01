@@ -1,0 +1,115 @@
+- description: 'story consent 1: named_with_permission'
+  vars:
+    slot_minutes: 10
+    target_wpm: 150
+    word_budget: 1450
+    structure_template: story_spine
+    idea_brief:
+      idea: Safety checklists fail when the most junior person in the room cannot stop it
+      belief: Reading a checklist aloud makes a team safe
+      story: The story is about my colleague Priya, who gave me permission to use her name.
+      evidence: 40 teams observed over two years; WHO programme data (needs source)
+      action: Ask the quietest person first
+      why_me: I have done this work for a decade.
+    idea_json:
+      throughline: Safety checklists fail when the most junior person in the room cannot stop it
+    expansion_json: {}
+    profile:
+      segment: coach
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); const stories=o.sections.flatMap(s=>s.talking_points).filter(p=>p.kind==='story');
+      stories.length>0 && stories.every(p=>p.consent==='named_with_permission')
+- description: 'story consent 2: pseudonymized'
+  vars:
+    slot_minutes: 10
+    target_wpm: 150
+    word_budget: 1450
+    structure_template: story_spine
+    idea_brief:
+      idea: Grief is a skill a family can practise before anyone dies
+      belief: Grief begins at the funeral
+      story: The story is about a patient; I will change the name.
+      evidence: Interviews with 60 families; palliative care literature (needs source)
+      action: Hold one conversation about a death before it comes
+      why_me: I have done this work for a decade.
+    idea_json:
+      throughline: Grief is a skill a family can practise before anyone dies
+    expansion_json: {}
+    profile:
+      segment: author
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); const stories=o.sections.flatMap(s=>s.talking_points).filter(p=>p.kind==='story');
+      stories.length>0 && stories.every(p=>p.consent==='pseudonymized')
+- description: 'story consent 3: composite'
+  vars:
+    slot_minutes: 10
+    target_wpm: 150
+    word_budget: 1450
+    structure_template: story_spine
+    idea_brief:
+      idea: The best strategy meeting has no slides and one unanswered question
+      belief: Decks make decisions clearer
+      story: The story blends three night shifts into one; I will say so on stage.
+      evidence: Twelve years of board meetings; Amazon memo practice (needs source)
+      action: Open your next meeting with the question you cannot answer
+      why_me: I have done this work for a decade.
+    idea_json:
+      throughline: The best strategy meeting has no slides and one unanswered question
+    expansion_json: {}
+    profile:
+      segment: executive
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); const stories=o.sections.flatMap(s=>s.talking_points).filter(p=>p.kind==='story');
+      stories.length>0 && stories.every(p=>p.consent==='composite')
+- description: 'story consent 4: pseudonymized'
+  vars:
+    slot_minutes: 10
+    target_wpm: 150
+    word_budget: 1450
+    structure_template: story_spine
+    idea_brief:
+      idea: Ice forms from the edges inward, and so do institutions
+      belief: Change starts at the centre
+      story: A nurse I worked with. I have not asked her yet.
+      evidence: Field observations of lake ice; organisational case studies (needs source)
+      action: Find the edge of your organisation and listen there
+      why_me: I have done this work for a decade.
+    idea_json:
+      throughline: Ice forms from the edges inward, and so do institutions
+    expansion_json: {}
+    profile:
+      segment: academic
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); const stories=o.sections.flatMap(s=>s.talking_points).filter(p=>p.kind==='story');
+      stories.length>0 && stories.every(p=>p.consent==='pseudonymized')
+- description: 'story consent 5: named_with_permission'
+  vars:
+    slot_minutes: 10
+    target_wpm: 150
+    word_budget: 1450
+    structure_template: story_spine
+    idea_brief:
+      idea: Indian cities cool faster when roofs are painted than when trees are planted
+      belief: Trees are the only answer to urban heat
+      story: My brother Arjun, who has read this and agreed.
+      evidence: Roof temperature measurements in Chennai (needs source)
+      action: Paint one roof white this summer
+      why_me: I have done this work for a decade.
+    idea_json:
+      throughline: Indian cities cool faster when roofs are painted than when trees are planted
+    expansion_json: {}
+    profile:
+      segment: india
+  assert:
+  - type: is-json
+  - type: javascript
+    value: const o=JSON.parse(output); const stories=o.sections.flatMap(s=>s.talking_points).filter(p=>p.kind==='story');
+      stories.length>0 && stories.every(p=>p.consent==='named_with_permission')

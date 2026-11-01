@@ -1,0 +1,67 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "claims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "text": {
+            "type": "string"
+          },
+          "section_id": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "number",
+              "study",
+              "person",
+              "history",
+              "causal",
+              "health",
+              "firsthand",
+              "other"
+            ]
+          },
+          "risk": {
+            "type": "string",
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ]
+          },
+          "fact_checker_asks": {
+            "type": "string"
+          },
+          "r5_flag": {
+            "type": "boolean"
+          },
+          "overclaim_flag": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "text",
+          "section_id",
+          "type",
+          "risk",
+          "fact_checker_asks",
+          "r5_flag",
+          "overclaim_flag"
+        ]
+      }
+    },
+    "note": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "claims",
+    "note"
+  ]
+}

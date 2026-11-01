@@ -1,0 +1,71 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "thesis": {
+      "type": "string"
+    },
+    "why_it_matters": {
+      "type": "string"
+    },
+    "key_points": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "story_candidates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "moment": {
+            "type": "string"
+          },
+          "sensory_detail": {
+            "type": "string"
+          },
+          "change": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "moment",
+          "sensory_detail",
+          "change"
+        ]
+      }
+    },
+    "evidence_to_find": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "contrast": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "what_is": {
+          "type": "string"
+        },
+        "what_could_be": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "what_is",
+        "what_could_be"
+      ]
+    }
+  },
+  "required": [
+    "thesis",
+    "why_it_matters",
+    "key_points",
+    "story_candidates",
+    "evidence_to_find",
+    "contrast"
+  ]
+}
