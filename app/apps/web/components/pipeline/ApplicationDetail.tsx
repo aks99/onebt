@@ -194,7 +194,7 @@ export function ApplicationDetail({ app, ev, fields, hasPack, tailoredLeft, hasM
             <h2 className="t-section">Authorship</h2>
             <p className="text-[var(--text-secondary)]">For organizers who ask whether AI was used. Counted from what you typed versus AI text you kept.</p>
             {note ? <pre className="whitespace-pre-wrap rounded-[var(--radius)] bg-[var(--surface-2)] p-2 font-[inherit]">{note}</pre> : <div><Button size="sm" variant="ghost" onClick={() => run("Authorship", () => authorshipNoteFor(app.id), (d) => setNote(d.note))}>Show the authorship note</Button></div>}
-            <a className="underline" href={`/api/export/application/${app.id}.txt`}>Export this record (text)</a>
+            <p>Export this record: <a className="underline" href={`/api/export/application/${app.id}.pdf`}>PDF</a> · <a className="underline" href={`/api/export/application/${app.id}.docx`}>DOCX</a> · <a className="underline" href={`/api/export/application/${app.id}.txt`}>text</a></p>
           </Card>
         </aside>
       </div>

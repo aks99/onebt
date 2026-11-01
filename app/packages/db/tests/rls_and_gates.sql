@@ -513,7 +513,52 @@ select tests.check('step7: follow-ups due pass moves applied to follow_up_due', 
 
 select name, case when passed then 'PASS' else 'FAIL' end as result, coalesce(left(detail, 90), '') as detail from tests.results where name like 'step7:%' order by passed, name;
 
+-- ---------------------------------------------------------------
+-- Step 8: finalize and reopen the outline, the Script Lock gate, post-lock versions
+-- ---------------------------------------------------------------
+reset role;
+set role authenticated;
+select tests.login('aaaaaaaa-0000-0000-0000-000000000001');
+-- a second outline version; finalizing it moves the earlier final back to draft and awards the milestone
+insert into public.outline_versions (id, user_id, outline_id, version, doc, status)
+values ('4a000000-0000-0000-0000-000000000002', 'aaaaaaaa-0000-0000-0000-000000000001', '5a000000-0000-0000-0000-000000000001', 2, '{"sections":[{"id":"s1","talking_points":[]}]}', 'draft');
+select public.finalize_outline('4a000000-0000-0000-0000-000000000002');
+select tests.check('step8: finalize makes exactly one final version', (select count(*) from public.outline_versions where outline_id = '5a000000-0000-0000-0000-000000000001' and status = 'final') = 1
+  and (select status from public.outline_versions where id = '4a000000-0000-0000-0000-000000000002') = 'final');
+select tests.check('step8: finalize awards the milestone and logs activity', (select count(*) from public.milestones where user_id = 'aaaaaaaa-0000-0000-0000-000000000001' and key = 'outline_finalized') = 1);
+select tests.check('step8: next outline version is 3', public.next_outline_version('5a000000-0000-0000-0000-000000000001') = 3);
+select public.reopen_outline('4a000000-0000-0000-0000-000000000002');
+select tests.check('step8: reopen returns the version to draft', (select status from public.outline_versions where id = '4a000000-0000-0000-0000-000000000002') = 'draft');
+select tests.expect_error('step8: a new script needs a final outline again', $q$insert into public.scripts (user_id, talk_id, outline_version_id) values ('aaaaaaaa-0000-0000-0000-000000000001', '7a000000-0000-0000-0000-000000000001', '4a000000-0000-0000-0000-000000000002')$q$, 'OUTLINE_NOT_FINAL');
+select public.finalize_outline('4a000000-0000-0000-0000-000000000002');
+-- script lock: unscored refused; weak ending refused; override with a reason; clean Level 3 locks
+select tests.expect_error('step8: unscored script cannot be locked', $q$select public.lock_script('2a000000-0000-0000-0000-000000000001')$q$, 'SCRIPT_NOT_SCORED');
+update public.script_versions set rubric = '{"lock_gate_passed":false,"scores":[{"criterion":1,"level":3},{"criterion":2,"level":3},{"criterion":3,"level":3},{"criterion":4,"level":3},{"criterion":5,"level":3},{"criterion":6,"level":3},{"criterion":7,"level":3},{"criterion":8,"level":3},{"criterion":9,"level":1},{"criterion":10,"level":3},{"criterion":11,"level":3}]}' where id = '2a000000-0000-0000-0000-000000000001';
+select tests.expect_error('step8: a summary ending (Level 1) blocks the lock', $q$select public.lock_script('2a000000-0000-0000-0000-000000000001')$q$, 'SCRIPT_NEEDS_WORK:9');
+select tests.expect_error('step8: a short override is not enough', $q$select public.lock_script('2a000000-0000-0000-0000-000000000001', 'ok')$q$, 'SCRIPT_NEEDS_WORK:9');
+select public.lock_script('2a000000-0000-0000-0000-000000000001', 'The organizer asked for this ending; I will rework it after their review.');
+select tests.check('step8: lock with a reason sets the locked version and moves the talk to Rehearse', (select locked_version_id = '2a000000-0000-0000-0000-000000000001' and lock_override_reason is not null from public.scripts where id = '3a000000-0000-0000-0000-000000000001')
+  and (select stage = 'rehearse' from public.talks where id = '7a000000-0000-0000-0000-000000000001'));
+select tests.check('step8: script_locked milestone awarded', (select count(*) from public.milestones where user_id = 'aaaaaaaa-0000-0000-0000-000000000001' and key = 'script_locked') = 1);
+select tests.expect_error('step8: unlock needs a reason', $q$select public.unlock_script('3a000000-0000-0000-0000-000000000001', 'x')$q$, 'REASON_REQUIRED');
+select public.unlock_script('3a000000-0000-0000-0000-000000000001', 'Cutting ninety seconds after the first timed run');
+select tests.check('step8: unlock clears the locked version', (select locked_version_id is null and unlocked_at is not null from public.scripts where id = '3a000000-0000-0000-0000-000000000001'));
+insert into public.script_versions (id, user_id, script_id, version, doc, word_count, est_seconds) values ('2a000000-0000-0000-0000-000000000002', 'aaaaaaaa-0000-0000-0000-000000000001', '3a000000-0000-0000-0000-000000000001', 0, '{"sections":[]}', 1400, 560);
+select tests.check('step8: a version after an unlock is flagged post-lock and numbered', (select post_lock and version = 2 from public.script_versions where id = '2a000000-0000-0000-0000-000000000002'));
+update public.script_versions set rubric = '{"lock_gate_passed":true,"scores":[{"criterion":1,"level":3},{"criterion":3,"level":3},{"criterion":9,"level":3},{"criterion":11,"level":4}]}' where id = '2a000000-0000-0000-0000-000000000002';
+select public.lock_script('2a000000-0000-0000-0000-000000000002');
+select tests.check('step8: a clean Level 3 script locks without a reason', (select locked_version_id = '2a000000-0000-0000-0000-000000000002' and lock_override_reason is null from public.scripts where id = '3a000000-0000-0000-0000-000000000001'));
+-- the other member cannot touch A's outline or script
+select tests.login('bbbbbbbb-0000-0000-0000-000000000002');
+select tests.expect_error('step8: B cannot finalize A outline', $q$select public.finalize_outline('4a000000-0000-0000-0000-000000000002')$q$, 'NOT_FOUND');
+select tests.expect_error('step8: B cannot lock A script', $q$select public.lock_script('2a000000-0000-0000-0000-000000000002')$q$, 'NOT_FOUND');
+select tests.logout();
+reset role;
+
+select name, case when passed then 'PASS' else 'FAIL' end as result, coalesce(left(detail, 90), '') as detail from tests.results where name like 'step8:%' order by passed, name;
+
+
 
 select name, case when passed then 'PASS' else 'FAIL' end as result, coalesce(left(detail, 90), '') as detail from tests.results where name like 'step3:%' order by passed, name;
 select count(*) filter (where passed) as passed, count(*) filter (where not passed) as failed from tests.results;
-select 1 / (case when (select count(*) from tests.results where not passed) = 0 then 1 else 0 end) as all_green_after_step7;
+select 1 / (case when (select count(*) from tests.results where not passed) = 0 then 1 else 0 end) as all_green_after_step8;

@@ -385,6 +385,34 @@ Dossier: {{dossier}}
 Profile: {{profile}}
 """), S(thesis=T(), why_it_matters=T(), key_points=A(T()), story_candidates=A(S(moment=T(), sensory_detail=T(), change=T())), evidence_to_find=A(T()), contrast=S(what_is=T(), what_could_be=T())))
 
+
+ACTIONS["script_rubric"] = (textwrap.dedent("""
+Score this talk script against the 11-criterion script rubric (level 1-4 each, one sentence of
+reasoning that quotes the words that earned the level): 1 invisible structure (care, idea,
+evidence or implementation, effect; no announcing); 2 opening (starts where the talk takes off: a
+surprising fact, a specific moment or a "what if"; no greeting, thanks, warm-up or meta-talk);
+3 brevity and one idea (fits the slot with buffer; one major point, at most 3 subtopics); 4
+explanation builds from the familiar (no curse of knowledge, jargon passes the non-specialist test);
+5 evidence (empirical over anecdotal, controversy acknowledged, no overstatement); 6 story and
+emotion (specific, sensory, sparing, serving the idea; honest, not forced); 7 contrast and tension
+(what is against what could be); 8 language (conversational, present tense, strong verbs, sounds
+like speech, no TED puns); 9 ending (shows how life changes if the idea is adopted, one winnable
+action, a new-bliss close, two planned ending points; a summary, a pitch, a fundraising ask or a
+book-cover close is level 1); 10 word budget (words per minute 130-160 with buffer; above 175 is
+level 1); 11 compliance (no promotion, no inflammatory politics or religion, claims fact-checkable,
+no claim the idea was delivered before). Also run the quirk list: talking about the talk,
+apologizing, rhetorical questions where statements are clearer, overstatement, utopianism or
+dystopianism, forced emotion, TED puns, purely anecdotal evidence, failing to admit controversy,
+reading quotes. lock_gate_passed is true only when criteria 1, 3, 9 and 11 are at level 3 or above.
+Slot: {{slot_minutes}} minutes at {{target_wpm}} wpm. Word count: {{word_count}}.
+Script sections: {{script_json}}
+"""), S(
+    scores=A(S(criterion=I(1, 11), level=I(1, 4), reason=T())),
+    lock_gate_passed=B(),
+    quirks=A(S(quirk=T(), quote=T("exact substring"), fix=T())),
+    strongest_line=T(), weakest_line=T(), next_step=T("one sentence"),
+))
+
 for key, (body, schema) in ACTIONS.items():
     d = os.path.join(ROOT, key); os.makedirs(d, exist_ok=True)
     with open(os.path.join(d, "v1.md"), "w") as f: f.write(body.strip() + "\n")

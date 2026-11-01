@@ -10,6 +10,7 @@
     "prior_stages_framing": { "model": "sonnet", "credits": 5,  "plan": "member", "fairUse": { "key": "framing", "cap": 20 }, "gates": ["idea_locked"], "lint": true, "version": "v1", "maxTokens": 1200 },
     "experience_summary":   { "model": "sonnet", "credits": 5,  "plan": "member", "fairUse": { "key": "framing", "cap": 20 }, "gates": ["idea_locked"], "lint": true, "version": "v1", "maxTokens": 800 },
     "readiness_review":     { "model": "haiku",  "credits": 5,  "plan": "member", "fairUse": { "key": "readiness", "cap": 60 }, "gates": [], "lint": false, "version": "v1", "maxTokens": 4000 },
+    "script_rubric":        { "model": "haiku",  "credits": 5,  "plan": "member", "fairUse": { "key": "readiness", "cap": 60 }, "gates": [], "lint": false, "version": "v1", "maxTokens": 4000 },
     "pitch_pack":           { "model": "sonnet", "credits": 15, "plan": "spark", "gates": ["idea_locked"], "lint": true, "version": "v1", "maxTokens": 5000 },
     "personalization":      { "model": "sonnet", "credits": 15, "plan": "member", "allowance": "tailored_application", "gates": ["research_step_complete", "organizer_ai_policy"], "lint": true, "version": "v1", "maxTokens": 4000 },
     "outline":              { "model": "sonnet", "credits": 20, "plan": "member", "allowance": "outline", "gates": ["brief_minimum", "idea_locked"], "lint": true, "version": "v1", "maxTokens": 6000 },

@@ -1,0 +1,78 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "scores": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "criterion": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 11
+          },
+          "level": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 4
+          },
+          "reason": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "criterion",
+          "level",
+          "reason"
+        ]
+      }
+    },
+    "lock_gate_passed": {
+      "type": "boolean"
+    },
+    "quirks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "quirk": {
+            "type": "string"
+          },
+          "quote": {
+            "type": "string",
+            "description": "exact substring"
+          },
+          "fix": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "quirk",
+          "quote",
+          "fix"
+        ]
+      }
+    },
+    "strongest_line": {
+      "type": "string"
+    },
+    "weakest_line": {
+      "type": "string"
+    },
+    "next_step": {
+      "type": "string",
+      "description": "one sentence"
+    }
+  },
+  "required": [
+    "scores",
+    "lock_gate_passed",
+    "quirks",
+    "strongest_line",
+    "weakest_line",
+    "next_step"
+  ]
+}
