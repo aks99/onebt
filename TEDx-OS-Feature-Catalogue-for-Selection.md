@@ -2,6 +2,8 @@
 
 Every feature in the blueprint, text-only, with my recommendation for the first release. Mark the last column (Yes / No / Later) and hand the file back; the build starts from the "Yes" rows. IDs match the blueprint sections 5–9. Effort is in person-days for two engineers (S = 1–3, M = 4–8, L = 9–15). "AI" shows whether the feature consumes the member's allowance.
 
+Note (1 November 2026): the owner's decisions were made in `TEDx-OS-Feature-Decisions.xlsx` and exported to `MVP-First-Release.md`; this catalogue is the original list the decisions were made from.
+
 ## A. Platform and journey (Section 5)
 
 | ID | Feature | What it does | My recommendation | AI | Effort | Your choice |

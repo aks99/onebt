@@ -383,6 +383,84 @@ select tests.logout();
 reset role;
 
 select name, case when passed then 'PASS' else 'FAIL' end as result, coalesce(left(detail, 90), '') as detail from tests.results where name like 'step5:%' order by passed, name;
+
+-- ---------------------------------------------------------------
+-- Step 6: catalogue sync, verify queue, dedup merge, reminders, calendar feed, reports, email capture
+-- ---------------------------------------------------------------
+reset role;
+insert into public.import_sources (id, kind, label, google_sheet_id, created_by) values ('5c000000-0000-0000-0000-000000000001', 'google_sheet', 'Owner sheet', 'sheet-abc', 'cccccccc-0000-0000-0000-000000000003');
+insert into public.crawler_runs (id, source_id, kind, run_label, triggered_by) values ('6c000000-0000-0000-0000-000000000001', '5c000000-0000-0000-0000-000000000001', 'google_sheet', 'test run', 'cccccccc-0000-0000-0000-000000000003');
+-- two sheet-sourced events: one present in the next sync, one missing
+insert into public.events (id, tedx_event_id, name, name_key, city, country_code, event_date, source, application_status, application_deadline, curator_verified)
+values ('e0000000-0000-0000-0000-000000000011', 'tedx-leeds-2027', 'TEDxLeeds', 'leeds', 'Leeds', 'GB', '2027-04-10', 'google_sheet', 'open', (now() at time zone 'utc')::date + 7, true),
+       ('e0000000-0000-0000-0000-000000000012', 'tedx-gone-2027', 'TEDxGone', 'gone', 'Nowhere', 'GB', '2027-04-11', 'google_sheet', 'open', '2027-02-01', false),
+       ('e0000000-0000-0000-0000-000000000013', 'tedx-old-2025', 'TEDxOld', 'old', 'Old Town', 'GB', (now() at time zone 'utc')::date - 45, 'crawler', 'closed', null, true);
+set role authenticated;
+select tests.login('aaaaaaaa-0000-0000-0000-000000000001');
+select tests.expect_error('step6: member cannot expire events', $q$select public.expire_events_missing('6c000000-0000-0000-0000-000000000001', '5c000000-0000-0000-0000-000000000001', array['tedx-leeds-2027'])$q$, 'permission denied');
+select tests.expect_error('step6: member cannot verify an event', $q$select public.verify_event('e0000000-0000-0000-0000-000000000011')$q$, 'permission denied');
+select tests.expect_error('step6: member cannot merge events', $q$select public.merge_events('e0000000-0000-0000-0000-000000000001', 'e0000000-0000-0000-0000-000000000002')$q$, 'permission denied');
+select tests.check('step6: member cannot read import diffs', (select count(*) from public.import_diffs) = 0);
+-- a member tracks Leeds (deadline in 7 days) and reports it; reminders due today include the 7-day one
+insert into public.target_list (user_id, event_id, talk_id) values ('aaaaaaaa-0000-0000-0000-000000000001', 'e0000000-0000-0000-0000-000000000011', '7a000000-0000-0000-0000-000000000001');
+select tests.check('step6: member can report an outdated listing', public.report_event('e0000000-0000-0000-0000-000000000011', 'outdated', null, 'The form says closed') is not null);
+select tests.check('step6: calendar token is created once', public.my_calendar_token() = public.my_calendar_token());
+select tests.check('step6: calendar feed lists the tracked deadline', (select count(*) from public.calendar_feed(public.my_calendar_token()) where event_name = 'TEDxLeeds') = 1);
+select tests.check('step6: a wrong token returns nothing', (select count(*) from public.calendar_feed('not-a-token')) = 0);
+select tests.expect_error('step6: member cannot list reminders due', $q$select * from public.deadline_reminders_due()$q$, 'permission denied');
+select tests.logout();
+-- anonymous visitors can leave an email on the open-calls page and read nothing back
+set role anon;
+insert into public.email_captures (email, source, consent_text) values ('visitor@example.com', 'open_calls', 'Send me the weekly open calls list.');
+select tests.expect_error('step6: anon cannot read email captures', $q$select count(*) from public.email_captures$q$, 'permission denied');
+select tests.expect_error('step6: duplicate capture is refused', $q$insert into public.email_captures (email, source, consent_text) values ('VISITOR@example.com', 'open_calls', 'x')$q$, 'duplicate');
+reset role;
+-- curator runs the sync bookkeeping
+set role authenticated;
+select tests.login('cccccccc-0000-0000-0000-000000000003');
+select tests.check('step6: expire returns the count of missing rows', public.expire_events_missing('6c000000-0000-0000-0000-000000000001', '5c000000-0000-0000-0000-000000000001', array['tedx-leeds-2027']) = 1);
+select tests.check('step6: missing row is expired, present row kept', (select expired from public.events where tedx_event_id = 'tedx-gone-2027') and not (select expired from public.events where tedx_event_id = 'tedx-leeds-2027'));
+select tests.check('step6: crawler-sourced rows are not expired by a sheet sync', not (select expired from public.events where tedx_event_id = 'tedx-wilson-park-2027'));
+select tests.check('step6: expire past returns a count', public.expire_past_events() >= 1);
+select tests.check('step6: events 30 days past expire', (select expired from public.events where tedx_event_id = 'tedx-old-2025'));
+select tests.check('step6: verify queue holds the unverified duplicate and not the expired rows',
+  exists (select 1 from public.verify_queue where tedx_event_id = 'tedx-wilsonpark-2027-dup') and not exists (select 1 from public.verify_queue where tedx_event_id = 'tedx-gone-2027'));
+select tests.check('step6: verify queue counts member interest', (select interest from public.verify_queue where tedx_event_id = 'tedx-leeds-2027') = 1);
+select public.verify_event('e0000000-0000-0000-0000-000000000002', 'open', '2027-01-20', 'checked the organizer page');
+select tests.check('step6: verify stamps who and when', (select curator_verified and not needs_review and verified_by = 'cccccccc-0000-0000-0000-000000000003' and application_status = 'open' and application_deadline = '2027-01-20' from public.events where id = 'e0000000-0000-0000-0000-000000000002'));
+-- dedup merge keeps the member's rows and expires the duplicate
+reset role;
+insert into public.event_watches (user_id, event_id) values ('aaaaaaaa-0000-0000-0000-000000000001', 'e0000000-0000-0000-0000-000000000002');
+set role authenticated;
+select tests.login('cccccccc-0000-0000-0000-000000000003');
+select public.merge_events('e0000000-0000-0000-0000-000000000001', 'e0000000-0000-0000-0000-000000000002');
+reset role;
+select tests.check('step6: merge moves the watch to the kept event', exists (select 1 from public.event_watches where user_id = 'aaaaaaaa-0000-0000-0000-000000000001' and event_id = 'e0000000-0000-0000-0000-000000000001'));
+set role authenticated;
+select tests.login('cccccccc-0000-0000-0000-000000000003');
+select tests.check('step6: merge expires the duplicate', (select expired from public.events where id = 'e0000000-0000-0000-0000-000000000002'));
+select tests.expect_error('step6: merging an event into itself fails', $q$select public.merge_events('e0000000-0000-0000-0000-000000000001', 'e0000000-0000-0000-0000-000000000001')$q$, 'SAME_EVENT');
+-- stale rule: an open call not re-verified in 14 days becomes stale
+update public.events set last_verified_at = now() - interval '20 days', status_seen_at = now() - interval '20 days' where tedx_event_id = 'tedx-leeds-2027';
+select tests.check('step6: stale pass returns a count', public.mark_stale_calls() >= 1);
+select tests.check('step6: unverified open call becomes stale, not open', (select application_status from public.events where tedx_event_id = 'tedx-leeds-2027') = 'stale');
+update public.events set application_status = 'open', last_verified_at = now() where tedx_event_id = 'tedx-leeds-2027';
+-- curator reads the member's report
+select tests.check('step6: curator sees the outdated report', (select count(*) from public.event_reports where event_id = 'e0000000-0000-0000-0000-000000000011' and kind = 'outdated') = 1);
+select tests.logout();
+reset role;
+-- reminders: once per interval, respecting the member switch
+select tests.check('step6: the 7-day reminder is due for the tracked member', (select count(*) from public.deadline_reminders_due() where user_id = 'aaaaaaaa-0000-0000-0000-000000000001' and event_name = 'TEDxLeeds' and days_before = 7) = 1);
+insert into public.reminder_log (user_id, event_id, days_before, deadline) values ('aaaaaaaa-0000-0000-0000-000000000001', 'e0000000-0000-0000-0000-000000000011', 7, (now() at time zone 'utc')::date + 7);
+select tests.check('step6: a sent reminder is not due again', (select count(*) from public.deadline_reminders_due() where user_id = 'aaaaaaaa-0000-0000-0000-000000000001' and days_before = 7) = 0);
+update public.profiles set deadline_reminders = false where user_id = 'aaaaaaaa-0000-0000-0000-000000000001';
+delete from public.reminder_log where user_id = 'aaaaaaaa-0000-0000-0000-000000000001';
+select tests.check('step6: reminders never fire when disabled', (select count(*) from public.deadline_reminders_due() where user_id = 'aaaaaaaa-0000-0000-0000-000000000001') = 0);
+update public.profiles set deadline_reminders = true where user_id = 'aaaaaaaa-0000-0000-0000-000000000001';
+select tests.check('step6: admin reads email captures', (select count(*) from public.email_captures where source = 'open_calls') = 1);
+
+select name, case when passed then 'PASS' else 'FAIL' end as result, coalesce(left(detail, 90), '') as detail from tests.results where name like 'step6:%' order by passed, name;
+
 select name, case when passed then 'PASS' else 'FAIL' end as result, coalesce(left(detail, 90), '') as detail from tests.results where name like 'step3:%' order by passed, name;
 select count(*) filter (where passed) as passed, count(*) filter (where not passed) as failed from tests.results;
-select 1 / (case when (select count(*) from tests.results where not passed) = 0 then 1 else 0 end) as all_green_after_step5;
+select 1 / (case when (select count(*) from tests.results where not passed) = 0 then 1 else 0 end) as all_green_after_step6;
