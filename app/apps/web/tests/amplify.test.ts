@@ -66,3 +66,14 @@ describe("copy kit and upload pack (F4.4, F4.2, F4.11)", () => {
   });
   it("the bio line uses the exact phrasing", () => { expect(bioLine("TEDxPune", 2027)).toBe("Spoke at TEDxPune 2027, an independently organized TEDx event."); expect(complianceFlags(bioLine("TEDxPune", 2027), { requirePhrase: true })).toEqual([]); });
 });
+
+// Deadline chips show the organizer's stated time and the member's local time (11.8), checked here with the UI helper.
+import { memberLocalText, zonedToUtc } from "@onebigtalk/ui";
+describe("deadline in two timezones (11.8)", () => {
+  it("converts 23:59 in New York to the member's time in Kolkata", () => {
+    expect(zonedToUtc("2026-12-09", "23:59", "America/New_York")?.toISOString()).toBe("2026-12-10T04:59:00.000Z");
+    expect(memberLocalText("2026-12-09", "23:59", "America/New_York", "Asia/Kolkata")).toBe("10 Dec, 10:29 your time");
+    expect(memberLocalText("2026-12-09", "23:59", "America/New_York", "America/New_York")).toBe("");
+    expect(memberLocalText("2026-07-01", "12:00", "Europe/London", "Asia/Kolkata")).toBe("1 Jul, 16:30 your time"); // BST
+  });
+});

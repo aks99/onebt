@@ -1,0 +1,11 @@
+320px: scrollWidth 320 ok
+timer controls at 320px: [["Start space",121,48],["Reset",83,48],["Finish and sav",158,48],["Leave Esc",115,48]]
+timer targets under 24px: 0
+timer at 320px scrollWidth 320 ok
+390px: scrollWidth 390 ok
+deliver controls at 390px: 26 controls, smallest 15px, under 24px: 1
+all controls under 24px at 390px: 10 [["A","Skip to content",1,1],["A","event page",74,20],["A","← Applications",358,20],["A","Open their page",107,17],["A","PDF",27,17],["A","DOCX",41,17],["A","text",25,17],["A","Fact-check the claim",324,20],["A","open",33,20],["A","Memorize",59,15]]
+640px: scrollWidth 640 ok
+1280px: scrollWidth 1280 ok
+reduced motion honoured by matchMedia: true; elements with animate-pulse at rest: 0
+getUserMedia referenced by app code: no (navigator type is function; the no-capture guard covers source)

@@ -57,7 +57,7 @@ export function PathAndQuestions({ initialPath }: { initialPath?: OnboardingPath
       <Field label="When would you like to give the talk?" error={errors.targetMonth}>
         <div className="flex flex-wrap items-center gap-3">
           <input type="month" className={cx(input, "sm:w-56")} disabled={notSure} value={q.targetMonth ?? ""} onChange={(e) => set("targetMonth", e.target.value || null)} />
-          <label className="flex items-center gap-2 t-compact"><input type="checkbox" checked={notSure} onChange={(e) => { setNotSure(e.target.checked); if (e.target.checked) set("targetMonth", null); }} className="h-5 w-5" /> Not sure yet</label>
+          <label className="flex items-center gap-2 t-compact"><input type="checkbox" checked={notSure} onChange={(e) => { setNotSure(e.target.checked); if (e.target.checked) set("targetMonth", null); }} className="h-6 w-6" /> Not sure yet</label>
         </div>
       </Field>
       {path === "invited" && (

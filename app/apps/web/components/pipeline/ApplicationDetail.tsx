@@ -150,7 +150,7 @@ export function ApplicationDetail({ app, ev, fields, hasPack, tailoredLeft, hasM
             <label>Applied on<input type="date" className={input} defaultValue={app.applied_at ?? ""} onBlur={(e) => run("Dates", () => updateDates(app.id, { appliedAt: e.target.value }))} /></label>
             <label>Follow-up on<input type="date" className={input} defaultValue={app.follow_up_at ?? ""} onBlur={(e) => run("Dates", () => updateDates(app.id, { followUpAt: e.target.value }))} /></label>
             <label>Organizer's decision date (if stated)<input type="date" className={input} defaultValue={app.decision_date ?? ""} onBlur={(e) => run("Dates", () => updateDates(app.id, { decisionDate: e.target.value }))} /></label>
-            <label className="flex items-center gap-2"><input type="checkbox" className="h-5 w-5" defaultChecked={app.no_enquiries} onChange={(e) => run("Dates", () => updateDates(app.id, { noEnquiries: e.target.checked }))} /> Their page says not to enquire</label>
+            <label className="flex items-center gap-2"><input type="checkbox" className="h-6 w-6" defaultChecked={app.no_enquiries} onChange={(e) => run("Dates", () => updateDates(app.id, { noEnquiries: e.target.checked }))} /> Their page says not to enquire</label>
             <label>Event date<input type="date" className={input} defaultValue={app.event_date ?? ""} onBlur={(e) => run("Dates", () => updateDates(app.id, { eventDate: e.target.value }))} /></label>
             <label>Notes<textarea rows={3} className={input} defaultValue={app.notes ?? ""} onBlur={(e) => run("Dates", () => updateDates(app.id, { notes: e.target.value }))} /></label>
           </Card>
@@ -177,7 +177,7 @@ export function ApplicationDetail({ app, ev, fields, hasPack, tailoredLeft, hasM
                 <label>Date<input name="date" type="date" className={input} defaultValue={new Date().toISOString().slice(0, 10)} /></label>
                 <label>Event date (if accepted)<input name="eventDate" type="date" className={input} defaultValue={app.event_date ?? ""} /></label>
                 <label>Reason, if they gave one<input name="reason" className={input} /></label>
-                <label className="flex items-center gap-2"><input name="reapply" type="checkbox" className="h-5 w-5" defaultChecked /> Remind me to re-apply next cycle (if declined)</label>
+                <label className="flex items-center gap-2"><input name="reapply" type="checkbox" className="h-6 w-6" defaultChecked /> Remind me to re-apply next cycle (if declined)</label>
                 <div className="flex gap-2"><Button size="sm" type="submit" loading={pending}>Log outcome</Button><Button size="sm" type="button" variant="ghost" onClick={() => setOutcomeOpen(false)}>Cancel</Button></div>
               </form>
             ) : <div><Button size="sm" variant="secondary" onClick={() => setOutcomeOpen(true)}>Log an outcome</Button></div>) : <p className="text-[var(--text-secondary)]">Once sent, log accepted, declined or withdrawn here.</p>}

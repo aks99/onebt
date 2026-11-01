@@ -62,7 +62,7 @@ export function BriefForm(p: BriefProps) {
         <Card className="flex flex-col gap-2 t-compact">
           <h2 className="t-section">Structure</h2>
           {Object.entries(TEMPLATES).map(([key, t]) => (
-            <label key={key} className="flex items-start gap-2"><input type="radio" name="template" className="mt-1 h-5 w-5" defaultChecked={p.template === key} onChange={() => start(async () => { await setStructure(p.talkId, key); router.refresh(); })} /><span><strong>{t.name}</strong> <span className="text-[var(--text-muted)]">{t.sections.map((s) => s.title).join(" · ")}</span><br /><span className="text-[var(--text-secondary)]">{t.source}</span></span></label>
+            <label key={key} className="flex items-start gap-2"><input type="radio" name="template" className="mt-0.5 h-6 w-6" defaultChecked={p.template === key} onChange={() => start(async () => { await setStructure(p.talkId, key); router.refresh(); })} /><span><strong>{t.name}</strong> <span className="text-[var(--text-muted)]">{t.sections.map((s) => s.title).join(" · ")}</span><br /><span className="text-[var(--text-secondary)]">{t.source}</span></span></label>
           ))}
         </Card>
       </aside>

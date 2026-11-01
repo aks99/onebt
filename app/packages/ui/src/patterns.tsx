@@ -30,19 +30,44 @@ export function daysSince(iso: string, now = new Date()) {
   return Math.floor((now.getTime() - new Date(iso).getTime()) / 86400000);
 }
 
+// A wall-clock time in one timezone as a UTC instant (two passes handle DST on the day itself).
+function tzOffsetMs(utcMs: number, timeZone: string) {
+  const parts = new Intl.DateTimeFormat("en-US", { timeZone, hourCycle: "h23", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit" }).formatToParts(new Date(utcMs));
+  const get = (t: string) => Number(parts.find((x) => x.type === t)?.value ?? 0);
+  return Date.UTC(get("year"), get("month") - 1, get("day"), get("hour"), get("minute"), get("second")) - utcMs;
+}
+export function zonedToUtc(dateIso: string, hhmm: string, timeZone: string): Date | null {
+  try {
+    const [h, m] = hhmm.split(":").map(Number);
+    const [y, mo, d] = dateIso.split("-").map(Number);
+    const guess = Date.UTC(y, mo - 1, d, h, m);
+    const utc = guess - tzOffsetMs(guess, timeZone);
+    return new Date(utc - (tzOffsetMs(utc, timeZone) - tzOffsetMs(guess, timeZone)));
+  } catch { return null; }
+}
+// The same deadline in the member's timezone (11.8): "" when it cannot be computed or the zones match.
+export function memberLocalText(dateIso: string, hhmm: string, organizerTz: string, memberTz?: string) {
+  if (!memberTz || memberTz === organizerTz) return "";
+  const utc = zonedToUtc(dateIso, hhmm, organizerTz);
+  if (!utc) return "";
+  try { return new Intl.DateTimeFormat("en-GB", { timeZone: memberTz, day: "numeric", month: "short", hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).format(utc) + " your time"; } catch { return ""; }
+}
+
 export function DeadlineChip(p: DeadlineChipProps) {
   const now = p.now ?? new Date();
   const days = daysUntil(p.deadline, now);
   const verifiedDays = daysSince(p.verifiedAt, now);
   const urgent = days <= 7;
   const dateText = p.hidden ? "date shown to members" : new Date(p.deadline + "T00:00:00Z").toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
-  const timeText = !p.hidden && p.timezoneStatus === "stated" && p.deadlineTime && p.organizerTimezone
-    ? ` ${p.deadlineTime} ${p.organizerTimezone}` : "";
+  const stated = !p.hidden && p.timezoneStatus === "stated" && !!p.deadlineTime && !!p.organizerTimezone;
+  const timeText = stated ? ` ${p.deadlineTime} ${p.organizerTimezone}` : "";
+  const localText = stated ? memberLocalText(p.deadline, p.deadlineTime!, p.organizerTimezone!, p.memberTimezone) : "";
   return (
     <span className={cx("inline-flex flex-wrap items-center gap-x-2 gap-y-0.5 rounded-[var(--radius)] border px-2 py-1 text-[13px] leading-[18px]",
       urgent ? "border-[var(--warning-text)]" : "border-[var(--border-subtle)]", "bg-[var(--surface)]")}>
       <span className="font-medium tabular">{days >= 0 ? `${days} d left` : "closed"}</span>
       <span className="text-[var(--text-secondary)]">{dateText}{timeText}</span>
+      {localText && <span className="text-[var(--text-muted)]">{localText}</span>}
       {!p.hidden && p.timezoneStatus === "unknown" && <span className="text-[var(--text-muted)]">timezone not stated by the organizer</span>}
       <span className="text-[var(--text-muted)]">verified {verifiedDays === 0 ? "today" : `${verifiedDays} d ago`}, {sourceLabel[p.sourceType]}</span>
     </span>

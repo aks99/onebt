@@ -81,7 +81,7 @@ export function DrillRunner({ kind, rows, onlyDue, sample, talkId }: { kind: Dri
         {kind === "blank_fill" && (
           <span className="flex flex-wrap items-center gap-2">
             <label className="flex items-center gap-1">Remove <select value={level} onChange={(e) => { setLevel(Number(e.target.value)); setTyped(""); setScore(null); }} className="h-9 rounded-[var(--radius)] border border-[var(--input)] bg-[var(--surface)] px-2" aria-label="Share of words removed">{BLANK_LEVELS.map((l, k) => <option key={l} value={k}>{l}%</option>)}</select></label>
-            <label className="flex items-center gap-1"><input type="checkbox" className="h-5 w-5" checked={typedMode} onChange={(e) => { setTypedMode(e.target.checked); setScore(null); }} /> type the missing words</label>
+            <label className="flex items-center gap-1"><input type="checkbox" className="h-6 w-6" checked={typedMode} onChange={(e) => { setTypedMode(e.target.checked); setScore(null); }} /> type the missing words</label>
           </span>
         )}
       </div>

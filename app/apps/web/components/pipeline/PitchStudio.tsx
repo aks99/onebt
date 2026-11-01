@@ -107,7 +107,7 @@ function PitchKit({ pack, onSave, pending }: { pack: PackRow; onSave: (kit: { le
       </AIDraftBlock>
       {script && <Pacer text={script} seconds={len} />}
       <div className="grid gap-2 sm:grid-cols-2">
-        <div><h3 className="t-label mb-1 text-[var(--text-muted)]">SHOT CHECKLIST</h3><ul className="flex flex-col gap-1 t-compact">{CHECKLIST.map((c) => <li key={c}><label className="flex items-center gap-2"><input type="checkbox" className="h-5 w-5" checked={!!checks[c]} onChange={(e) => setChecks({ ...checks, [c]: e.target.checked })} />{c}</label></li>)}</ul></div>
+        <div><h3 className="t-label mb-1 text-[var(--text-muted)]">SHOT CHECKLIST</h3><ul className="flex flex-col gap-1 t-compact">{CHECKLIST.map((c) => <li key={c}><label className="flex items-center gap-2"><input type="checkbox" className="h-6 w-6" checked={!!checks[c]} onChange={(e) => setChecks({ ...checks, [c]: e.target.checked })} />{c}</label></li>)}</ul></div>
         <div><h3 className="t-label mb-1 text-[var(--text-muted)]">SELF-REVIEW AFTER FILMING</h3><div className="flex flex-col gap-2">{SELF_REVIEW.map((q) => <label key={q.key} className="t-compact">{q.q}<input value={review[q.key] ?? ""} onChange={(e) => setReview({ ...review, [q.key]: e.target.value })} className="mt-1 h-10 w-full rounded-[var(--radius)] border border-[var(--input)] bg-[var(--surface)] px-2" /></label>)}</div></div>
       </div>
       <label className="t-compact">Unlisted link, if a form asks for the video (a link, never a file)<input value={link} onChange={(e) => setLink(e.target.value)} inputMode="url" placeholder="https://" className="mt-1 h-11 w-full rounded-[var(--radius)] border border-[var(--input)] bg-[var(--surface)] px-3" /></label>

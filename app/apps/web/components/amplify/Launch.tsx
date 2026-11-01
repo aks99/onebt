@@ -121,7 +121,7 @@ export function Launch(p: LaunchProps) {
                   <ul className="flex flex-col gap-1">
                     {rows.map(({ item, index }) => (
                       <li key={index} className={cx("flex items-start gap-2 py-1", item.done && "opacity-70")}>
-                        <input type="checkbox" className="mt-1 h-5 w-5 shrink-0" checked={!!item.done} onChange={(e) => run(() => setItemDone(p.talkId, index, e.target.checked))} aria-label={`Done: ${item.text}`} />
+                        <input type="checkbox" className="mt-0.5 h-6 w-6 shrink-0" checked={!!item.done} onChange={(e) => run(() => setItemDone(p.talkId, index, e.target.checked))} aria-label={`Done: ${item.text}`} />
                         <div className="min-w-0">
                           <span className={cx("t-metadata tabular", !item.done && !isRelative(item.when) && item.when <= p.todayIso ? "text-[var(--accent-text)]" : "text-[var(--text-muted)]")}>{isRelative(item.when) ? item.when : new Date(item.when + "T00:00:00Z").toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short", timeZone: "UTC" })}</span>
                           {editingPlan ? <textarea value={plan[index]?.text ?? item.text} onChange={(e) => setPlan((pl) => pl.map((x, k) => k === index ? { ...x, text: e.target.value } : x))} rows={2} className={ta} aria-label="Plan item" /> : <p className={cx("t-compact", item.done && "line-through")}>{item.text}</p>}

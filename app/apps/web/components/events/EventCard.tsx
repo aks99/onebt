@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Button, Card, DeadlineChip, cx } from "@onebigtalk/ui";
 import { removeTarget, reportEvent, saveTarget, trackEvent, watchEvent } from "@/app/(app)/find/events/actions";
@@ -19,6 +19,8 @@ const STATUS_LABEL: Record<string, string> = { open: "OPEN", announced: "OPENS S
 // S3.4 event row: name, place, date, status, deadline chip, match, three "why" lines, one caution, actions.
 // Colour never carries a meaning alone; the status is always a word.
 export function EventCard({ ev, match, state, showDeadline }: { ev: EventCardData; match: MatchResult | null; state: MemberState; showDeadline: boolean }) {
+  const [memberTz, setMemberTz] = useState<string | undefined>(undefined);
+  useEffect(() => { try { setMemberTz(Intl.DateTimeFormat().resolvedOptions().timeZone); } catch { /* unknown zone: the organizer's time still shows */ } }, []);
   const [msg, setMsg] = useState<{ code: string; message: string } | null>(null);
   const [report, setReport] = useState(false);
   const [pending, start] = useTransition();
@@ -35,7 +37,7 @@ export function EventCard({ ev, match, state, showDeadline }: { ev: EventCardDat
       </div>
       <div className="flex flex-wrap items-center gap-2 t-compact">
         <span className={cx("rounded-full border px-2 py-0.5 font-medium", ev.application_status === "open" ? "border-[var(--accent-outline)]" : "border-[var(--border-subtle)] text-[var(--text-secondary)]")}>{ev.expired ? "EVENT CANCELLED OR PAST" : STATUS_LABEL[ev.application_status] ?? ev.application_status}</span>
-        {ev.application_deadline && !ev.expired && <DeadlineChip deadline={ev.application_deadline} deadlineTime={ev.deadline_time} organizerTimezone={ev.deadline_timezone} timezoneStatus={ev.deadline_timezone_status} verifiedAt={ev.last_verified_at ?? new Date().toISOString()} sourceType={ev.source === "google_sheet" ? "google_sheet" : "curator"} hidden={!showDeadline} />}
+        {ev.application_deadline && !ev.expired && <DeadlineChip deadline={ev.application_deadline} deadlineTime={ev.deadline_time} organizerTimezone={ev.deadline_timezone} timezoneStatus={ev.deadline_timezone_status} verifiedAt={ev.last_verified_at ?? new Date().toISOString()} sourceType={ev.source === "google_sheet" ? "google_sheet" : "curator"} hidden={!showDeadline} memberTimezone={memberTz} />}
         {verifiedDays !== null && verifiedDays > 60 && <span className="rounded-full border border-[var(--warning-text)] px-2 py-0.5 text-[var(--warning-text)]">verify: last checked {verifiedDays} d ago</span>}
       </div>
       {match && (
