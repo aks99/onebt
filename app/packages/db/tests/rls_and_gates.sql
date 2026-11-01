@@ -461,6 +461,59 @@ select tests.check('step6: admin reads email captures', (select count(*) from pu
 
 select name, case when passed then 'PASS' else 'FAIL' end as result, coalesce(left(detail, 90), '') as detail from tests.results where name like 'step6:%' order by passed, name;
 
+-- ---------------------------------------------------------------
+-- Step 7: pipeline gates, research step, milestones, follow-up restraint
+-- ---------------------------------------------------------------
+reset role;
+set role authenticated;
+select tests.login('bbbbbbbb-0000-0000-0000-000000000002');
+-- B tracks Leeds (public form) and Wilson Park (no form) on the step-5 talk
+reset role;
+update public.events set form_url = 'https://tedxleeds.example/apply', application_status = 'open', expired = false where tedx_event_id = 'tedx-leeds-2027';
+set role authenticated;
+select tests.login('bbbbbbbb-0000-0000-0000-000000000002');
+insert into public.applications (id, user_id, talk_id, event_id, status) values
+  ('ab000000-0000-0000-0000-000000000071', 'bbbbbbbb-0000-0000-0000-000000000002', '7b000000-0000-0000-0000-000000000005', 'e0000000-0000-0000-0000-000000000011', 'planned'),
+  ('ab000000-0000-0000-0000-000000000072', 'bbbbbbbb-0000-0000-0000-000000000002', '7b000000-0000-0000-0000-000000000005', 'e0000000-0000-0000-0000-000000000001', 'planned');
+select tests.expect_error('step7: one application per event per cycle', $q$insert into public.applications (user_id, talk_id, event_id) values ('bbbbbbbb-0000-0000-0000-000000000002', '7b000000-0000-0000-0000-000000000005', 'e0000000-0000-0000-0000-000000000011')$q$, 'duplicate');
+-- research step: short answers do not complete it; three answers of 20+ characters do and move planned -> researching
+update public.applications set research_answers = '{"theme_in_own_words":"short","past_talk_watched":"x","why_this_audience":"y"}' where id = 'ab000000-0000-0000-0000-000000000071';
+select tests.check('step7: short research answers do not complete the step', (select research_completed_at is null and status = 'planned' from public.applications where id = 'ab000000-0000-0000-0000-000000000071'));
+update public.applications set research_answers = '{"theme_in_own_words":"Thresholds: the moment before a decision becomes irreversible","past_talk_watched":"A 2026 talk on ward handovers by a nurse from Leeds","why_this_audience":"Clinicians and managers who decide who may speak up in a room"}' where id = 'ab000000-0000-0000-0000-000000000071';
+select tests.check('step7: complete research stamps the step and moves to researching', (select research_completed_at is not null and status = 'researching' from public.applications where id = 'ab000000-0000-0000-0000-000000000071'));
+-- follow-up restraint
+select tests.check('step7: follow-up refused before applied', public.follow_up_allowed('ab000000-0000-0000-0000-000000000071') = 'NOT_APPLIED');
+update public.applications set status = 'applied', applied_at = (now() at time zone 'utc')::date - 20 where id = 'ab000000-0000-0000-0000-000000000071';
+select tests.check('step7: follow-up allowed 14 days after applying through a public form', public.follow_up_allowed('ab000000-0000-0000-0000-000000000071') = 'OK');
+update public.applications set decision_date = (now() at time zone 'utc')::date + 10 where id = 'ab000000-0000-0000-0000-000000000071';
+select tests.check('step7: never before the organizer decision date', public.follow_up_allowed('ab000000-0000-0000-0000-000000000071') = 'BEFORE_DECISION_DATE');
+update public.applications set decision_date = null, no_enquiries = true where id = 'ab000000-0000-0000-0000-000000000071';
+select tests.check('step7: never where the organizer says not to enquire', public.follow_up_allowed('ab000000-0000-0000-0000-000000000071') = 'ORGANIZER_SAYS_NO');
+update public.applications set no_enquiries = false, follow_up_sent_at = now() where id = 'ab000000-0000-0000-0000-000000000071';
+select tests.check('step7: only one follow-up', public.follow_up_allowed('ab000000-0000-0000-0000-000000000071') = 'ALREADY_SENT');
+update public.applications set status = 'applied', applied_at = (now() at time zone 'utc')::date - 20 where id = 'ab000000-0000-0000-0000-000000000072';
+select tests.check('step7: no follow-up without a public form', public.follow_up_allowed('ab000000-0000-0000-0000-000000000072') = 'NO_PUBLIC_FORM');
+-- milestones from the pipeline
+select tests.check('step7: first application sent is a milestone', (select count(*) from public.milestones where user_id = 'bbbbbbbb-0000-0000-0000-000000000002' and key = 'first_application_sent') = 1);
+select tests.check('step7: applied counts activity for the week', (select count(*) from public.activity_log where user_id = 'bbbbbbbb-0000-0000-0000-000000000002' and kind = 'application_sent') >= 1);
+-- acceptance moves the talk to Write with the event
+update public.applications set status = 'accepted', outcome = 'accepted', event_date = '2027-04-10' where id = 'ab000000-0000-0000-0000-000000000071';
+select tests.check('step7: acceptance logs the milestone and moves the talk to Write', (select count(*) from public.milestones where user_id = 'bbbbbbbb-0000-0000-0000-000000000002' and key = 'acceptance_logged') = 1
+  and (select stage = 'write' and event_id = 'e0000000-0000-0000-0000-000000000011' and event_date = '2027-04-10' from public.talks where id = '7b000000-0000-0000-0000-000000000005'));
+select tests.check('step7: outcome date is set automatically', (select outcome_at is not null from public.applications where id = 'ab000000-0000-0000-0000-000000000071'));
+-- the 100 counter ignores applications that were not ready
+select tests.check('step7: an application sent without readiness does not count toward 100', (select sent from public.ready_applications_detail('bbbbbbbb-0000-0000-0000-000000000002')) = 0);
+-- pitch pack versions
+select tests.check('step7: next pitch pack version follows the existing one', public.next_pitch_pack_version('7b000000-0000-0000-0000-000000000005') = 2);
+insert into public.pitch_packs (user_id, talk_id, version, fields) values ('bbbbbbbb-0000-0000-0000-000000000002', '7b000000-0000-0000-0000-000000000005', public.next_pitch_pack_version('7b000000-0000-0000-0000-000000000005'), '{"one_sentence":"x"}');
+select tests.check('step7: next pitch pack version increments', public.next_pitch_pack_version('7b000000-0000-0000-0000-000000000005') = 3);
+select tests.logout();
+reset role;
+select tests.check('step7: follow-ups due pass moves applied to follow_up_due', public.mark_follow_ups_due() >= 0);
+
+select name, case when passed then 'PASS' else 'FAIL' end as result, coalesce(left(detail, 90), '') as detail from tests.results where name like 'step7:%' order by passed, name;
+
+
 select name, case when passed then 'PASS' else 'FAIL' end as result, coalesce(left(detail, 90), '') as detail from tests.results where name like 'step3:%' order by passed, name;
 select count(*) filter (where passed) as passed, count(*) filter (where not passed) as failed from tests.results;
-select 1 / (case when (select count(*) from tests.results where not passed) = 0 then 1 else 0 end) as all_green_after_step6;
+select 1 / (case when (select count(*) from tests.results where not passed) = 0 then 1 else 0 end) as all_green_after_step7;

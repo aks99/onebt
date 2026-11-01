@@ -19,7 +19,7 @@ export default async function EventsPage({ searchParams }: { searchParams: Promi
   if (!user) redirect("/login?next=/find/events");
   const talk = await currentTalk(user.id);
   const sp = await searchParams;
-  const f: Filters = { country: sp.country, region: sp.region, city: sp.city, type: sp.type, status: sp.status, from: sp.from, to: sp.to, deadlineWithin: sp.deadline ? Number(sp.deadline) : undefined, slot: sp.slot ? Number(sp.slot) : undefined, q: sp.q };
+  const f: Filters = { country: sp.country, region: sp.region, city: sp.city, type: sp.type, status: sp.status, from: sp.from, to: sp.to, deadlineWithin: sp.deadline ? Number(sp.deadline) : undefined, slot: sp.slot ? Number(sp.slot) : undefined, q: sp.q, local: sp.local === "1" };
   const data = await loadFinder(user.id, talk?.id ?? null, f);
   const member = data.hasMemberAccess;
   const byId = new Map(data.events.map((e) => [e.id, e]));
@@ -32,7 +32,7 @@ export default async function EventsPage({ searchParams }: { searchParams: Promi
     <div className="flex flex-col gap-4">
       <div className="flex flex-wrap items-end justify-between gap-2">
         <div><h1 className="t-page-title">Event Finder</h1><p className="t-compact text-[var(--text-secondary)]">{data.idea ? `Ranked for "${data.idea.throughline ?? data.idea.title}".` : "Lock an idea in the Idea Lab and the ranking will use it."} {data.events.length} events · {openCount} open calls.</p></div>
-        <div className="flex gap-2"><Link href="/find/targets" className="t-compact underline">Targets</Link><Link href="/open-calls" className="t-compact underline">Public open calls</Link></div>
+        <div className="flex flex-wrap gap-2"><Link href={sp.local === "1" ? "/find/events" : "/find/events?local=1"} aria-pressed={sp.local === "1"} className={`inline-flex h-10 items-center rounded-full border px-3 t-compact ${sp.local === "1" ? "border-[var(--accent-outline)] bg-[var(--surface-2)]" : "border-[var(--border-subtle)]"}`}>Near you: hometown, places lived, alma mater</Link><Link href="/find/targets" className="t-compact underline">Targets</Link><Link href="/open-calls" className="t-compact underline">Public open calls</Link></div>
       </div>
 
       <form method="get" className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6" aria-label="Filters">

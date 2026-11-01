@@ -20,7 +20,7 @@ const ITEMS: Item[] = [
 const SUB: Record<string, { href: string; label: string }[]> = {
   "/find": [
     { href: "/find/idea-lab", label: "Idea Lab" }, { href: "/find/events", label: "Event Finder" }, { href: "/find/targets", label: "Targets" },
-    { href: "/find/applications", label: "Applications" }, { href: "/find/prior-stages", label: "Prior Stages" },
+    { href: "/find/applications", label: "Applications" }, { href: "/find/pitch", label: "Pitch Pack" }, { href: "/find/prior-stages", label: "Prior Stages" },
   ],
   "/write": [{ href: "/write/brief", label: "Idea Brief" }, { href: "/write/outline", label: "Outline" }, { href: "/write/script", label: "Script Studio" }, { href: "/write/factcheck", label: "Fact-check" }],
   "/deliver": [{ href: "/deliver/memorize", label: "Memorize" }, { href: "/deliver/timer", label: "Practice timer" }],
