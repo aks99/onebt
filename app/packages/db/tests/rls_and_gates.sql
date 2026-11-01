@@ -641,8 +641,46 @@ reset role;
 
 select name, case when passed then 'PASS' else 'FAIL' end as result, coalesce(left(detail, 90), '') as detail from tests.results where name like 'step10:%' order by passed, name;
 
+-- ---------------------------------------------------------------
+-- Step 12: admin screens (migration 0015): admin-only functions, audited writes, aggregates without content
+-- ---------------------------------------------------------------
+reset role;
+set role authenticated;
+select tests.login('aaaaaaaa-0000-0000-0000-000000000001');
+select tests.expect_error('step12: a member cannot read the admin overview', $q$select public.admin_overview()$q$, 'ADMIN_ONLY');
+select tests.expect_error('step12: a member cannot list members', $q$select * from public.admin_members()$q$, 'ADMIN_ONLY');
+select tests.expect_error('step12: a member cannot flip a flag', $q$select public.admin_set_flag('prompter', true)$q$, 'ADMIN_ONLY');
+select tests.login('cccccccc-0000-0000-0000-000000000003');
+select tests.expect_error('step12: a curator is not an admin', $q$select public.admin_billing()$q$, 'ADMIN_ONLY');
+select tests.login('dddddddd-0000-0000-0000-000000000004');
+select tests.check('step12: the funnel has nine steps and counts the published member', (select count(*) = 9 and max(members) filter (where step = 'Published') = 1 and max(members) filter (where step = 'Script locked') = 1 from public.admin_funnel()));
+select tests.check('step12: the overview carries plans, seats and AI cost', (select (v ? 'members_by_plan') and (v ? 'founding_seats_remaining') and (v ? 'ai_cost_this_month') and (v->>'founding_seats_remaining')::int = 0 from public.admin_overview() v));
+select tests.check('step12: members list finds A by email with stage, counts and no content', (select count(*) = 1 and bool_and(stage = 'amplify' and ideas_locked >= 1 and applications_sent >= 1) from public.admin_members('a@example.com')));
+select tests.check('step12: member timeline lists milestones and activity, newest first', (select count(*) >= 5 and bool_and(kind in ('milestone', 'activity')) from public.admin_member_timeline('aaaaaaaa-0000-0000-0000-000000000001')));
+select public.admin_set_flag('nerves_kit', true);
+select tests.check('step12: flag flipped and audited', (select enabled from public.feature_flags where key = 'nerves_kit') and (select count(*) from public.audit_log where action = 'set_flag' and resource_id = 'nerves_kit') = 1);
+select public.admin_set_flag('nerves_kit', false);
+select tests.expect_error('step12: unknown flag is refused', $q$select public.admin_set_flag('no_such_flag', true)$q$, 'NOT_FOUND');
+select public.admin_set_role('bbbbbbbb-0000-0000-0000-000000000002', 'coach', 'active');
+select tests.check('step12: role change saved and audited', (select role = 'coach' from public.user_roles where user_id = 'bbbbbbbb-0000-0000-0000-000000000002') and (select count(*) from public.audit_log where action = 'set_role' and resource_id = 'bbbbbbbb-0000-0000-0000-000000000002') = 1);
+select public.admin_set_role('bbbbbbbb-0000-0000-0000-000000000002', 'member', 'active');
+select tests.expect_error('step12: an admin cannot demote themselves', $q$select public.admin_set_role('dddddddd-0000-0000-0000-000000000004', 'member', 'active')$q$, 'CANNOT_DEMOTE_SELF');
+select public.admin_set_plan('bbbbbbbb-0000-0000-0000-000000000002', 'founding', 'twelve_month', true, now() + interval '365 days', 'comped seat for a launch partner');
+select tests.check('step12: plan assignment saved with the founding flag and audited', (select plan = 'founding' and founding_price and billing_period = 'twelve_month' from public.memberships where user_id = 'bbbbbbbb-0000-0000-0000-000000000002') and (select count(*) from public.audit_log where action = 'set_plan') = 1);
+select public.admin_grant_extension('bbbbbbbb-0000-0000-0000-000000000002', now() + interval '180 days');
+select tests.check('step12: extension granted and audited with the ready count', (select extension_active from public.memberships where user_id = 'bbbbbbbb-0000-0000-0000-000000000002') and (select details ? 'ready_applications' from public.audit_log where action = 'grant_extension' limit 1));
+select tests.check('step12: AI settings carry flags, prompt versions and eval runs', (select jsonb_array_length(v->'flags') >= 10 and (v ? 'prompt_versions') and (v ? 'eval_runs') from public.admin_ai_settings() v));
+select tests.check('step12: billing carries the seat counter, subscriptions and invoices', (select (v ? 'subscriptions') and (v ? 'invoices') and (v ? 'addons') and (v->>'founding_seats_remaining')::int = 0 from public.admin_billing() v));
+select tests.check('step12: reports carry outcomes, churn, allowance burn and event coverage', (select (v ? 'outcomes') and (v ? 'churn') and (v ? 'allowance_burn') and (v->'event_coverage' ? 'deadline_coverage_pct') from public.admin_reports() v));
+select tests.check('step12: audit rows list the admin writes with the actor email', (select count(*) >= 4 and bool_and(actor_email = 'admin@example.com') from public.admin_audit(10) where action in ('set_flag', 'set_role', 'set_plan', 'grant_extension')));
+select tests.check('step12: monthly value spreads six and twelve month prices', public.monthly_value_cents(7700, 'six_month') = 1283 and public.monthly_value_cents(14700, 'twelve_month') = 1225 and public.monthly_value_cents(1700, 'monthly') = 1700);
+select tests.logout();
+reset role;
+
+select name, case when passed then 'PASS' else 'FAIL' end as result, coalesce(left(detail, 90), '') as detail from tests.results where name like 'step12:%' order by passed, name;
+
 
 
 select name, case when passed then 'PASS' else 'FAIL' end as result, coalesce(left(detail, 90), '') as detail from tests.results where name like 'step3:%' order by passed, name;
 select count(*) filter (where passed) as passed, count(*) filter (where not passed) as failed from tests.results;
-select 1 / (case when (select count(*) from tests.results where not passed) = 0 then 1 else 0 end) as all_green_after_step10;
+select 1 / (case when (select count(*) from tests.results where not passed) = 0 then 1 else 0 end) as all_green_after_step12;

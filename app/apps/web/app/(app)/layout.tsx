@@ -12,7 +12,8 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   const user = await currentUser();
   if (!user) redirect("/login");
   const talk = await currentTalk(user.id);
-  let staff = false;
-  if (!talk) { const r = await currentRole(); staff = !!r && (r.role === "curator" || r.role === "admin"); if (!staff) redirect("/onboarding"); }
-  return <AppShell talkTitle={talk?.title ?? null} staff={staff || undefined}>{children}</AppShell>;
+  const r = await currentRole();
+  const staff = !!r && (r.role === "curator" || r.role === "admin");
+  if (!talk && !staff) redirect("/onboarding");
+  return <AppShell talkTitle={talk?.title ?? null} staff={staff || undefined} admin={r?.role === "admin" || undefined}>{children}</AppShell>;
 }

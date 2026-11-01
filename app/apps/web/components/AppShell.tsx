@@ -32,7 +32,7 @@ function activeFor(path: string, item: Item) {
   return path === item.href || path.startsWith(root + "/") || path === root;
 }
 
-export function AppShell({ children, talkTitle, rings, staff }: { children: React.ReactNode; talkTitle?: string | null; rings?: Partial<Record<"find" | "write" | "deliver" | "amplify", number>>; staff?: boolean }) {
+export function AppShell({ children, talkTitle, rings, staff, admin }: { children: React.ReactNode; talkTitle?: string | null; rings?: Partial<Record<"find" | "write" | "deliver" | "amplify", number>>; staff?: boolean; admin?: boolean }) {
   const path = usePathname() ?? "";
   const section = "/" + path.split("/")[1];
   const sub = SUB[section];
@@ -64,6 +64,7 @@ export function AppShell({ children, talkTitle, rings, staff }: { children: Reac
         })}
         <div className="mt-auto flex flex-col gap-1">
           {(staff || path.startsWith("/curate") || path.startsWith("/admin")) && <Link href="/curate" aria-current={path.startsWith("/curate") ? "page" : undefined} className={cx("flex h-11 items-center rounded-[var(--radius)] px-3 t-body", path.startsWith("/curate") ? "bg-[var(--surface-2)] font-medium" : "hover:bg-[var(--surface-2)]")}>Curator Console</Link>}
+          {(admin || path.startsWith("/admin")) && <Link href="/admin" aria-current={path.startsWith("/admin") ? "page" : undefined} className={cx("flex h-11 items-center rounded-[var(--radius)] px-3 t-body", path.startsWith("/admin") ? "bg-[var(--surface-2)] font-medium" : "hover:bg-[var(--surface-2)]")}>Admin</Link>}
           <Link href="/me/plan" className="flex h-11 items-center rounded-[var(--radius)] px-3 t-body hover:bg-[var(--surface-2)]">Me</Link>
         </div>
       </nav>

@@ -24,3 +24,15 @@ export async function assertCurator() {
   if (!r || (r.role !== "curator" && r.role !== "admin")) throw new Error("permission denied");
   return r;
 }
+
+export async function requireAdmin() {
+  const r = await currentRole();
+  if (!r) redirect("/login?next=/admin");
+  if (r.role !== "admin") redirect("/today");
+  return r;
+}
+export async function assertAdmin() {
+  const r = await currentRole();
+  if (!r || r.role !== "admin") throw new Error("permission denied");
+  return r;
+}
