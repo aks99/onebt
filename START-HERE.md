@@ -1,6 +1,6 @@
 # Start here: handoff for any AI or person continuing One Big Talk
 
-Written 1 November 2026. This file replaces `TEDx-OS-Handoff-Prompt.md` (kept for history). It is written so that a new Claude account, another AI, or a human engineer can open this repository cold and continue from exactly where the work stands.
+Written 1 November 2026. This file replaces `TEDx-OS-Handoff-Prompt.md` (kept for history). For a new Claude account with the `G:\TEDx OS` folder attached, `Handover-to-New-Account.md` is the short, paste-ready version of this file; `build/00-prompts/Codex-Review-Process.md` is how to have Codex review and fix the work with every fix shown first. It is written so that a new Claude account, another AI, or a human engineer can open this repository cold and continue from exactly where the work stands.
 
 ## Part 1. Paste this as the project instructions (or system prompt)
 
